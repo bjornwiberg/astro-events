@@ -25,6 +25,7 @@ import {
 } from "../utils/link";
 
 export default function Home() {
+  const [mounted, setMounted] = useState(false);
   const { query } = useRouter();
   const [offset, setOffset] = useState(
     (new Date().getTimezoneOffset() * -1) / 60
@@ -56,6 +57,9 @@ export default function Home() {
   const todayLink = getTodayLinkFromDate(currentDate);
 
   const formatDateWithOffset = (date: Date) => formatDate(date, offset);
+
+  useEffect(() => setMounted(true), []);
+  if (!mounted) return null;
 
   return (
     <div className={styles.container}>
