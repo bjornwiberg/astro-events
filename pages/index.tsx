@@ -1,133 +1,25 @@
 import Head from "next/head";
-import addMonths from "date-fns/addMonths";
-import subMonths from "date-fns/subMonths";
-import isSameMonth from "date-fns/isSameMonth";
-import isSameYear from "date-fns/isSameYear";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import format from "date-fns/format";
 
 import eventsData from "../data/events";
 import styles from "../styles/Home.module.css";
-import { EventBaseType, EventType } from "../types/events";
-
-function getEventTypesFromEvents(events: EventBaseType[]) {
-  const returnEvents = {};
-
-  events.forEach((event) => {
-    if (returnEvents?.[event.type]) returnEvents[event.type].push(event);
-
-    returnEvents[event.type] = [event];
-  });
-
-  return returnEvents;
-}
-
-function getEventsFromDate(date: Date) {
-  const year = date.getFullYear();
-  const month = date.getMonth();
-
-  return eventsData.filter((event) => {
-    return (
-      event.startDate.getFullYear() === year &&
-      event.startDate.getMonth() === month
-    );
-  });
-}
-
-function getEventTypeFromEvents(events, type: string) {
-  if (events?.[type]) {
-    return events[type]
-      .map(({ startDate, endDate, description }) => {
-        return `${format(startDate, "E dd MMM - HH:kk")}${
-          endDate ? ` - ${format(endDate, "E dd MMM - HH:kk")}` : ""
-        }${description ? ` (${description})` : ""}`;
-      })
-      .join(", ");
-  }
-  return null;
-}
-
-function getIconAndNameFromType(type: string) {
-  switch (type) {
-    case EventType.EQUINOX:
-      return {
-        icon: "🌱",
-        name: "Equinox",
-      };
-    case EventType.SOLSTICE:
-      return {
-        icon: "🌞",
-        name: "Solstice",
-      };
-    case EventType.HIATUS_SOLAR:
-      return {
-        icon: "🔆",
-        name: "Hiatus Solar",
-      };
-    case EventType.TRIPURA_SUNDARI_PEAK:
-      return {
-        icon: "❤️",
-        name: "Tripura Sundari",
-      };
-    case EventType.FULL_MOON_PEAK:
-      return {
-        icon: "🌕",
-        name: "Full moon",
-      };
-    case EventType.SHIVARATRI:
-      return {
-        icon: "🔱",
-        name: "Shivaratri",
-      };
-    case EventType.NEW_MOON:
-      return {
-        icon: "🌑",
-        name: "New moon",
-      };
-    case EventType.MOON_ECLIPSE:
-      return {
-        icon: "🌒",
-        name: "Moon eclipse",
-      };
-    case EventType.SOLAR_ECLIPSE:
-      return {
-        icon: "🌚",
-        name: "Solar eclipse",
-      };
-  }
-}
-
-function getLinkFromDate(date: Date) {
-  const todaysDate = new Date();
-
-  if (isSameYear(todaysDate, date) && isSameMonth(todaysDate, date)) return "/";
-  const yearString = isSameYear(todaysDate, date)
-    ? ""
-    : `year=${date.getFullYear()}&`;
-  return `/?${yearString}month=${date.getMonth()}`;
-}
-
-function getTodayLinkFromDate(date: Date) {
-  const todaysDate = new Date();
-
-  if (!isSameYear(todaysDate, date) || !isSameMonth(todaysDate, date))
-    return "/";
-
-  return;
-}
-
-function getPreviousLinkFromDate(date: Date) {
-  const newDate = subMonths(date, 1);
-
-  return getLinkFromDate(newDate);
-}
-
-function getNextLinkFromDate(date: Date) {
-  const newDate = addMonths(date, 1);
-
-  return getLinkFromDate(newDate);
-}
+import { EventType } from "../types/events";
+import {
+  formatDate,
+  getFullMoonDatesFromPeakDate,
+  getTripuraSundariDatesFromPeakDate,
+} from "../utils/date";
+import {
+  getEventsFromDate,
+  getEventTypesFromEvents,
+  getIconAndNameFromType,
+} from "../utils/event";
+import {
+  getNextLinkFromDate,
+  getPreviousLinkFromDate,
+  getTodayLinkFromDate,
+} from "../utils/link";
 
 export default function Home() {
   const { query } = useRouter();
@@ -140,7 +32,7 @@ export default function Home() {
   currentDate.setFullYear(year as number);
   currentDate.setMonth(month as number);
 
-  const eventsFromDate = getEventsFromDate(currentDate);
+  const eventsFromDate = getEventsFromDate(eventsData, currentDate);
 
   const events = getEventTypesFromEvents(eventsFromDate);
 
@@ -193,9 +85,60 @@ export default function Home() {
           {Object.entries(events).map(([type, event]) => {
             const { icon, name } = getIconAndNameFromType(type);
 
+            const currentEvents = events[type];
+
             return (
               <div className={styles.event}>
-                {icon} {getEventTypeFromEvents(events, type)}
+                <div>{icon}</div>
+                <div className={styles.eventDates}>
+                  {currentEvents.map((event) => {
+                    const { startDate, endDate, description } = event;
+                    let dateString = `${formatDate(startDate)}${
+                      endDate ? ` - ${formatDate(endDate)}` : ""
+                    }`;
+                    let peakString: JSX.Element;
+
+                    if (
+                      type === EventType.TRIPURA_SUNDARI_PEAK ||
+                      type === EventType.FULL_MOON_PEAK
+                    )
+                      peakString = (
+                        <>
+                          {formatDate(startDate)}
+                          <br />
+                        </>
+                      );
+
+                    if (type === EventType.TRIPURA_SUNDARI_PEAK) {
+                      const { start, end } = getTripuraSundariDatesFromPeakDate(
+                        event.startDate
+                      );
+
+                      dateString = `${formatDate(start)} - ${formatDate(end)}`;
+                    }
+
+                    if (type === EventType.FULL_MOON_PEAK) {
+                      const { start, end } = getFullMoonDatesFromPeakDate(
+                        event.startDate
+                      );
+
+                      dateString = `${formatDate(start)} - ${formatDate(end)}`;
+                    }
+
+                    return (
+                      <div>
+                        {peakString}
+                        {dateString}
+                        {description ? (
+                          <>
+                            {" "}
+                            (<strong>{description}</strong>)
+                          </>
+                        ) : null}
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             );
           })}
@@ -222,7 +165,7 @@ export default function Home() {
         }
         footer {
           width: 100%;
-          height: 100px;
+          height: 50px;
           border-top: 1px solid #eaeaea;
           display: flex;
           justify-content: center;
