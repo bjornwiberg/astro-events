@@ -1,5 +1,4 @@
 import { EventBaseType, EventType } from "../types/events";
-import { formatDate } from "./date";
 
 export function getEventTypesFromEvents(events: EventBaseType[]) {
   const returnEvents = {};
@@ -23,19 +22,6 @@ export function getEventsFromDate(events: EventBaseType[], date: Date) {
       event.startDate.getMonth() === month
     );
   });
-}
-
-function getEventTypeFromEvents(events, type: string) {
-  if (events?.[type]) {
-    return events[type]
-      .map(({ startDate, endDate, description }) => {
-        return `${formatDate(startDate)}${
-          endDate ? ` - ${formatDate(endDate)}` : ""
-        }${description ? ` (${description})` : ""}`;
-      })
-      .join(", ");
-  }
-  return null;
 }
 
 export function getIconAndNameFromType(type: string) {
