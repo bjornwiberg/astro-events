@@ -55,30 +55,25 @@ export default function Home() {
         <p className={styles.description}>
           View the atrological events for given month
         </p>
-        <h2>
+        <h2 className={styles.month}>
           {currentDate.toLocaleDateString(undefined, { month: "long" })}{" "}
           {currentDate.getFullYear()}
         </h2>
-        {todayLink && <Link href={todayLink}>Goto today's month</Link>}
-        <div className={styles.chips}>
-          {Object.keys(EventType).map((type) => {
-            const { icon, name } = getIconAndNameFromType(type);
-            return (
-              <div className={styles.chip}>
-                {icon} {name}
-              </div>
-            );
-          })}
+        <div className={styles.dateInfo}>
+          {todayLink ? (
+            <Link href={todayLink}>Goto today's month</Link>
+          ) : (
+            <span className={styles.dateInfoNoneActive}>
+              Goto today's month
+            </span>
+          )}
         </div>
-        <div className={styles.grid}>
-          <Link href={previousLink} className={styles.card}>
-            <h3>&larr; Previous month</h3>
-            <p>Get previous months events</p>
+        <div className={styles.navigation}>
+          <Link href={previousLink} className={styles.link}>
+            &larr; Previous month
           </Link>
-
-          <Link href={nextLink} className={styles.card}>
-            <h3>Next month &rarr;</h3>
-            <p>Get next months events</p>
+          <Link href={nextLink} className={styles.link}>
+            Next month &rarr;
           </Link>
         </div>
         <div>
@@ -92,7 +87,7 @@ export default function Home() {
 
             return (
               <div className={styles.event}>
-                <div>{icon}</div>
+                <div className={styles.eventIcon}>{icon}</div>
                 <div className={styles.eventDates}>
                   {currentEvents.map((event) => {
                     const { startDate, endDate, description } = event;
@@ -146,6 +141,16 @@ export default function Home() {
             );
           })}
         </div>
+        <div className={styles.chips}>
+          {Object.keys(EventType).map((type) => {
+            const { icon, name } = getIconAndNameFromType(type);
+            return (
+              <div className={styles.chip}>
+                {icon} {name}
+              </div>
+            );
+          })}
+        </div>
       </main>
 
       <footer>
@@ -159,7 +164,7 @@ export default function Home() {
 
       <style jsx>{`
         main {
-          padding: 5rem 0;
+          padding: 2rem 0;
           flex: 1;
           display: flex;
           flex-direction: column;
