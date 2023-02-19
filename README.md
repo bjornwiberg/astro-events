@@ -5,6 +5,7 @@
 Application for showing
 - Equinox
 - Solstice
+- Hiatus Solar
 - Tripura Sundari (including peak)
 - Full moon (including peak)
 - Shivaratri
