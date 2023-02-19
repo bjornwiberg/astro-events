@@ -108,6 +108,15 @@ function getLinkFromDate(date: Date) {
   return `/?${yearString}month=${date.getMonth()}`;
 }
 
+function getTodayLinkFromDate(date: Date) {
+  const todaysDate = new Date();
+
+  if (!isSameYear(todaysDate, date) || !isSameMonth(todaysDate, date))
+    return "/";
+
+  return;
+}
+
 function getPreviousLinkFromDate(date: Date) {
   const newDate = subMonths(date, 1);
 
@@ -137,6 +146,7 @@ export default function Home() {
 
   const previousLink = getPreviousLinkFromDate(currentDate);
   const nextLink = getNextLinkFromDate(currentDate);
+  const todayLink = getTodayLinkFromDate(currentDate);
 
   return (
     <div className={styles.container}>
@@ -154,6 +164,7 @@ export default function Home() {
           {currentDate.toLocaleDateString(undefined, { month: "long" })}{" "}
           {currentDate.getFullYear()}
         </h2>
+        {todayLink && <Link href={todayLink}>Goto today's month</Link>}
         <div className={styles.chips}>
           {Object.keys(EventType).map((type) => {
             const { icon, name } = getIconAndNameFromType(type);
