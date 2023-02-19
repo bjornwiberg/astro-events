@@ -37,11 +37,11 @@ const tripuraSundari2023: EventBaseType[] = [
   },
   {
     type: EventType.TRIPURA_SUNDARI_PEAK,
-    startDate: new Date("2023-03-05 5:52+01:00"),
+    startDate: new Date("2023-03-05 05:52+01:00"),
   },
   {
     type: EventType.TRIPURA_SUNDARI_PEAK,
-    startDate: new Date("2023-04-04 0:57+01:00"),
+    startDate: new Date("2023-04-04 00:57+01:00"),
   },
   {
     type: EventType.TRIPURA_SUNDARI_PEAK,
@@ -49,15 +49,15 @@ const tripuraSundari2023: EventBaseType[] = [
   },
   {
     type: EventType.TRIPURA_SUNDARI_PEAK,
-    startDate: new Date("2023-06-02 6:03+01:00"),
+    startDate: new Date("2023-06-02 06:03+01:00"),
   },
   {
     type: EventType.TRIPURA_SUNDARI_PEAK,
-    startDate: new Date("2023-07-31 1:01+01:00"),
+    startDate: new Date("2023-07-31 01:01+01:00"),
   },
   {
     type: EventType.TRIPURA_SUNDARI_PEAK,
-    startDate: new Date("2023-08-29 8:24+01:00"),
+    startDate: new Date("2023-08-29 08:24+01:00"),
   },
   {
     type: EventType.TRIPURA_SUNDARI_PEAK,
@@ -65,70 +65,70 @@ const tripuraSundari2023: EventBaseType[] = [
   },
   {
     type: EventType.TRIPURA_SUNDARI_PEAK,
-    startDate: new Date("2023-10-27 0:25+01:00"),
+    startDate: new Date("2023-10-27 00:25+01:00"),
   },
   {
     type: EventType.TRIPURA_SUNDARI_PEAK,
-    startDate: new Date("2023-11-25 9:41+01:00"),
+    startDate: new Date("2023-11-25 09:41+01:00"),
   },
   {
     type: EventType.TRIPURA_SUNDARI_PEAK,
-    startDate: new Date("2023-12-24 22:0+01:00"),
+    startDate: new Date("2023-12-24 22:03+01:00"),
   },
 ];
 
 const fullMoon2023: EventBaseType[] = [
   {
     type: EventType.FULL_MOON_PEAK,
-    startDate: new Date("2023/01/07 00:08+01:00"),
+    startDate: new Date("2023-01-07 00:08+01:00"),
   },
   {
     type: EventType.FULL_MOON_PEAK,
-    startDate: new Date("2023/02/05 19:28+01:00"),
+    startDate: new Date("2023-02-05 19:28+01:00"),
   },
   {
     type: EventType.FULL_MOON_PEAK,
-    startDate: new Date("2023/03/07 13:40+01:00"),
+    startDate: new Date("2023-03-07 13:40+01:00"),
   },
   {
     type: EventType.FULL_MOON_PEAK,
-    startDate: new Date("2023/04/06 06:34+01:00"),
+    startDate: new Date("2023-04-06 06:34+01:00"),
   },
   {
     type: EventType.FULL_MOON_PEAK,
-    startDate: new Date("2023/05/05 19:34+01:00"),
+    startDate: new Date("2023-05-05 19:34+01:00"),
   },
   {
     type: EventType.FULL_MOON_PEAK,
-    startDate: new Date("2023/06/04 05:42+01:00"),
+    startDate: new Date("2023-06-04 05:42+01:00"),
   },
   {
     type: EventType.FULL_MOON_PEAK,
-    startDate: new Date("2023/07/03 13:39+01:00"),
+    startDate: new Date("2023-07-03 13:39+01:00"),
   },
   {
     type: EventType.FULL_MOON_PEAK,
-    startDate: new Date("2023/08/01 20:32+01:00"),
+    startDate: new Date("2023-08-01 20:32+01:00"),
   },
   {
     type: EventType.FULL_MOON_PEAK,
-    startDate: new Date("2023/08/31 03:36+01:00"),
+    startDate: new Date("2023-08-31 03:36+01:00"),
   },
   {
     type: EventType.FULL_MOON_PEAK,
-    startDate: new Date("2023/09/29 11:57+01:00"),
+    startDate: new Date("2023-09-29 11:57+01:00"),
   },
   {
     type: EventType.FULL_MOON_PEAK,
-    startDate: new Date("2023/10/28 22:24+01:00"),
+    startDate: new Date("2023-10-28 22:24+01:00"),
   },
   {
     type: EventType.FULL_MOON_PEAK,
-    startDate: new Date("2023/11/27 10:16+01:00"),
+    startDate: new Date("2023-11-27 10:16+01:00"),
   },
   {
     type: EventType.FULL_MOON_PEAK,
-    startDate: new Date("2023/12/27 01:33+01:00"),
+    startDate: new Date("2023-12-27 01:33+01:00"),
   },
 ];
 
