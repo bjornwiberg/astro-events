@@ -7,7 +7,7 @@ import type { ITimezoneOption } from "react-timezone-select";
 
 import eventsData from "../data/events";
 import styles from "../styles/Home.module.css";
-import { EventType } from "../types/events";
+import { EventBaseType, EventType } from "../types/events";
 import {
   formatDate,
   getFullMoonDatesFromPeakDate,
@@ -40,10 +40,9 @@ export default function Home() {
       setOffset(selectedTimezone.offset);
   }, [selectedTimezone]);
 
-  const month = query.month ?? new Date().getMonth();
-  const year = query.year ?? new Date().getFullYear();
-
   const currentDate = new Date();
+  const month = query.month ?? currentDate.getMonth();
+  const year = query.year ?? currentDate.getFullYear();
 
   currentDate.setFullYear(year as number);
   currentDate.setMonth(month as number);
@@ -98,10 +97,10 @@ export default function Home() {
           {!Boolean(Object.keys(events).length) && (
             <h3>No data could be found for given month</h3>
           )}
-          {Object.entries(events).map(([type, event]) => {
-            const { icon, name } = getIconAndNameFromType(type);
+          {Object.keys(events).map((type) => {
+            const { icon } = getIconAndNameFromType(type);
 
-            const currentEvents = events[type];
+            const currentEvents: EventBaseType[] = events[type];
 
             return (
               <div className={styles.event}>
