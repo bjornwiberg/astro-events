@@ -69,7 +69,7 @@ const tripuraSundari2023: EventBaseType[] = [
   },
   {
     type: EventType.TRIPURA_SUNDARI_PEAK,
-    startDate: new Date("2023-11-25 9:41	"),
+    startDate: new Date("2023-11-25 9:41"),
   },
   {
     type: EventType.TRIPURA_SUNDARI_PEAK,
@@ -80,51 +80,51 @@ const tripuraSundari2023: EventBaseType[] = [
 const fullMoon2023: EventBaseType[] = [
   {
     type: EventType.FULL_MOON_PEAK,
-    startDate: new Date("2023/01/07 00:08	"),
+    startDate: new Date("2023/01/07 00:08"),
   },
   {
     type: EventType.FULL_MOON_PEAK,
-    startDate: new Date("2023/02/05 19:28	"),
+    startDate: new Date("2023/02/05 19:28"),
   },
   {
     type: EventType.FULL_MOON_PEAK,
-    startDate: new Date("2023/03/07 13:40	"),
+    startDate: new Date("2023/03/07 13:40"),
   },
   {
     type: EventType.FULL_MOON_PEAK,
-    startDate: new Date("2023/04/06 06:34	"),
+    startDate: new Date("2023/04/06 06:34"),
   },
   {
     type: EventType.FULL_MOON_PEAK,
-    startDate: new Date("2023/05/05 19:34	"),
+    startDate: new Date("2023/05/05 19:34"),
   },
   {
     type: EventType.FULL_MOON_PEAK,
-    startDate: new Date("2023/06/04 05:42	"),
+    startDate: new Date("2023/06/04 05:42"),
   },
   {
     type: EventType.FULL_MOON_PEAK,
-    startDate: new Date("2023/07/03 13:39	"),
+    startDate: new Date("2023/07/03 13:39"),
   },
   {
     type: EventType.FULL_MOON_PEAK,
-    startDate: new Date("2023/08/01 20:32	"),
+    startDate: new Date("2023/08/01 20:32"),
   },
   {
     type: EventType.FULL_MOON_PEAK,
-    startDate: new Date("2023/08/31 03:36	"),
+    startDate: new Date("2023/08/31 03:36"),
   },
   {
     type: EventType.FULL_MOON_PEAK,
-    startDate: new Date("2023/09/29 11:57	"),
+    startDate: new Date("2023/09/29 11:57"),
   },
   {
     type: EventType.FULL_MOON_PEAK,
-    startDate: new Date("2023/10/28 22:24	"),
+    startDate: new Date("2023/10/28 22:24"),
   },
   {
     type: EventType.FULL_MOON_PEAK,
-    startDate: new Date("2023/11/27 10:16	"),
+    startDate: new Date("2023/11/27 10:16"),
   },
   {
     type: EventType.FULL_MOON_PEAK,
