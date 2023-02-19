@@ -60,6 +60,11 @@
   text-decoration: line-through;
 }
 
+.timezoneSelector {
+  width: 400px;
+  max-width: 90vw;
+}
+
 .link {
   white-space: nowrap;
   margin: 1rem;

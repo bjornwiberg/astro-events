@@ -1,12 +1,13 @@
 import addHours from "date-fns/addHours";
 import format from "date-fns/format";
 import subHours from "date-fns/subHours";
-import { sv } from "date-fns/locale";
 
-export function formatDate(date: Date) {
-  return format(date, "E dd MMM - HH:mm", {
-    locale: sv,
-  });
+export function formatDate(date: Date, utcOffsetHrs: number) {
+  const baseTzOffset = utcOffsetHrs * 60;
+  const tzOffset = date.getTimezoneOffset();
+  const d = new Date(date.valueOf() + (baseTzOffset + tzOffset) * 60 * 1000);
+
+  return format(d, "E dd MMM - HH:mm");
 }
 
 export function getTripuraSundariDatesFromPeakDate(date: Date) {

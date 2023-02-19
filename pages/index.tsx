@@ -1,6 +1,9 @@
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import TimezoneSelect from "react-timezone-select";
+import type { ITimezoneOption } from "react-timezone-select";
 
 import eventsData from "../data/events";
 import styles from "../styles/Home.module.css";
@@ -23,6 +26,19 @@ import {
 
 export default function Home() {
   const { query } = useRouter();
+  const [offset, setOffset] = useState(
+    (new Date().getTimezoneOffset() * -1) / 60
+  );
+  const [selectedTimezone, setSelectedTimezone] = useState<
+    string | ITimezoneOption
+  >(Intl.DateTimeFormat().resolvedOptions().timeZone);
+
+  useEffect(() => {
+    // @ts-ignore
+    if (selectedTimezone?.offset || selectedTimezone?.offset === 0)
+      // @ts-ignore
+      setOffset(selectedTimezone.offset);
+  }, [selectedTimezone]);
 
   const month = query.month ?? new Date().getMonth();
   const year = query.year ?? new Date().getFullYear();
@@ -39,6 +55,8 @@ export default function Home() {
   const previousLink = getPreviousLinkFromDate(currentDate);
   const nextLink = getNextLinkFromDate(currentDate);
   const todayLink = getTodayLinkFromDate(currentDate);
+
+  const formatDateWithOffset = (date: Date) => formatDate(date, offset);
 
   return (
     <div className={styles.container}>
@@ -91,8 +109,8 @@ export default function Home() {
                 <div className={styles.eventDates}>
                   {currentEvents.map((event) => {
                     const { startDate, endDate, description } = event;
-                    let dateString = `${formatDate(startDate)}${
-                      endDate ? ` - ${formatDate(endDate)}` : ""
+                    let dateString = `${formatDateWithOffset(startDate)}${
+                      endDate ? ` - ${formatDateWithOffset(endDate)}` : ""
                     }`;
                     let peakString: JSX.Element;
 
@@ -102,7 +120,7 @@ export default function Home() {
                     )
                       peakString = (
                         <>
-                          {formatDate(startDate)}
+                          {formatDateWithOffset(startDate)}
                           <br />
                         </>
                       );
@@ -112,7 +130,9 @@ export default function Home() {
                         event.startDate
                       );
 
-                      dateString = `${formatDate(start)} - ${formatDate(end)}`;
+                      dateString = `${formatDateWithOffset(
+                        start
+                      )} - ${formatDateWithOffset(end)}`;
                     }
 
                     if (type === EventType.FULL_MOON_PEAK) {
@@ -120,7 +140,9 @@ export default function Home() {
                         event.startDate
                       );
 
-                      dateString = `${formatDate(start)} - ${formatDate(end)}`;
+                      dateString = `${formatDateWithOffset(
+                        start
+                      )} - ${formatDateWithOffset(end)}`;
                     }
 
                     return (
@@ -140,6 +162,12 @@ export default function Home() {
               </div>
             );
           })}
+        </div>
+        <div className={styles.timezoneSelector}>
+          <TimezoneSelect
+            value={selectedTimezone}
+            onChange={setSelectedTimezone}
+          />
         </div>
         <div className={styles.chips}>
           {Object.keys(EventType).map((type) => {
