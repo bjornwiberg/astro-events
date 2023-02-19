@@ -1,8 +1,142 @@
 import Head from "next/head";
+import addMonths from "date-fns/addMonths";
+import subMonths from "date-fns/subMonths";
+import isSameMonth from "date-fns/isSameMonth";
+import isSameYear from "date-fns/isSameYear";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import format from "date-fns/format";
+
+import eventsData from "../data/events";
 import styles from "../styles/Home.module.css";
+import { EventBaseType, EventType } from "../types/events";
+
+function getEventTypesFromEvents(events: EventBaseType[]) {
+  const returnEvents = {};
+
+  events.forEach((event) => {
+    if (returnEvents?.[event.type]) returnEvents[event.type].push(event);
+
+    returnEvents[event.type] = [event];
+  });
+
+  return returnEvents;
+}
+
+function getEventsFromDate(date: Date) {
+  const year = date.getFullYear();
+  const month = date.getMonth();
+
+  return eventsData.filter((event) => {
+    return (
+      event.startDate.getFullYear() === year &&
+      event.startDate.getMonth() === month
+    );
+  });
+}
+
+function getEventTypeFromEvents(events, type: string) {
+  if (events?.[type]) {
+    return events[type]
+      .map(({ startDate, endDate, description }) => {
+        return `${format(startDate, "E dd MMM - HH:kk")}${
+          endDate ? ` - ${format(endDate, "E dd MMM - HH:kk")}` : ""
+        }${description ? ` (${description})` : ""}`;
+      })
+      .join(", ");
+  }
+  return null;
+}
+
+function getIconAndNameFromType(type: string) {
+  switch (type) {
+    case EventType.EQUINOX:
+      return {
+        icon: "🌱",
+        name: "Equinox",
+      };
+    case EventType.SOLSTICE:
+      return {
+        icon: "🌞",
+        name: "Solstice",
+      };
+    case EventType.HIATUS_SOLAR:
+      return {
+        icon: "🔆",
+        name: "Hiatus Solar",
+      };
+    case EventType.TRIPURA_SUNDARI_PEAK:
+      return {
+        icon: "❤️",
+        name: "Tripura Sundari",
+      };
+    case EventType.FULL_MOON_PEAK:
+      return {
+        icon: "🌕",
+        name: "Full moon",
+      };
+    case EventType.SHIVARATRI:
+      return {
+        icon: "🔱",
+        name: "Shivaratri",
+      };
+    case EventType.NEW_MOON:
+      return {
+        icon: "🌑",
+        name: "New moon",
+      };
+    case EventType.MOON_ECLIPSE:
+      return {
+        icon: "🌒",
+        name: "Moon eclipse",
+      };
+    case EventType.SOLAR_ECLIPSE:
+      return {
+        icon: "🌚",
+        name: "Solar eclipse",
+      };
+  }
+}
+
+function getLinkFromDate(date: Date) {
+  const todaysDate = new Date();
+
+  if (isSameYear(todaysDate, date) && isSameMonth(todaysDate, date)) return "/";
+  const yearString = isSameYear(todaysDate, date)
+    ? ""
+    : `year=${date.getFullYear()}&`;
+  return `/?${yearString}month=${date.getMonth()}`;
+}
+
+function getPreviousLinkFromDate(date: Date) {
+  const newDate = subMonths(date, 1);
+
+  return getLinkFromDate(newDate);
+}
+
+function getNextLinkFromDate(date: Date) {
+  const newDate = addMonths(date, 1);
+
+  return getLinkFromDate(newDate);
+}
 
 export default function Home() {
-  const event = "";
+  const { query } = useRouter();
+
+  const month = query.month ?? new Date().getMonth();
+  const year = query.year ?? new Date().getFullYear();
+
+  const currentDate = new Date();
+
+  currentDate.setFullYear(year as number);
+  currentDate.setMonth(month as number);
+
+  const eventsFromDate = getEventsFromDate(currentDate);
+
+  const events = getEventTypesFromEvents(eventsFromDate);
+
+  const previousLink = getPreviousLinkFromDate(currentDate);
+  const nextLink = getNextLinkFromDate(currentDate);
 
   return (
     <div className={styles.container}>
@@ -16,40 +150,44 @@ export default function Home() {
         <p className={styles.description}>
           View the atrological events for given month
         </p>
+        <h2>
+          {currentDate.toLocaleDateString(undefined, { month: "long" })}{" "}
+          {currentDate.getFullYear()}
+        </h2>
         <div className={styles.chips}>
-          <div className={styles.chip}>🌱 Equinox</div>
-          <div className={styles.chip}>🌞 Solstice</div>
-          <div className={styles.chip}>❤️ Tripura Sundari</div>
-          <div className={styles.chip}>🌕 Full moon</div>
-          <div className={styles.chip}>🔱 Shivaratri</div>
-          <div className={styles.chip}>🌑 New moon</div>
-          <div className={styles.chip}>🌒 Moon eclipse</div>
-          <div className={styles.chip}>🌚 Solar eclipse</div>
+          {Object.keys(EventType).map((type) => {
+            const { icon, name } = getIconAndNameFromType(type);
+            return (
+              <div className={styles.chip}>
+                {icon} {name}
+              </div>
+            );
+          })}
         </div>
         <div className={styles.grid}>
-          <a href="" className={styles.card}>
+          <Link href={previousLink} className={styles.card}>
             <h3>&larr; Previous month</h3>
             <p>Get previous months events</p>
-          </a>
+          </Link>
 
-          <a href="" className={styles.card}>
+          <Link href={nextLink} className={styles.card}>
             <h3>Next month &rarr;</h3>
             <p>Get next months events</p>
-          </a>
+          </Link>
         </div>
         <div>
-          <div className={styles.event}>🌱 Equinox {event}</div>
-          <div className={styles.event}>🌞 Solstice: {event}</div>
-          <div className={styles.event}>
-            ❤️ Tripura Sundari: {event} - peak ({event})
-          </div>
-          <div className={styles.event}>
-            🌕 Full moon: {event} - peak ({event})
-          </div>
-          <div className={styles.event}>🔱 Shivaratri: {event}</div>
-          <div className={styles.event}>🌑 New moon: {event}</div>
-          <div className={styles.event}>🌒 Moon eclipse: {event}</div>
-          <div className={styles.event}>🌚 Solar eclipse: {event}</div>
+          {!Boolean(Object.keys(events).length) && (
+            <h3>No data could be found for given month</h3>
+          )}
+          {Object.entries(events).map(([type, event]) => {
+            const { icon, name } = getIconAndNameFromType(type);
+
+            return (
+              <div className={styles.event}>
+                {icon} {getEventTypeFromEvents(events, type)}
+              </div>
+            );
+          })}
         </div>
       </main>
 
@@ -68,7 +206,7 @@ export default function Home() {
           flex: 1;
           display: flex;
           flex-direction: column;
-          justify-content: center;
+          justify-content: felx-start;
           align-items: center;
         }
         footer {

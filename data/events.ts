@@ -1,21 +1,4 @@
-enum EventType {
-  EQUINOX,
-  SOLSTICE,
-  HIATUS_SOLAR,
-  TRIPURA_SUNDARI_PEAK,
-  FULL_MOON_PEAK,
-  SHIVARATRI,
-  NEW_MOON,
-  MOON_ECLIPSE,
-  SOLAR_ECLIPSE,
-}
-
-type EventBaseType = {
-  type: EventType;
-  startDate: Date;
-  endDate?: Date;
-  description?: string;
-};
+import { EventBaseType, EventType } from "../types/events";
 
 const equinox2023: EventBaseType[] = [
   {
