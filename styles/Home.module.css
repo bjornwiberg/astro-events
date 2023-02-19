@@ -28,18 +28,12 @@
   text-align: center;
 }
 
-.title,
-.description {
+.title {
   text-align: center;
 }
 
-
-.description {
-  line-height: 1.5;
-  font-size: 1.5rem;
-}
-
-.grid {
+.grid,
+.chips {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -47,6 +41,17 @@
 
   max-width: 800px;
   margin-top: 3rem;
+}
+
+.chips {
+  max-width: 600px;
+  gap: 1rem;
+}
+
+.chip {
+  border: 1px solid #eee;
+  padding: 0 5px 0;
+  border-radius: 7px;
 }
 
 .card {
@@ -59,6 +64,7 @@
   border: 1px solid #eaeaea;
   border-radius: 10px;
   transition: color 0.15s ease, border-color 0.15s ease;
+  width: clamp(300px, 20vw, 500px);
 }
 
 .card:hover,

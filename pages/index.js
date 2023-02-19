@@ -1,63 +1,63 @@
-import Head from 'next/head';
-import styles from '../styles/Home.module.css';
+import Head from "next/head";
+import styles from "../styles/Home.module.css";
 
 export default function Home() {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Create Next App</title>
+        <title>Astrological Events</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
+        <h1 className={styles.title}>Welcome to the Astro Events</h1>
         <p className={styles.description}>
-          Get started by editing <code>pages/index.js</code>
+          View the atrological events for given month
         </p>
-
+        <div className={styles.chips}>
+          <div className={styles.chip}>🌱 Equinox</div>
+          <div className={styles.chip}>🌞 Solstice</div>
+          <div className={styles.chip}>❤️ Tripura Sundari</div>
+          <div className={styles.chip}>🌕 Full moon</div>
+          <div className={styles.chip}>🔱 Shivaratri</div>
+          <div className={styles.chip}>🌑 New moon</div>
+          <div className={styles.chip}>🌒 Moon eclipse</div>
+          <div className={styles.chip}>🌚 Solar eclipse</div>
+        </div>
         <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
+          <a href="" className={styles.card}>
+            <h3>&larr; Previous month</h3>
+            <p>Get previous months events</p>
           </a>
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
+          <a href="" className={styles.card}>
+            <h3>Next month &rarr;</h3>
+            <p>Get next months events</p>
           </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+        </div>
+        <div>
+          <div className={styles.event}>🌱 Equinox {event}</div>
+          <div className={styles.event}>🌞 Solstice: {event}</div>
+          <div className={styles.event}>
+            ❤️ Tripura Sundari: {event} - peak ({event})
+          </div>
+          <div className={styles.event}>
+            🌕 Full moon: {event} - peak ({event})
+          </div>
+          <div className={styles.event}>🔱 Shivaratri: {event}</div>
+          <div className={styles.event}>🌑 New moon: {event}</div>
+          <div className={styles.event}>🌒 Moon eclipse: {event}</div>
+          <div className={styles.event}>🌚 Solar eclipse: {event}</div>
         </div>
       </main>
 
       <footer>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel" className={styles.logo} />
-        </a>
+        <div>
+          Created by{" "}
+          <a href="https://bjrn.nu" target="_blank" rel="noopener noreferrer">
+            Björn Wiberg
+          </a>
+        </div>
       </footer>
 
       <style jsx>{`
@@ -77,23 +77,12 @@ export default function Home() {
           justify-content: center;
           align-items: center;
         }
-        footer img {
-          margin-left: 0.5rem;
-        }
         footer a {
-          display: flex;
-          justify-content: center;
-          align-items: center;
           text-decoration: none;
           color: inherit;
         }
-        code {
-          background: #fafafa;
-          border-radius: 5px;
-          padding: 0.75rem;
-          font-size: 1.1rem;
-          font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-            DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
+        footer a:hover {
+          text-decoration: underline;
         }
       `}</style>
 
@@ -111,5 +100,5 @@ export default function Home() {
         }
       `}</style>
     </div>
-  )
+  );
 }
