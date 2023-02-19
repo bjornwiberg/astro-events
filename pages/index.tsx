@@ -107,7 +107,7 @@ export default function Home() {
             const currentEvents: EventBaseType[] = events[type];
 
             return (
-              <div className={styles.event}>
+              <div className={styles.event} key={type}>
                 <div className={styles.eventIcon}>{icon}</div>
                 <div className={styles.eventDates}>
                   {currentEvents.map((event) => {
@@ -149,7 +149,7 @@ export default function Home() {
                     }
 
                     return (
-                      <div>
+                      <div key={event.startDate.toString()}>
                         {peakString}
                         {dateString}
                         {description ? (
@@ -176,7 +176,7 @@ export default function Home() {
           {Object.keys(EventType).map((type) => {
             const { icon, name } = getIconAndNameFromType(type);
             return (
-              <div className={styles.chip}>
+              <div className={styles.chip} key={name}>
                 {icon} {name}
               </div>
             );
