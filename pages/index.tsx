@@ -204,18 +204,22 @@ export default function Home() {
         }
         footer {
           width: 100%;
-          height: 50px;
+          height: 40px;
           border-top: 1px solid #eaeaea;
           display: flex;
           justify-content: center;
           align-items: center;
+          bottom: 0;
+          background: #fff;
+          position: sticky;
+          font-size: clamp(12px, 2vw, 1rem);
         }
         footer a {
-          text-decoration: none;
+          text-decoration: underline;
           color: inherit;
         }
         footer a:hover {
-          text-decoration: underline;
+          text-decoration: none;
         }
       `}</style>
 
