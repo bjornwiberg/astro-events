@@ -27,6 +27,10 @@ const tripuraSundari: EventBaseType[] = [
   },
   {
     type: EventType.TRIPURA_SUNDARI_PEAK,
+    startDate: new Date("2023-07-01T16:33+01:00"),
+  },
+  {
+    type: EventType.TRIPURA_SUNDARI_PEAK,
     startDate: new Date("2023-07-31T01:01+01:00"),
   },
   {
