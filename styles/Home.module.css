@@ -111,8 +111,6 @@
   width: 32px;
 }
 .eventDates {
-  display: flex;
-  flex-direction: column;
   margin-left: 1rem;
   font-size: clamp(12px, 2vw, 1rem);
 }

@@ -50,7 +50,9 @@ export default function Home() {
 
   const eventsFromDate = getEventsFromDate(eventsData, currentDate);
 
-  const events = getEventTypesFromEvents(eventsFromDate);
+  const events = eventsFromDate.sort((a, b) =>
+    a.startDate > b.startDate ? 1 : -1
+  );
 
   const previousLink = getPreviousLinkFromDate(currentDate);
   const nextLink = getNextLinkFromDate(currentDate);
@@ -98,69 +100,59 @@ export default function Home() {
           </Link>
         </div>
         <div>
-          {!Boolean(Object.keys(events).length) && (
+          {!Boolean(events.length) && (
             <h3>No data could be found for given month</h3>
           )}
-          {Object.keys(events).map((type) => {
+          {events.map((event) => {
+            const { type, startDate, endDate, description } = event;
             const { icon } = getIconAndNameFromType(type);
+            let peakString: JSX.Element;
+            let dateString: JSX.Element | string;
 
-            const currentEvents: EventBaseType[] = events[type];
+            dateString = `${formatDateWithOffset(startDate)}${
+              endDate ? ` - ${formatDateWithOffset(endDate)}` : ""
+            }`;
+
+            if (
+              type === EventType.TRIPURA_SUNDARI_PEAK ||
+              type === EventType.FULL_MOON_PEAK
+            )
+              peakString = <div>{formatDateWithOffset(startDate)}</div>;
+
+            if (type === EventType.TRIPURA_SUNDARI_PEAK) {
+              const { start, end } = getTripuraSundariDatesFromPeakDate(
+                event.startDate
+              );
+
+              dateString = `${formatDateWithOffset(
+                start
+              )} - ${formatDateWithOffset(end)}`;
+            }
+
+            if (type === EventType.FULL_MOON_PEAK) {
+              const { start, end } = getFullMoonDatesFromPeakDate(
+                event.startDate
+              );
+
+              dateString = `${formatDateWithOffset(
+                start
+              )} - ${formatDateWithOffset(end)}`;
+            }
+
+            if (description) {
+              dateString = (
+                <div>
+                  {dateString} (<strong>{description}</strong>)
+                </div>
+              );
+            }
 
             return (
-              <div className={styles.event} key={type}>
+              <div className={styles.event} key={startDate.toString()}>
                 <div className={styles.eventIcon}>{icon}</div>
                 <div className={styles.eventDates}>
-                  {currentEvents.map((event) => {
-                    const { startDate, endDate, description } = event;
-                    let dateString = `${formatDateWithOffset(startDate)}${
-                      endDate ? ` - ${formatDateWithOffset(endDate)}` : ""
-                    }`;
-                    let peakString: JSX.Element;
-
-                    if (
-                      type === EventType.TRIPURA_SUNDARI_PEAK ||
-                      type === EventType.FULL_MOON_PEAK
-                    )
-                      peakString = (
-                        <>
-                          {formatDateWithOffset(startDate)}
-                          <br />
-                        </>
-                      );
-
-                    if (type === EventType.TRIPURA_SUNDARI_PEAK) {
-                      const { start, end } = getTripuraSundariDatesFromPeakDate(
-                        event.startDate
-                      );
-
-                      dateString = `${formatDateWithOffset(
-                        start
-                      )} - ${formatDateWithOffset(end)}`;
-                    }
-
-                    if (type === EventType.FULL_MOON_PEAK) {
-                      const { start, end } = getFullMoonDatesFromPeakDate(
-                        event.startDate
-                      );
-
-                      dateString = `${formatDateWithOffset(
-                        start
-                      )} - ${formatDateWithOffset(end)}`;
-                    }
-
-                    return (
-                      <div key={event.startDate.toString()}>
-                        {peakString}
-                        {dateString}
-                        {description ? (
-                          <>
-                            {" "}
-                            (<strong>{description}</strong>)
-                          </>
-                        ) : null}
-                      </div>
-                    );
-                  })}
+                  {peakString}
+                  {dateString}
                 </div>
               </div>
             );
