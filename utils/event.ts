@@ -1,17 +1,5 @@
 import { EventBaseType, EventType } from "../types/events";
 
-export function getEventTypesFromEvents(events: EventBaseType[]) {
-  const returnEvents = {};
-
-  events.forEach((event) => {
-    returnEvents?.[event.type]
-      ? returnEvents[event.type].push(event)
-      : (returnEvents[event.type] = [event]);
-  });
-
-  return returnEvents;
-}
-
 export function getEventsFromDate(events: EventBaseType[], date: Date) {
   const year = date.getFullYear();
   const month = date.getMonth();

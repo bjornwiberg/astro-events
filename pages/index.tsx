@@ -4,20 +4,17 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import TimezoneSelect from "react-timezone-select";
 import type { ITimezoneOption } from "react-timezone-select";
+import mixpanel from "mixpanel-browser";
 
 import eventsData from "../data/events";
 import styles from "../styles/Home.module.css";
-import { EventBaseType, EventType } from "../types/events";
+import { EventType } from "../types/events";
 import {
   formatDate,
   getFullMoonDatesFromPeakDate,
   getTripuraSundariDatesFromPeakDate,
 } from "../utils/date";
-import {
-  getEventsFromDate,
-  getEventTypesFromEvents,
-  getIconAndNameFromType,
-} from "../utils/event";
+import { getEventsFromDate, getIconAndNameFromType } from "../utils/event";
 import {
   getNextLinkFromDate,
   getPreviousLinkFromDate,
@@ -26,13 +23,21 @@ import {
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
-  const { query } = useRouter();
+  const { push, query } = useRouter();
   const [offset, setOffset] = useState(
     (new Date().getTimezoneOffset() * -1) / 60
   );
   const [selectedTimezone, setSelectedTimezone] = useState<
     string | ITimezoneOption
   >(Intl.DateTimeFormat().resolvedOptions().timeZone);
+
+  useEffect(() => {
+    mixpanel.init(process.env.NEXT_PUBLIC_MIXPANEL_TOKEN, {
+      ignore_dnt: true,
+    });
+    mixpanel.register({ Environment: process.env.NODE_ENV });
+    mixpanel.track("Enter page");
+  }, []);
 
   useEffect(() => {
     // @ts-ignore
@@ -83,19 +88,27 @@ export default function Home() {
           {currentDate.getFullYear()}
         </h2>
         <div className={styles.dateInfo}>
-          {todayLink ? (
-            <Link href={todayLink}>Goto today's month</Link>
-          ) : (
-            <span className={styles.dateInfoNoneActive}>
-              Goto today's month
-            </span>
-          )}
+          <Link
+            className={todayLink ? "" : styles.dateInfoNoneActive}
+            href={todayLink ?? ""}
+            onClick={() => mixpanel.track("Click Today Link")}
+          >
+            Goto today's month
+          </Link>
         </div>
         <div className={styles.navigation}>
-          <Link href={previousLink} className={styles.link}>
+          <Link
+            className={styles.link}
+            href={previousLink}
+            onClick={() => mixpanel.track("Click Previous Link")}
+          >
             &larr; Previous month
           </Link>
-          <Link href={nextLink} className={styles.link}>
+          <Link
+            className={styles.link}
+            href={nextLink}
+            onClick={() => mixpanel.track("Click Next Link")}
+          >
             Next month &rarr;
           </Link>
         </div>
@@ -161,7 +174,10 @@ export default function Home() {
         <div className={styles.timezoneSelector}>
           <TimezoneSelect
             value={selectedTimezone}
-            onChange={setSelectedTimezone}
+            onChange={(timezone) => {
+              mixpanel.track("Change Zimezone", timezone);
+              setSelectedTimezone(timezone);
+            }}
           />
         </div>
         <div className={styles.chips}>
@@ -179,7 +195,12 @@ export default function Home() {
       <footer>
         <div>
           Created by{" "}
-          <a href="https://bjrn.nu" target="_blank" rel="noopener noreferrer">
+          <a
+            href="https://bjrn.nu"
+            onClick={() => mixpanel.track("Click Footer Link")}
+            rel="noopener"
+            target="_blank"
+          >
             Björn Wiberg
           </a>
         </div>
