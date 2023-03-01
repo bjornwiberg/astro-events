@@ -10,6 +10,7 @@
     "mixpanel-browser": "^2.45.0",
     "next": "latest",
     "react": "18.2.0",
+    "react-cookie-consent": "^8.0.1",
     "react-dom": "18.2.0",
     "react-timezone-select": "^1.4.0"
   },
