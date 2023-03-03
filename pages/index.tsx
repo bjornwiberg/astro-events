@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import CookieConsent from "react-cookie-consent";
 import Head from "next/head";
 import Link from "next/link";
-import mixpanel from "mixpanel-browser";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import TimezoneSelect from "react-timezone-select";
 import type { ITimezoneOption } from "react-timezone-select";
+import mixpanel from "mixpanel-browser";
 
 import eventsData from "../data/events";
 import styles from "../styles/Home.module.css";
@@ -71,12 +70,6 @@ export default function Home() {
 
   return (
     <div className={styles.container}>
-      <CookieConsent
-        onAccept={() => mixpanel.track("Click Accept Cookie Button")}
-        overlay
-      >
-        This website uses cookies to enhance the user experience.
-      </CookieConsent>
       <Head>
         <title>Astrological Events</title>
         <link
