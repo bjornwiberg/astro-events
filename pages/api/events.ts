@@ -1,6 +1,28 @@
+import Cors from "cors";
 import type { NextApiRequest, NextApiResponse } from "next";
+
 import { EventBaseType } from "../../types/events";
 import eventsData from "../../data/events";
+
+const cors = Cors({
+  methods: ["GET"],
+});
+
+function runMiddleware(
+  req: NextApiRequest,
+  res: NextApiResponse,
+  fn: Function
+) {
+  return new Promise((resolve, reject) => {
+    fn(req, res, (result: any) => {
+      if (result instanceof Error) {
+        return reject(result);
+      }
+
+      return resolve(result);
+    });
+  });
+}
 
 function getEventsFromDate(events: EventBaseType[], date: Date) {
   const year = date.getFullYear();
@@ -13,10 +35,12 @@ function getEventsFromDate(events: EventBaseType[], date: Date) {
   });
 }
 
-export default function handler(
+export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<EventBaseType[]>
 ) {
+  await runMiddleware(req, res, cors);
+
   const date = req.query.date;
   const events = getEventsFromDate(eventsData, new Date(date as string));
   const sortedEvents = events.sort((a, b) =>
