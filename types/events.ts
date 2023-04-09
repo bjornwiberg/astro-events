@@ -12,7 +12,7 @@ export enum EventType {
 
 export type EventBaseType = {
   type: EventType;
-  startDate: Date;
-  endDate?: Date;
+  startDate: string;
+  endDate?: string;
   description?: string;
 };

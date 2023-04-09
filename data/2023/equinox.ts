@@ -3,11 +3,11 @@ import { EventBaseType, EventType } from "../../types/events";
 const equinox: EventBaseType[] = [
   {
     type: EventType.EQUINOX,
-    startDate: new Date("2023-03-20T22:24:00+01:00"),
+    startDate: "2023-03-20T22:24:00+01:00",
   },
   {
     type: EventType.EQUINOX,
-    startDate: new Date("2023-09-23T08:50:00+01:00"),
+    startDate: "2023-09-23T08:50:00+01:00",
   },
 ];
 
