@@ -1,16 +1,4 @@
-import { EventBaseType, EventType } from "../types/events";
-
-export function getEventsFromDate(events: EventBaseType[], date: Date) {
-  const year = date.getFullYear();
-  const month = date.getMonth();
-
-  return events.filter((event) => {
-    return (
-      event.startDate.getFullYear() === year &&
-      event.startDate.getMonth() === month
-    );
-  });
-}
+import { EventType } from "../types/events";
 
 export function getIconAndNameFromType(type: string) {
   switch (type) {

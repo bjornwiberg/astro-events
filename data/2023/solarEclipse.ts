@@ -3,12 +3,12 @@ import { EventBaseType, EventType } from "../../types/events";
 const solarEclipse: EventBaseType[] = [
   {
     type: EventType.SOLAR_ECLIPSE,
-    startDate: new Date("2023-04-20T06:17+01:00"),
+    startDate: "2023-04-20T06:17+01:00",
     description: "Full",
   },
   {
     type: EventType.SOLAR_ECLIPSE,
-    startDate: new Date("2023-10-14T20:00+01:00"),
+    startDate: "2023-10-14T20:00+01:00",
     description: "Partial",
   },
 ];

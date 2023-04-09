@@ -62,6 +62,10 @@
   pointer-events: none;
 }
 
+.error {
+  color: red;
+}
+
 .timezoneSelector {
   width: 400px;
   max-width: 90vw;
