@@ -20,6 +20,7 @@ import {
   getPreviousLinkFromDate,
   getTodayLinkFromDate,
 } from "../utils/link";
+import { initMixpanel, track } from "../utils/mixpanel";
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
@@ -32,11 +33,7 @@ export default function Home() {
   >(Intl.DateTimeFormat().resolvedOptions().timeZone);
 
   useEffect(() => {
-    mixpanel.init(process.env.NEXT_PUBLIC_MIXPANEL_TOKEN, {
-      ignore_dnt: true,
-    });
-    mixpanel.register({ Environment: process.env.NODE_ENV });
-    mixpanel.track("Enter page");
+    initMixpanel();
   }, []);
 
   useEffect(() => {
@@ -91,7 +88,7 @@ export default function Home() {
           <Link
             className={todayLink ? "" : styles.dateInfoNoneActive}
             href={todayLink ?? ""}
-            onClick={() => mixpanel.track("Click Today Link")}
+            onClick={() => track("Click Today Link")}
           >
             Goto today's month
           </Link>
@@ -100,14 +97,14 @@ export default function Home() {
           <Link
             className={styles.link}
             href={previousLink}
-            onClick={() => mixpanel.track("Click Previous Link")}
+            onClick={() => track("Click Previous Link")}
           >
             &larr; Previous month
           </Link>
           <Link
             className={styles.link}
             href={nextLink}
-            onClick={() => mixpanel.track("Click Next Link")}
+            onClick={() => track("Click Next Link")}
           >
             Next month &rarr;
           </Link>
@@ -175,7 +172,7 @@ export default function Home() {
           <TimezoneSelect
             value={selectedTimezone}
             onChange={(timezone) => {
-              mixpanel.track("Change Zimezone", timezone);
+              track("Change Zimezone", timezone);
               setSelectedTimezone(timezone);
             }}
           />
@@ -197,7 +194,7 @@ export default function Home() {
           Created by{" "}
           <a
             href="https://bjrn.nu"
-            onClick={() => mixpanel.track("Click Footer Link")}
+            onClick={() => track("Click Footer Link")}
             rel="noopener"
             target="_blank"
           >
