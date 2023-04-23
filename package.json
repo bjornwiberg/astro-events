@@ -14,7 +14,7 @@
     "react-timezone-select": "^1.4.0"
   },
   "devDependencies": {
-    "@types/node": "18.15.13",
+    "@types/node": "18.16.0",
     "@types/react": "18.0.38",
     "typescript": "5.0.4"
   }
