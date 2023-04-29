@@ -85,9 +85,7 @@
   text-align: center;
 }
 
-.link:hover,
-.link:focus,
-.link:active {
+.link:is(:hover, :focus, :active) {
   color: #0070f3;
   border-color: #0070f3;
 }

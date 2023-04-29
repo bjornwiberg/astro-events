@@ -20,7 +20,7 @@ import {
 } from "../utils/link";
 import { initMixpanel, track } from "../utils/mixpanel";
 
-export default function Home() {
+export default function Index() {
   const [mounted, setMounted] = useState(false);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
