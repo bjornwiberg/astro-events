@@ -1,0 +1,8 @@
+.information {
+  line-height: 1.5rem;
+  min-block-size: 1.5rem;
+}
+
+.error {
+  color: red;
+}

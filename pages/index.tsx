@@ -1,24 +1,18 @@
 import Head from "next/head";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import TimezoneSelect from "react-timezone-select";
 import type { ITimezoneOption } from "react-timezone-select";
 
-import styles from "../styles/Home.module.css";
 import { EventBaseType, EventType } from "../types/events";
-import {
-  formatDate,
-  getFullMoonDatesFromPeakDate,
-  getTripuraSundariDatesFromPeakDate,
-} from "../utils/date";
+
 import { getIconAndNameFromType } from "../utils/event";
-import {
-  getNextLinkFromDate,
-  getPreviousLinkFromDate,
-  getTodayLinkFromDate,
-} from "../utils/link";
 import { initMixpanel, track } from "../utils/mixpanel";
+import { Event } from "../components/Event";
+import { FetchInformation } from "../components/FetchInformation";
+import { Navigation } from "../components/Navigation";
+
+import styles from "../styles/Home.module.css";
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
@@ -72,11 +66,12 @@ export default function Home() {
       .finally(() => setLoading(false));
   }, [currentDate]);
 
-  const previousLink = getPreviousLinkFromDate(currentDate);
-  const nextLink = getNextLinkFromDate(currentDate);
-  const todayLink = getTodayLinkFromDate(currentDate);
+  const displayContent = isReady && !error;
 
-  const formatDateWithOffset = (date: Date) => formatDate(date, offset);
+  const currentDateWithMonthAndYear = `${currentDate.toLocaleDateString(
+    undefined,
+    { month: "long" }
+  )} ${currentDate.getFullYear()}`;
 
   useEffect(() => setMounted(true), []);
   if (!mounted) return null;
@@ -84,7 +79,7 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Astrological Events</title>
+        <title>Astro Events</title>
         <link
           rel="icon"
           href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🪐</text></svg>"
@@ -92,107 +87,27 @@ export default function Home() {
       </Head>
 
       <main>
-        <h1 className={styles.title}>Welcome to the Astro Events</h1>
+        <h1 className={styles.title}>Welcome to Astro Events</h1>
         <p className={styles.description}>
-          View the atrological events for given month
+          View the atrological events for{" "}
+          <strong>{currentDateWithMonthAndYear}</strong>
         </p>
-        {!isReady || loading ? (
-          <>Fetching events...</>
-        ) : error ? (
-          <div className={styles.error}>
-            An error occured during fetching events
-          </div>
-        ) : (
+        <FetchInformation
+          currentDate={currentDateWithMonthAndYear}
+          error={error}
+          isReady={isReady}
+          loading={loading}
+        />
+        {displayContent && (
           <>
-            <h2 className={styles.month}>
-              {currentDate.toLocaleDateString(undefined, { month: "long" })}{" "}
-              {currentDate.getFullYear()}
-            </h2>
-            <div className={styles.dateInfo}>
-              <Link
-                className={todayLink ? "" : styles.dateInfoNoneActive}
-                href={todayLink ?? ""}
-                onClick={() => track("Click Today Link")}
-              >
-                Goto today's month
-              </Link>
-            </div>
-            <div className={styles.navigation}>
-              <Link
-                className={styles.link}
-                href={previousLink}
-                onClick={() => track("Click Previous Link")}
-              >
-                &larr; Previous month
-              </Link>
-              <Link
-                className={styles.link}
-                href={nextLink}
-                onClick={() => track("Click Next Link")}
-              >
-                Next month &rarr;
-              </Link>
-            </div>
+            <Navigation currentDate={currentDate} />
             <div>
               {!Boolean(events.length) && (
-                <p>No data could be found for given month</p>
+                <p>No data could be found for current month</p>
               )}
-              {events.map((event) => {
-                const { type, startDate, endDate, description } = event;
-                const { icon } = getIconAndNameFromType(type);
-                let peakString: JSX.Element;
-                let dateString: JSX.Element | string;
-
-                dateString = `${formatDateWithOffset(new Date(startDate))}${
-                  endDate ? ` - ${formatDateWithOffset(new Date(endDate))}` : ""
-                }`;
-
-                if (
-                  type === EventType.TRIPURA_SUNDARI_PEAK ||
-                  type === EventType.FULL_MOON_PEAK
-                )
-                  peakString = (
-                    <div>{formatDateWithOffset(new Date(startDate))}</div>
-                  );
-
-                if (type === EventType.TRIPURA_SUNDARI_PEAK) {
-                  const { start, end } = getTripuraSundariDatesFromPeakDate(
-                    new Date(startDate)
-                  );
-
-                  dateString = `${formatDateWithOffset(
-                    new Date(start)
-                  )} - ${formatDateWithOffset(new Date(end))}`;
-                }
-
-                if (type === EventType.FULL_MOON_PEAK) {
-                  const { start, end } = getFullMoonDatesFromPeakDate(
-                    new Date(startDate)
-                  );
-
-                  dateString = `${formatDateWithOffset(
-                    new Date(start)
-                  )} - ${formatDateWithOffset(new Date(end))}`;
-                }
-
-                if (description) {
-                  dateString = (
-                    <div>
-                      {dateString} (<strong>{description}</strong>)
-                    </div>
-                  );
-                }
-
-                return (
-                  <div className={styles.event} key={startDate.toString()}>
-                    <div className={styles.eventIcon}>{icon}</div>
-                    <div className={styles.eventDates}>
-                      {peakString}
-                      {dateString}
-                    </div>
-                  </div>
-                );
-              })}
+              {events.map((event) => (
+                <Event event={event} offset={offset} />
+              ))}
             </div>
             <div className={styles.timezoneSelector}>
               <TimezoneSelect
@@ -233,28 +148,27 @@ export default function Home() {
 
       <style jsx>{`
         main {
-          padding: 2rem 0;
-          flex: 1;
+          align-items: center;
           display: flex;
           flex-direction: column;
-          justify-content: felx-start;
-          align-items: center;
+          flex: 1;
+          max-inline-size: 600px;
+          padding: 2rem 0;
         }
         footer {
-          width: 100%;
-          height: 40px;
+          align-items: center;
+          background: #fff;
+          block-size: 40px;
           border-top: 1px solid #eaeaea;
           display: flex;
+          inset-block-end: 0;
+          inline-size: 100%;
           justify-content: center;
-          align-items: center;
-          bottom: 0;
-          background: #fff;
           position: sticky;
-          font-size: clamp(12px, 2vw, 1rem);
         }
         footer a {
-          text-decoration: underline;
           color: inherit;
+          text-decoration: underline;
         }
         footer a:hover {
           text-decoration: none;
@@ -264,11 +178,14 @@ export default function Home() {
       <style jsx global>{`
         html,
         body {
-          padding: 0;
-          margin: 0;
           font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
             Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
             sans-serif;
+          margin: 0;
+          padding: 0;
+        }
+        body {
+          font-size: clamp(14px, 2vw, 1rem);
         }
         * {
           box-sizing: border-box;

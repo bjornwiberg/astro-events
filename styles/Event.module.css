@@ -1,0 +1,12 @@
+.event {
+  align-items: center;
+  display: flex;
+  margin-block-end: 1rem;
+}
+
+.eventIcon {
+  width: 32px;
+}
+.eventDates {
+  margin-inline-start: 1rem;
+}
