@@ -1,0 +1,42 @@
+.navigation {
+  display: flex;
+  font-size: clamp(0.8rem, 1vw, 1rem);
+  justify-content: space-between;
+  margin-block-end: 1rem;
+  inline-size: 100%;
+}
+
+.link {
+  border-radius: 10px;
+  border: 1px solid #eaeaea;
+  color: inherit;
+  margin: 1rem;
+  inline-size: 150px;
+  padding: 0.5rem;
+  text-align: center;
+  text-decoration: none;
+  transition: color 0.15s ease, border-color 0.15s ease;
+  white-space: nowrap;
+}
+
+.link:hover,
+.link:focus,
+.link:active {
+  border-color: #0070f3;
+  color: #0070f3;
+}
+
+.link-inactive {
+  pointer-events: none;
+  text-decoration: line-through;
+}
+
+@media screen and (max-width: 549px) {
+  .link:has(.desktop) {
+    inline-size: 55px;
+  }
+
+  .link .desktop {
+    display: none;
+  }
+}
