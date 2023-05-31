@@ -1,8 +1,10 @@
 import Head from "next/head";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 import TimezoneSelect from "react-timezone-select";
+import setMonth from "date-fns/setMonth";
+import setYear from "date-fns/setYear";
 import type { ITimezoneOption } from "react-timezone-select";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 import { EventBaseType, EventType } from "../types/events";
 
@@ -40,13 +42,13 @@ export default function Index() {
   }, [selectedTimezone]);
 
   useEffect(() => {
-    const newDate = new Date();
+    let newDate = new Date();
 
     const month = query.month ?? newDate.getMonth();
     const year = query.year ?? newDate.getFullYear();
 
-    newDate.setFullYear(year as number);
-    newDate.setMonth(month as number);
+    newDate = setYear(newDate, year as number);
+    newDate = setMonth(newDate, month as number);
 
     setCurrentDate(newDate);
   }, [query]);
