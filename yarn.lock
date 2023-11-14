@@ -464,9 +464,9 @@ memoize-one@^6.0.0:
   integrity sha512-rkpe71W0N0c0Xz6QD0eJETuWAJGnJ9afsl1srmwPrI+yBCkge5EycXXbYRyvL29zZVUWQCY7InPRCv3GDXuZNw==
 
 mixpanel-browser@^2.45.0:
-  version "2.47.0"
-  resolved "https://registry.yarnpkg.com/mixpanel-browser/-/mixpanel-browser-2.47.0.tgz#4e7fd3bb660c6f63443efbd169d1cd327db71ed4"
-  integrity sha512-Ldrva0fRBEIFWmEibBQO1PulfpJVF3pf28Guk09lDirDaSQqqU/xs9zQLwN2rL5VwVtsP1aD3JaCgaa98EjojQ==
+  version "2.48.0"
+  resolved "https://registry.yarnpkg.com/mixpanel-browser/-/mixpanel-browser-2.48.0.tgz#fc04ff603622611d75c2bbe787a8be3e146d724c"
+  integrity sha512-hPml898BgO3SKXfZRssAlgjxi+Ez9VyDxbxP/fjJzyouNk55aIT+1dyEhd/38JyLHNrIXi5cawdCF9HrFcxtJw==
 
 nanoid@^3.3.4:
   version "3.3.4"
