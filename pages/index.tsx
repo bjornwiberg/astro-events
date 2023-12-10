@@ -2,7 +2,7 @@ import Head from "next/head";
 import TimezoneSelect from "react-timezone-select";
 import setMonth from "date-fns/setMonth";
 import setYear from "date-fns/setYear";
-import type { ITimezoneOption } from "react-timezone-select";
+import type { ITimezone, ITimezoneOption } from "react-timezone-select";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
@@ -26,29 +26,35 @@ export default function Index() {
   const [offset, setOffset] = useState(
     (new Date().getTimezoneOffset() * -1) / 60
   );
-  const [selectedTimezone, setSelectedTimezone] = useState<
-    string | ITimezoneOption
-  >(Intl.DateTimeFormat().resolvedOptions().timeZone);
+  const [selectedTimezone, setSelectedTimezone] = useState<ITimezone>(
+    Intl.DateTimeFormat().resolvedOptions().timeZone
+  );
+
+  const displayContent = isReady && !error;
+
+  const currentDateWithMonthAndYear = `${currentDate.toLocaleDateString(
+    undefined,
+    { month: "long" }
+  )} ${currentDate.getFullYear()}`;
 
   useEffect(() => {
     initMixpanel();
   }, []);
 
   useEffect(() => {
-    // @ts-ignore
-    if (selectedTimezone?.offset || selectedTimezone?.offset === 0)
-      // @ts-ignore
-      setOffset(selectedTimezone.offset);
+    const { offset } = selectedTimezone as ITimezoneOption;
+
+    if (offset || offset === 0) setOffset(offset);
   }, [selectedTimezone]);
 
   useEffect(() => {
     let newDate = new Date();
 
-    const month = query.month ?? newDate.getMonth();
-    const year = query.year ?? newDate.getFullYear();
+    const month = (query.month as unknown as number) ?? newDate.getMonth();
+    const year = (query.year as unknown as number) ?? newDate.getFullYear();
 
-    newDate = setYear(newDate, year as number);
-    newDate = setMonth(newDate, month as number);
+    newDate = setYear(newDate, year);
+    newDate = setMonth(newDate, month);
 
     setCurrentDate(newDate);
   }, [query]);
@@ -67,13 +73,6 @@ export default function Index() {
       .catch(() => setError(true))
       .finally(() => setLoading(false));
   }, [currentDate]);
-
-  const displayContent = isReady && !error;
-
-  const currentDateWithMonthAndYear = `${currentDate.toLocaleDateString(
-    undefined,
-    { month: "long" }
-  )} ${currentDate.getFullYear()}`;
 
   useEffect(() => setMounted(true), []);
   if (!mounted) return null;
@@ -113,6 +112,7 @@ export default function Index() {
             </div>
             <div className={styles.timezoneSelector}>
               <TimezoneSelect
+                labelStyle="abbrev"
                 value={selectedTimezone}
                 onChange={(timezone) => {
                   track("Change Zimezone", timezone);
