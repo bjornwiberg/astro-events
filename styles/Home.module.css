@@ -41,7 +41,7 @@
 }
 
 .timezoneSelector {
-  inline-size: 400px;
+  inline-size: 100%;
   max-inline-size: 90vw;
 }
 

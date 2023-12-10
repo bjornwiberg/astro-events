@@ -10,7 +10,7 @@ export function initMixpanel() {
   }
 }
 
-export function track(message: string, options?: Record<string, any>) {
+export function track(message: string, options?: Record<string, any> | string) {
   if (process.env.NODE_ENV === "production") {
     mixpanel.track(message, options);
   }
