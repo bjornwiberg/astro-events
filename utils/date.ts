@@ -1,6 +1,6 @@
-import addHours from "date-fns/addHours";
-import format from "date-fns/format";
-import subHours from "date-fns/subHours";
+import { addHours } from "date-fns/addHours";
+import { format } from "date-fns/format";
+import { subHours } from "date-fns/subHours";
 
 function isDateDST(d: Date) {
   let jan = new Date(d.getFullYear(), 0, 1).getTimezoneOffset();

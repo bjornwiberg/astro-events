@@ -1,7 +1,7 @@
-import addMonths from "date-fns/addMonths";
-import isSameMonth from "date-fns/isSameMonth";
-import isSameYear from "date-fns/isSameYear";
-import subMonths from "date-fns/subMonths";
+import { addMonths } from "date-fns/addMonths";
+import { isSameMonth } from "date-fns/isSameMonth";
+import { isSameYear } from "date-fns/isSameYear";
+import { subMonths } from "date-fns/subMonths";
 
 export function getLinkFromDate(date: Date) {
   const todaysDate = new Date();
