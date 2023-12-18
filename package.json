@@ -6,7 +6,7 @@
     "start": "next start"
   },
   "dependencies": {
-    "date-fns": "^2.29.3",
+    "date-fns": "^3.0.0",
     "mixpanel-browser": "^2.45.0",
     "next": "latest",
     "react": "18.2.0",
