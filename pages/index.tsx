@@ -1,7 +1,7 @@
 import Head from "next/head";
 import TimezoneSelect from "react-timezone-select";
-import setMonth from "date-fns/setMonth";
-import setYear from "date-fns/setYear";
+import { setMonth } from "date-fns/setMonth";
+import { setYear } from "date-fns/setYear";
 import type { ITimezone, ITimezoneOption } from "react-timezone-select";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
