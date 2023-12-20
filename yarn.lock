@@ -582,9 +582,9 @@ react-select@^5.8.0:
     use-isomorphic-layout-effect "^1.1.2"
 
 react-timezone-select@^3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/react-timezone-select/-/react-timezone-select-3.0.2.tgz#79d094a3dc6c52ca035ba2d5078224cb4b74d2a7"
-  integrity sha512-dplONQZzy8JMYCZl9iSqX2FptFJv//iXz9dGeujw0B2VEcnft8mLI8NAQUsa4c5McY0RBqJRg4hmoqpcpkLmOw==
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/react-timezone-select/-/react-timezone-select-3.1.0.tgz#921afc1b91c504a67afea20ecc2065018a8bf3db"
+  integrity sha512-+Ki07Iv/k3v7v0byN0iQB41D61n2eb7QT9uMSuBUyN5cGKeNbvt4hW78Hjm6+UEze+fu8TIqXISOnu+QVcP3Cg==
   dependencies:
     spacetime "^7.4.8"
     timezone-soft "^1.5.1"
@@ -643,9 +643,9 @@ source-map@^0.5.7:
   integrity sha512-LbrmJOMUSdEVxIKvdcJzQC+nQhe8FUZQTXQy6+I75skNgn3OoQ0DZA8YnFa7gp8tqtL3KPf1kmo0R5DoApeSGQ==
 
 spacetime@^7.4.8:
-  version "7.4.8"
-  resolved "https://registry.yarnpkg.com/spacetime/-/spacetime-7.4.8.tgz#10a904e639d3c4e2549dda761f08ceed12adfb35"
-  integrity sha512-kQxyLfY1g+JH5+YwdYqsD4LtLxdcbkjlLnTCI9AaPUt3Ul8mr4BAQZk9gxza8eF9hlME55lIAgx49ShqBPsx/A==
+  version "7.5.0"
+  resolved "https://registry.yarnpkg.com/spacetime/-/spacetime-7.5.0.tgz#38eb3129d7535221cc5e32ddca61dfd5c17c54b6"
+  integrity sha512-FJ8EqkHf3W69s1/fDZVKQwVSrP7fd8oPdEIkgrXw2Mdcq9NeimrflEQFkCLQI84NVHHPTdwMq8L2sD39tIBJPg==
 
 styled-jsx@5.1.1:
   version "5.1.1"
