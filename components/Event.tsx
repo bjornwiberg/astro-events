@@ -29,7 +29,11 @@ export function Event({ event, offset }: EventProps) {
     type === EventType.TRIPURA_SUNDARI_PEAK ||
     type === EventType.FULL_MOON_PEAK
   )
-    peakString = <div>{formatDateWithOffset(new Date(startDate))}</div>;
+    peakString = (
+      <div>
+        {formatDateWithOffset(new Date(startDate))} <em>(Peak)</em>
+      </div>
+    );
 
   if (type === EventType.TRIPURA_SUNDARI_PEAK) {
     const { start, end } = getTripuraSundariDatesFromPeakDate(
