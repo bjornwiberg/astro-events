@@ -14,7 +14,7 @@ interface EventProps {
   offset: number;
 }
 export function Event({ event, offset }: EventProps) {
-  const { type, startDate, endDate, description } = event;
+  const { type, peakDate, startDate, endDate, description } = event;
   const { icon } = getIconAndNameFromType(type);
   let peakString: JSX.Element;
   let dateString: JSX.Element | string;
@@ -33,6 +33,15 @@ export function Event({ event, offset }: EventProps) {
       <div>
         {formatDateWithOffset(new Date(startDate))} <em>(Peak)</em>
       </div>
+    );
+
+  if (type === EventType.SOLAR_ECLIPSE || type === EventType.MOON_ECLIPSE)
+    peakString = peakDate ? (
+      <div>
+        {formatDateWithOffset(new Date(peakDate))} <em>(Maximum)</em>
+      </div>
+    ) : (
+      <></>
     );
 
   if (type === EventType.TRIPURA_SUNDARI_PEAK) {
