@@ -4,12 +4,14 @@ import eventsData from "../../data/events";
 
 function getEventsFromDate(events: EventBaseType[], date: Date) {
   const year = date.getFullYear();
-  const month = date.getMonth();
+  const month = date.getUTCMonth();
 
   return events.filter((event) => {
-    const date = new Date(event.startDate);
+    const eventDate = new Date(event.startDate);
 
-    return date.getFullYear() === year && date.getMonth() === month;
+    return (
+      eventDate.getFullYear() === year && eventDate.getUTCMonth() === month
+    );
   });
 }
 
