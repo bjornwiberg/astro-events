@@ -7,7 +7,7 @@ const equinox: EventBaseType[] = [
   },
   {
     type: EventType.EQUINOX,
-    startDate: "2022-09-23+03:04+01:00",
+    startDate: "2022-09-23T03:04+01:00",
   },
 ];
 
