@@ -3,7 +3,7 @@ import { EventBaseType, EventType } from "../../types/events";
 const newMoon: EventBaseType[] = [
   {
     type: EventType.NEW_MOON,
-    startDate: "2024-01-10T01:39+01:00",
+    startDate: "2024-01-11T12:57+01:00",
   },
   {
     type: EventType.NEW_MOON,
