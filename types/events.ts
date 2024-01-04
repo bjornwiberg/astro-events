@@ -16,4 +16,5 @@ export type EventBaseType = {
   endDate?: string;
   peakDate?: string;
   description?: string;
+  updatedAt?: string;
 };
