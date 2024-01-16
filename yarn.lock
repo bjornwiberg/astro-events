@@ -582,9 +582,9 @@ react-select@^5.8.0:
     use-isomorphic-layout-effect "^1.1.2"
 
 react-timezone-select@^3.0.2:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/react-timezone-select/-/react-timezone-select-3.1.0.tgz#921afc1b91c504a67afea20ecc2065018a8bf3db"
-  integrity sha512-+Ki07Iv/k3v7v0byN0iQB41D61n2eb7QT9uMSuBUyN5cGKeNbvt4hW78Hjm6+UEze+fu8TIqXISOnu+QVcP3Cg==
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/react-timezone-select/-/react-timezone-select-3.2.0.tgz#43910b97f331833bcc5d6058e22822f1e4e7f222"
+  integrity sha512-rrDZ/bWFz4cWd46k5kOqicrVqKG5viY5ZEKoweBK0XFxjycAkX6fwssH6Ten5BZ16qnzPOKEEeon935RxrbtNA==
   dependencies:
     spacetime "^7.4.8"
     timezone-soft "^1.5.1"
@@ -672,9 +672,9 @@ supports-preserve-symlinks-flag@^1.0.0:
   integrity sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==
 
 timezone-soft@^1.5.1:
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/timezone-soft/-/timezone-soft-1.5.1.tgz#1c0148a6cbcc0ee76ecb06b0fc3df2819dfd4351"
-  integrity sha512-3BlU8Vq8Z+hlyIiKjAHTBttc8kN10g6FPWzAEDws3zexZgEZ43c9/MJx6moJVu6rjRk51gAHFSYkssoR5+c2dQ==
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/timezone-soft/-/timezone-soft-1.5.2.tgz#1d7f20b2ffb43e80edd2a7bf45572ccae144c7e7"
+  integrity sha512-BUr+CfBfeWXJwFAuEzPO9uF+v6sy3pL5SKLkDg4vdEhsyXgbBnpFoBCW8oEKSNTqNq9YHbVOjNb31xE7WyGmrA==
 
 to-fast-properties@^2.0.0:
   version "2.0.0"
