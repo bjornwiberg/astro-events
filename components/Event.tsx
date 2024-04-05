@@ -1,5 +1,6 @@
 import {
   formatDate,
+  getDateWithOffsetAndDST,
   getFullMoonDatesFromPeakDate,
   getTripuraSundariDatesFromPeakDate,
 } from "../utils/date";
@@ -19,7 +20,10 @@ export function Event({ event, offset }: EventProps) {
   let peakString: JSX.Element;
   let dateString: JSX.Element | string;
 
-  const formatDateWithOffset = (date: Date) => formatDate(date, offset);
+  const formatDateWithOffset = (date: Date) => {
+    const dateWithOffset = getDateWithOffsetAndDST(date, offset);
+    return formatDate(dateWithOffset);
+  };
 
   dateString = `${formatDateWithOffset(new Date(startDate))}${
     endDate ? ` - ${formatDateWithOffset(new Date(endDate))}` : ""
