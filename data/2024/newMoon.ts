@@ -35,7 +35,7 @@ const newMoon: EventBaseType[] = [
   },
   {
     type: EventType.NEW_MOON,
-    startDate: "2024-09-03T03:56+01:00",
+    startDate: "2024-09-03T03:55+01:00",
   },
   {
     type: EventType.NEW_MOON,
@@ -48,6 +48,10 @@ const newMoon: EventBaseType[] = [
   {
     type: EventType.NEW_MOON,
     startDate: "2024-12-01T07:21+01:00",
+  },
+  {
+    type: EventType.NEW_MOON,
+    startDate: "2024-12-30T23:27+01:00",
   },
 ];
 
