@@ -615,12 +615,12 @@ react-select@^5.8.0:
     use-isomorphic-layout-effect "^1.1.2"
 
 react-timezone-select@^3.0.2:
-  version "3.2.3"
-  resolved "https://registry.yarnpkg.com/react-timezone-select/-/react-timezone-select-3.2.3.tgz#f80668ec63bb962a98e677a22ce81924cfca5627"
-  integrity sha512-RO2NuGh3Ch8unq+tAl2UN4XTZRjM6quJ6BvKOxqsif3IqhbHAb3ZFEC8E/RIiLf2wseGJhWTYHIwe35ua/CNfg==
+  version "3.2.5"
+  resolved "https://registry.yarnpkg.com/react-timezone-select/-/react-timezone-select-3.2.5.tgz#ed8a3151bcd892b476287329d29be2deca9f48c4"
+  integrity sha512-ZGYkP0o+JbO8ZSjhWn9UduC9I/PAkmLkU+uztognfvQutxzb9vNNjMZcQV2sNwpnpZE18KooQRWVtCebHbaRtQ==
   dependencies:
-    spacetime "^7.4.8"
-    timezone-soft "^1.5.1"
+    spacetime "^7.6.0"
+    timezone-soft "^1.5.2"
 
 react-transition-group@^4.3.0:
   version "4.4.5"
@@ -706,10 +706,10 @@ source-map@^0.5.7:
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.5.7.tgz#8a039d2d1021d22d1ea14c80d8ea468ba2ef3fcc"
   integrity sha512-LbrmJOMUSdEVxIKvdcJzQC+nQhe8FUZQTXQy6+I75skNgn3OoQ0DZA8YnFa7gp8tqtL3KPf1kmo0R5DoApeSGQ==
 
-spacetime@^7.4.8:
-  version "7.5.0"
-  resolved "https://registry.yarnpkg.com/spacetime/-/spacetime-7.5.0.tgz#38eb3129d7535221cc5e32ddca61dfd5c17c54b6"
-  integrity sha512-FJ8EqkHf3W69s1/fDZVKQwVSrP7fd8oPdEIkgrXw2Mdcq9NeimrflEQFkCLQI84NVHHPTdwMq8L2sD39tIBJPg==
+spacetime@^7.6.0:
+  version "7.6.0"
+  resolved "https://registry.yarnpkg.com/spacetime/-/spacetime-7.6.0.tgz#582fc6c9119cddeb42a43b5dded45721c158da01"
+  integrity sha512-pQ1K7XNmmcFGRtF2LzXkfgQ02+NbV6W9v+0UmxnPe0xVByqFDbKkKI1uangS+9ZG5Ey2HeFh74EL9rKE7V/k9A==
 
 styled-jsx@5.1.1:
   version "5.1.1"
@@ -735,7 +735,7 @@ supports-preserve-symlinks-flag@^1.0.0:
   resolved "https://registry.yarnpkg.com/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz#6eda4bd344a3c94aea376d4cc31bc77311039e09"
   integrity sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==
 
-timezone-soft@^1.5.1:
+timezone-soft@^1.5.2:
   version "1.5.2"
   resolved "https://registry.yarnpkg.com/timezone-soft/-/timezone-soft-1.5.2.tgz#1d7f20b2ffb43e80edd2a7bf45572ccae144c7e7"
   integrity sha512-BUr+CfBfeWXJwFAuEzPO9uF+v6sy3pL5SKLkDg4vdEhsyXgbBnpFoBCW8oEKSNTqNq9YHbVOjNb31xE7WyGmrA==
