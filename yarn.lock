@@ -615,9 +615,9 @@ react-select@^5.8.0:
     use-isomorphic-layout-effect "^1.1.2"
 
 react-timezone-select@^3.0.2:
-  version "3.2.5"
-  resolved "https://registry.yarnpkg.com/react-timezone-select/-/react-timezone-select-3.2.5.tgz#ed8a3151bcd892b476287329d29be2deca9f48c4"
-  integrity sha512-ZGYkP0o+JbO8ZSjhWn9UduC9I/PAkmLkU+uztognfvQutxzb9vNNjMZcQV2sNwpnpZE18KooQRWVtCebHbaRtQ==
+  version "3.2.7"
+  resolved "https://registry.yarnpkg.com/react-timezone-select/-/react-timezone-select-3.2.7.tgz#a47a20e593b3e19b1b17922eecdb20ef713734fc"
+  integrity sha512-WgjEaQ8Rm2vt0LyHU/Xd7dlEYpFKJaIEhgL4sXREdM8020RRj2sqkTFTq6wI4K3jUamfQ9v/Uy3VlUi8x0Fp9w==
   dependencies:
     spacetime "^7.6.0"
     timezone-soft "^1.5.2"
