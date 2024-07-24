@@ -231,11 +231,11 @@
   integrity sha512-Ls2OL9hi3YlJKGNdKv8k3X/lLgc3VmLG3a/DeTkAd+lAituJp8ZHmRmm9f9SL84fT3CotlzcgbdaCDfFwFA6bA==
 
 "@rrweb/types@^2.0.0-alpha.13":
-  version "2.0.0-alpha.15"
-  resolved "https://registry.yarnpkg.com/@rrweb/types/-/types-2.0.0-alpha.15.tgz#5d158dc1071e529cb0392fb040f57384aa1ddb89"
-  integrity sha512-NsD2D8oFYT+XZidklW3T/waqDyaUqu+GqBNMZRJ5UQ7hbwtlx0lmt6ZCvKa29cT/6GfEwNYxAQqelodAwRnHTw==
+  version "2.0.0-alpha.16"
+  resolved "https://registry.yarnpkg.com/@rrweb/types/-/types-2.0.0-alpha.16.tgz#f27ab8be04c087f17e5fe1409ce1e8e54c82c85b"
+  integrity sha512-E6cACNVsm+NUhn7dzocQoKyXI7BHrHRRm5Ab23yrAzEQ2caWocCEYJhqDlc4KRVJBkQfXZfyWm8+2d0uggFuZg==
   dependencies:
-    rrweb-snapshot "^2.0.0-alpha.15"
+    rrweb-snapshot "^2.0.0-alpha.16"
 
 "@swc/helpers@0.4.14":
   version "0.4.14"
@@ -495,9 +495,9 @@ mitt@^3.0.0:
   integrity sha512-vKivATfr97l2/QBCYAkXYDbrIWPM2IIKEl7YPhjCvKlG3kE2gm+uBo6nEXK3M5/Ffh/FLpKExzOQ3JJoJGFKBw==
 
 mixpanel-browser@^2.45.0:
-  version "2.53.0"
-  resolved "https://registry.yarnpkg.com/mixpanel-browser/-/mixpanel-browser-2.53.0.tgz#7531e4ee4e5fdf14c4fbe9612163e4fe3c4a1646"
-  integrity sha512-8U7zCTT82yCIH2vfdCvs0ZRWlCgyHMuU4jtC6yOAiNUR4HhnQYk7re/o2GnhfdvYtkPxdda60/3eH1igUlIXuw==
+  version "2.54.0"
+  resolved "https://registry.yarnpkg.com/mixpanel-browser/-/mixpanel-browser-2.54.0.tgz#da354b2d0bc63609026d22c266e15814f2639749"
+  integrity sha512-ad5cIw0Uxa7VaBvI3RfvnH5eYfbmaZUboLHNVYb5A5IGwddRYJ6wzXV50peBixUg1ovlLIz/Lz6yOePfBQVdrQ==
   dependencies:
     rrweb "2.0.0-alpha.13"
 
@@ -659,16 +659,16 @@ resolve@^1.19.0:
     supports-preserve-symlinks-flag "^1.0.0"
 
 rrdom@^2.0.0-alpha.13:
-  version "2.0.0-alpha.15"
-  resolved "https://registry.yarnpkg.com/rrdom/-/rrdom-2.0.0-alpha.15.tgz#9bd9ce3bffa5fde2f97d142bd59c7c795a7ded1e"
-  integrity sha512-c7BMmqJf6u9cm5G1wx7Mgnc5pyNog4CLaGTDUZCDGZAIfRIFOWwu7A4f2z9IPiEeokgc5wq8R/8/dKp6xpg8Ug==
+  version "2.0.0-alpha.16"
+  resolved "https://registry.yarnpkg.com/rrdom/-/rrdom-2.0.0-alpha.16.tgz#cf98cb2d75634fb4dc29cedbe16e9a23f9d7b83c"
+  integrity sha512-m8aoeORWUz7AFdEb7hES7wPeL6fl/oP23RoAlzLXyA/f2+NqCDM7KEyCXY4sHu6CChN3OAUP2BaUGEXn0zynlw==
   dependencies:
-    rrweb-snapshot "^2.0.0-alpha.15"
+    rrweb-snapshot "^2.0.0-alpha.16"
 
-rrweb-snapshot@^2.0.0-alpha.13, rrweb-snapshot@^2.0.0-alpha.15:
-  version "2.0.0-alpha.15"
-  resolved "https://registry.yarnpkg.com/rrweb-snapshot/-/rrweb-snapshot-2.0.0-alpha.15.tgz#26107a89d9b88e239107f3c8d1ef7897531e5932"
-  integrity sha512-U5lOYoMt6YsmxKcnWVhX1ller6B8/OICQqLWqvylajTYv5oRHgAk68AFDTAXxLsjMSTQjtr1Vp+REFSmnhWrIg==
+rrweb-snapshot@^2.0.0-alpha.13, rrweb-snapshot@^2.0.0-alpha.16:
+  version "2.0.0-alpha.16"
+  resolved "https://registry.yarnpkg.com/rrweb-snapshot/-/rrweb-snapshot-2.0.0-alpha.16.tgz#50dd6c0c8ea64e9bfe13514a4295e20da977191a"
+  integrity sha512-p81OrzUiCmUMZzJu4fGHeLB00PIbVIqsV/zhqzr2pitHTUXpMYcyOvDWt0vHdla0vnowEPaHq3Wsu6cUc732/w==
 
 rrweb@2.0.0-alpha.13:
   version "2.0.0-alpha.13"
