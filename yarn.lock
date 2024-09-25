@@ -322,10 +322,10 @@
   resolved "https://registry.yarnpkg.com/@types/css-font-loading-module/-/css-font-loading-module-0.0.7.tgz#2f98ede46acc0975de85c0b7b0ebe06041d24601"
   integrity sha512-nl09VhutdjINdWyXxHWN/w9zlNCfr60JUqJbd24YXUuCwgeL0TpFSdElCwb6cxfB6ybE19Gjj4g0jsgkXxKv1Q==
 
-"@types/node@20.16.7":
-  version "20.16.7"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.16.7.tgz#0a245bf5805add998a22b8b5adac612ee70190bc"
-  integrity sha512-QkDQjAY3gkvJNcZOWwzy3BN34RweT0OQ9zJyvLCU0kSK22dO2QYh/NHGfbEAYylPYzRB1/iXcojS79wOg5gFSw==
+"@types/node@20.16.9":
+  version "20.16.9"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.16.9.tgz#1217c6cc77c4f3aaf4a6c76fb56b790e81e48120"
+  integrity sha512-rkvIVJxsOfBejxK7I0FO5sa2WxFmJCzoDwcd88+fq/CUfynNywTo/1/T6hyFz22CyztsnLS9nVlHOnTI36RH5w==
   dependencies:
     undici-types "~6.19.2"
 
