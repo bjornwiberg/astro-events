@@ -2,7 +2,7 @@ import { addHours } from "date-fns/addHours";
 import { format } from "date-fns/format";
 import { subHours } from "date-fns/subHours";
 
-function isDateDST(d: Date) {
+export function isDateDST(d: Date) {
   const jan = new Date(d.getFullYear(), 0, 1).getTimezoneOffset();
   const jul = new Date(d.getFullYear(), 6, 1).getTimezoneOffset();
   return Math.max(jan, jul) !== d.getTimezoneOffset();
