@@ -10,7 +10,7 @@ const shivaRatri: EventBaseType[] = [
     type: EventType.SHIVARATRI,
     startDate: "2023-02-18T22:09+01:00",
     endDate: "2023-02-19T00:49+01:00",
-    description: "MSR",
+    description: "Maha Shivaratri",
   },
   {
     type: EventType.SHIVARATRI,
