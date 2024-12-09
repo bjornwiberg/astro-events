@@ -13,7 +13,7 @@ export function formatDate(date: Date, utcOffsetHrs: number) {
   const tzOffset = date.getTimezoneOffset();
   const d = new Date(date.valueOf() + (baseTzOffset + tzOffset) * 60 * 1000);
 
-  return format(isDateDST(new Date()) ? subHours(d, 1) : d, "E dd MMM HH:mm");
+  return format(isDateDST(new Date(d)) ? subHours(d, 1) : d, "E dd MMM HH:mm");
 }
 
 export function getTripuraSundariDatesFromPeakDate(date: Date) {
