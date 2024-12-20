@@ -107,7 +107,11 @@ export default function Index() {
                 <p>No data could be found for current month</p>
               )}
               {events.map((event) => (
-                <Event event={event} key={event.startDate} offset={offset} />
+                <Event
+                  event={event}
+                  key={`${event.startDate}_${event.type}`}
+                  offset={offset}
+                />
               ))}
             </div>
             <div className={styles.timezoneSelector}>
