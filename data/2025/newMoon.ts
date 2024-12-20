@@ -3,15 +3,15 @@ import { EventBaseType, EventType } from "../../types/events";
 const newMoon: EventBaseType[] = [
   {
     type: EventType.NEW_MOON,
-    startDate: "2025-01-29T13:36+01:00",
+    startDate: "2025-01-29T13:35+01:00",
   },
   {
     type: EventType.NEW_MOON,
-    startDate: "2025-02-28T01:45+01:00",
+    startDate: "2025-02-28T01:44+01:00",
   },
   {
     type: EventType.NEW_MOON,
-    startDate: "2025-03-29T11:58+01:00",
+    startDate: "2025-03-29T11:57+01:00",
   },
   {
     type: EventType.NEW_MOON,
@@ -23,7 +23,7 @@ const newMoon: EventBaseType[] = [
   },
   {
     type: EventType.NEW_MOON,
-    startDate: "2025-06-25T12:32+01:00",
+    startDate: "2025-06-25T12:31+01:00",
   },
   {
     type: EventType.NEW_MOON,
@@ -47,7 +47,7 @@ const newMoon: EventBaseType[] = [
   },
   {
     type: EventType.NEW_MOON,
-    startDate: "2025-12-20T00:14+01:00",
+    startDate: "2025-12-20T02:43+01:00",
   },
 ];
 

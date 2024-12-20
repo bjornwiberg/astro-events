@@ -3,7 +3,7 @@ import { EventBaseType, EventType } from "../../types/events";
 const fullMoon: EventBaseType[] = [
   {
     type: EventType.FULL_MOON_PEAK,
-    startDate: "2025-01-13T23:27+01:00",
+    startDate: "2025-01-13T23:26+01:00",
   },
   {
     type: EventType.FULL_MOON_PEAK,
@@ -11,7 +11,7 @@ const fullMoon: EventBaseType[] = [
   },
   {
     type: EventType.FULL_MOON_PEAK,
-    startDate: "2025-03-14T07:55+01:00",
+    startDate: "2025-03-14T07:54+01:00",
   },
   {
     type: EventType.FULL_MOON_PEAK,
@@ -19,15 +19,15 @@ const fullMoon: EventBaseType[] = [
   },
   {
     type: EventType.FULL_MOON_PEAK,
-    startDate: "2025-05-12T18:56+01:00",
+    startDate: "2025-05-12T18:55+01:00",
   },
   {
     type: EventType.FULL_MOON_PEAK,
-    startDate: "2025-06-11T09:44+01:00",
+    startDate: "2025-06-11T09:43+01:00",
   },
   {
     type: EventType.FULL_MOON_PEAK,
-    startDate: "2025-07-10T22:37+01:00",
+    startDate: "2025-07-10T22:36+01:00",
   },
   {
     type: EventType.FULL_MOON_PEAK,
@@ -35,11 +35,11 @@ const fullMoon: EventBaseType[] = [
   },
   {
     type: EventType.FULL_MOON_PEAK,
-    startDate: "2025-09-07T20:09+01:00",
+    startDate: "2025-09-07T20:08+01:00",
   },
   {
     type: EventType.FULL_MOON_PEAK,
-    startDate: "2025-10-07T20:09+01:00",
+    startDate: "2025-10-07T05:47+01:00",
   },
   {
     type: EventType.FULL_MOON_PEAK,
