@@ -12,10 +12,12 @@ const newMoon: EventBaseType[] = [
   {
     type: EventType.NEW_MOON,
     startDate: "2025-03-29T11:57+01:00",
+    description: "Super New Moon",
   },
   {
     type: EventType.NEW_MOON,
     startDate: "2025-04-27T21:31+01:00",
+    description: "Super New Moon",
   },
   {
     type: EventType.NEW_MOON,
@@ -44,6 +46,7 @@ const newMoon: EventBaseType[] = [
   {
     type: EventType.NEW_MOON,
     startDate: "2025-11-20T07:47+01:00",
+    description: "Micro New Moon",
   },
   {
     type: EventType.NEW_MOON,

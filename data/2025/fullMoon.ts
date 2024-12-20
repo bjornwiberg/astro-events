@@ -16,10 +16,12 @@ const fullMoon: EventBaseType[] = [
   {
     type: EventType.FULL_MOON_PEAK,
     startDate: "2025-04-13T02:22+01:00",
+    description: "Micro Full Moon",
   },
   {
     type: EventType.FULL_MOON_PEAK,
     startDate: "2025-05-12T18:55+01:00",
+    description: "Micro Full Moon",
   },
   {
     type: EventType.FULL_MOON_PEAK,
@@ -44,10 +46,12 @@ const fullMoon: EventBaseType[] = [
   {
     type: EventType.FULL_MOON_PEAK,
     startDate: "2025-11-05T14:19+01:00",
+    description: "Super Full Moon",
   },
   {
     type: EventType.FULL_MOON_PEAK,
     startDate: "2025-12-05T00:14+01:00",
+    description: "Super Full Moon",
   },
 ];
 
