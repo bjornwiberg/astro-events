@@ -2,18 +2,22 @@ import { addHours } from "date-fns/addHours";
 import { format } from "date-fns/format";
 import { subHours } from "date-fns/subHours";
 
-function isDateDST(d: Date) {
-  let jan = new Date(d.getFullYear(), 0, 1).getTimezoneOffset();
-  let jul = new Date(d.getFullYear(), 6, 1).getTimezoneOffset();
+export function isDateDST(d: Date) {
+  const jan = new Date(d.getFullYear(), 0, 1).getTimezoneOffset();
+  const jul = new Date(d.getFullYear(), 6, 1).getTimezoneOffset();
   return Math.max(jan, jul) !== d.getTimezoneOffset();
 }
 
-export function formatDate(date: Date, utcOffsetHrs: number) {
+export function getDateWithOffsetAndDST(date: Date, utcOffsetHrs: number) {
   const baseTzOffset = utcOffsetHrs * 60;
   const tzOffset = date.getTimezoneOffset();
   const d = new Date(date.valueOf() + (baseTzOffset + tzOffset) * 60 * 1000);
 
-  return format(isDateDST(new Date()) ? subHours(d, 1) : d, "E dd MMM HH:mm");
+  return isDateDST(new Date()) ? subHours(d, 1) : d;
+}
+
+export function formatDate(date: Date) {
+  return format(date, "E dd MMM HH:mm");
 }
 
 export function getTripuraSundariDatesFromPeakDate(date: Date) {
