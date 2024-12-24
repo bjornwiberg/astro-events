@@ -25,6 +25,10 @@ function getTimestamp(dateString: string) {
   )}00`;
 }
 
+function createUID(date: string, type: EventType) {
+  return `UID:${stringToUuid(getTimestamp(date) + type)}`;
+}
+
 const stringToUuid = (str: string) => {
   str = str.replace("-", "");
   return "xxxxxxxx-xxxx-4xxx-xxxx-xxxxxxxxxxxx".replace(
@@ -84,9 +88,7 @@ export default function handler(
             const { start, end } = getTripuraSundariDatesFromPeakDate(date);
 
             rows.push("BEGIN:VEVENT");
-            rows.push(
-              `UID:${stringToUuid(getTimestamp(start.toISOString()) + type)}`
-            );
+            rows.push(createUID(start.toISOString(), type));
             rows.push(`DTSTAMP:${getTimestamp(start.toISOString())}`);
             rows.push(summary);
             rows.concat(descriptionAndLastModified);
@@ -106,9 +108,7 @@ export default function handler(
             const { start, end } = getFullMoonDatesFromPeakDate(date);
 
             rows.push("BEGIN:VEVENT");
-            rows.push(
-              `UID:${stringToUuid(getTimestamp(start.toISOString()) + type)}`
-            );
+            rows.push(createUID(start.toISOString(), type));
             rows.push(`DTSTAMP:${getTimestamp(start.toISOString())}`);
             rows.push(summary);
             rows.concat(descriptionAndLastModified);
@@ -133,7 +133,7 @@ export default function handler(
 
           if (peakDate) {
             rows.push("BEGIN:VEVENT");
-            rows.push(`UID:${stringToUuid(getTimestamp(peakDate) + type)}`);
+            rows.push(createUID(peakDate, type));
             rows.push(`DTSTAMP:${getTimestamp(peakDate)}`);
             rows.push(summary);
             rows.concat(descriptionAndLastModified);
@@ -144,7 +144,7 @@ export default function handler(
           }
 
           rows.push("BEGIN:VEVENT");
-          rows.push(`UID:${stringToUuid(getTimestamp(startDate) + type)}`);
+          rows.push(createUID(startDate, type));
           rows.push(`DTSTAMP:${getTimestamp(startDate)}`);
           rows.push(summary);
           rows.concat(descriptionAndLastModified);
