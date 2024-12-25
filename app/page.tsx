@@ -1,10 +1,12 @@
+"use client";
+
 import Head from "next/head";
 import TimezoneSelect from "react-timezone-select";
-import { setMonth } from "date-fns/setMonth";
-import { setYear } from "date-fns/setYear";
+import { setMonth } from "date-fns";
+import { setYear } from "date-fns";
 import type { ITimezone, ITimezoneOption } from "react-timezone-select";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import { useSearchParams } from "next/navigation";
 
 import { EventBaseType, EventType } from "../types/events";
 
@@ -22,7 +24,9 @@ export default function Index() {
   const [loading, setLoading] = useState(false);
   const [events, setEvents] = useState<EventBaseType[]>([]);
   const [currentDate, setCurrentDate] = useState(new Date());
-  const { isReady, query } = useRouter();
+
+  const searchParams = useSearchParams();
+
   const [offset, setOffset] = useState(
     (new Date().getTimezoneOffset() * -1) / 60
   );
@@ -30,7 +34,7 @@ export default function Index() {
     Intl.DateTimeFormat().resolvedOptions().timeZone
   );
 
-  const displayContent = isReady && !error;
+  const displayContent = !error;
 
   const currentDateWithMonthAndYear = `${currentDate.toLocaleDateString(
     undefined,
@@ -47,20 +51,20 @@ export default function Index() {
     if (offset || offset === 0) setOffset(offset);
   }, [selectedTimezone]);
 
+  const month =
+    (searchParams?.get("month") as unknown as number) ?? new Date().getMonth();
+  const year =
+    (searchParams?.get("year") as unknown as number) ??
+    new Date().getFullYear();
+
   useEffect(() => {
-    let newDate = new Date();
-
-    const month = (query.month as unknown as number) ?? newDate.getMonth();
-    const year = (query.year as unknown as number) ?? newDate.getFullYear();
-
-    newDate = setYear(newDate, year);
-    newDate = setMonth(newDate, month);
+    const newDate = setYear(setMonth(new Date(), month), year);
 
     setCurrentDate(newDate);
-  }, [query]);
+  }, [month, year]);
 
   useEffect(() => {
-    if (!isReady || !mounted) return;
+    if (!mounted) return;
 
     const dateISO = currentDate.toISOString().split("T")[0];
 
@@ -74,19 +78,12 @@ export default function Index() {
       .finally(() => setLoading(false));
   }, [currentDate]);
 
+  // prevent hyration error
   useEffect(() => setMounted(true), []);
   if (!mounted) return null;
 
   return (
     <div className={styles.container}>
-      <Head>
-        <title>Astro Events</title>
-        <link
-          rel="icon"
-          href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🪐</text></svg>"
-        />
-      </Head>
-
       <main>
         <h1 className={styles.title}>Welcome to Astro Events</h1>
         <p className={styles.description}>
@@ -96,7 +93,6 @@ export default function Index() {
         <FetchInformation
           currentDate={currentDateWithMonthAndYear}
           error={error}
-          isReady={isReady}
           loading={loading}
         />
         {displayContent && (
@@ -126,7 +122,9 @@ export default function Index() {
             </div>
             <div className={styles.chips}>
               {Object.keys(EventType).map((type) => {
-                const { icon, name } = getIconAndNameFromType(type);
+                const result = getIconAndNameFromType(type);
+                if (!result) return null;
+                const { icon, name } = result;
                 return (
                   <div className={styles.chip} key={name}>
                     {icon} {name}

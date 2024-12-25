@@ -17,8 +17,9 @@ interface EventProps {
 }
 export function Event({ event, offset }: EventProps) {
   const { type, peakDate, startDate, endDate, description } = event;
-  const { icon } = getIconAndNameFromType(type);
-  let peakString: JSX.Element;
+  const iconData = getIconAndNameFromType(type);
+  const icon = iconData?.icon ?? "";
+  let peakString: JSX.Element = <></>;
   let dateString: JSX.Element | string;
 
   const formatDateWithOffset = (date: Date) => {
