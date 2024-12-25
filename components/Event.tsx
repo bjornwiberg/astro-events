@@ -9,6 +9,7 @@ import { getIconAndNameFromType } from "../utils/event";
 import { EventBaseType, EventType } from "../types/events";
 
 import styles from "../styles/Event.module.css";
+import { JSX } from "react";
 
 interface EventProps {
   event: EventBaseType;
