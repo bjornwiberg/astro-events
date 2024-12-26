@@ -1,9 +1,15 @@
 import styles from "../styles/Errors.module.css";
 
-export default function Errors({ error }) {
+type ErrorsProps = {
+  show: boolean;
+};
+
+export default function Errors({ show }: ErrorsProps) {
+  if (!show) return null;
+
   return (
     <div className={styles.information}>
-      {error && <div className={styles.error}>Error fetching events</div>}
+      <div className={styles.error}>Error fetching events</div>
     </div>
   );
 }

@@ -9,10 +9,14 @@ import { track } from "../../../utils/mixpanel";
 
 import styles from "../styles/Navigation.module.css";
 
-export default function Navigation({ currentDate }: { currentDate: Date }) {
-  const previousLink = getPreviousLinkFromDate(currentDate);
-  const nextLink = getNextLinkFromDate(currentDate);
-  const todayLink = getTodayLinkFromDate(currentDate);
+type NavigationProps = {
+  date: Date;
+};
+
+export default function Navigation({ date }: NavigationProps) {
+  const previousLink = getPreviousLinkFromDate(date);
+  const nextLink = getNextLinkFromDate(date);
+  const todayLink = getTodayLinkFromDate(date);
 
   return (
     <div className={styles.navigation}>

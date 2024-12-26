@@ -16,13 +16,13 @@ import TimezoneSelector from "./TimezoneSelector";
 
 import styles from "../styles/IndexPage.module.css";
 
-interface ClientPageProps {
+type IndexPageProps = {
   date: Date;
   error: boolean;
   events: EventBaseType[];
-}
+};
 
-export default function IndexPage({ date, error, events }: ClientPageProps) {
+export default function IndexPage({ date, error, events }: IndexPageProps) {
   const [mounted, setMounted] = useState(false);
   const [offset, setOffset] = useState(0);
   const [selectedTimezone, setSelectedTimezone] = useState<ITimezone>("UTC");
@@ -46,12 +46,12 @@ export default function IndexPage({ date, error, events }: ClientPageProps) {
     <>
       <main className={styles.main}>
         <Header date={date} />
-        <Errors error={error} />
-        <Navigation currentDate={date} />
+        <Errors show={error} />
+        <Navigation date={date} />
         <Events events={events} offset={offset} />
         <TimezoneSelector
-          selectedTimezone={selectedTimezone}
-          setSelectedTimezone={setSelectedTimezone}
+          value={selectedTimezone as ITimezoneOption}
+          onChange={setSelectedTimezone}
         />
         <Chips />
       </main>

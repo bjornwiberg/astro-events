@@ -17,9 +17,11 @@ async function getEvents(dateISO: string) {
   return res.json();
 }
 
-export default async function Page(props: {
+type PageProps = {
   searchParams: Promise<SearchParams>;
-}) {
+};
+
+export default async function Page(props: PageProps) {
   let events: EventBaseType[] = [];
   let error = false;
 
