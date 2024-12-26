@@ -1,14 +1,15 @@
 import Link from "next/link";
+
 import {
   getNextLinkFromDate,
   getPreviousLinkFromDate,
   getTodayLinkFromDate,
-} from "../utils/link";
-import { track } from "../utils/mixpanel";
+} from "../../../utils/link";
+import { track } from "../../../utils/mixpanel";
 
 import styles from "../styles/Navigation.module.css";
 
-export function Navigation({ currentDate }: { currentDate: Date }) {
+export default function Navigation({ currentDate }: { currentDate: Date }) {
   const previousLink = getPreviousLinkFromDate(currentDate);
   const nextLink = getNextLinkFromDate(currentDate);
   const todayLink = getTodayLinkFromDate(currentDate);
