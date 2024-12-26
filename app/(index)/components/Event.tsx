@@ -1,15 +1,16 @@
+import { JSX } from "react";
+
+import { EventBaseType, EventType } from "../../../types/events";
+
 import {
   formatDate,
   getDateWithOffsetAndDST,
   getFullMoonDatesFromPeakDate,
   getTripuraSundariDatesFromPeakDate,
-} from "../utils/date";
-import { getIconAndNameFromType } from "../utils/event";
-
-import { EventBaseType, EventType } from "../types/events";
+} from "../../../utils/date";
+import { getIconAndNameFromType } from "../../../utils/event";
 
 import styles from "../styles/Event.module.css";
-import { JSX } from "react";
 
 interface EventProps {
   event: EventBaseType;
@@ -17,8 +18,9 @@ interface EventProps {
 }
 export function Event({ event, offset }: EventProps) {
   const { type, peakDate, startDate, endDate, description } = event;
-  const { icon } = getIconAndNameFromType(type);
-  let peakString: JSX.Element;
+  const iconData = getIconAndNameFromType(type);
+  const icon = iconData?.icon ?? "";
+  let peakString: JSX.Element = <></>;
   let dateString: JSX.Element | string;
 
   const formatDateWithOffset = (date: Date) => {
@@ -67,20 +69,17 @@ export function Event({ event, offset }: EventProps) {
     )} - ${formatDateWithOffset(new Date(end))}`;
   }
 
-  if (description) {
-    dateString = (
-      <div>
-        {dateString} (<strong>{description}</strong>)
-      </div>
-    );
-  }
-
   return (
-    <div className={styles.event} key={startDate.toString()}>
+    <div className={styles.event}>
       <div className={styles.eventIcon}>{icon}</div>
       <div className={styles.eventDates}>
         {peakString}
         {dateString}
+        {description && (
+          <>
+            (<strong>{description}</strong>)
+          </>
+        )}
       </div>
     </div>
   );

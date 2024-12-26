@@ -1,6 +1,7 @@
 import { addHours } from "date-fns/addHours";
 import { format } from "date-fns/format";
 import { subHours } from "date-fns/subHours";
+import { SearchParams } from "../types/searchParams";
 
 export function isDateDST(d: Date) {
   const jan = new Date(d.getFullYear(), 0, 1).getTimezoneOffset();
@@ -47,4 +48,12 @@ export function getFullMoonDatesFromPeakDate(date: Date) {
     start: subHours(date, 18),
     end: addHours(date, 18),
   };
+}
+
+export function getDateFromSearchParams({ month, year }: SearchParams) {
+  const currentDate = new Date();
+  currentDate.setMonth(month ? Number(month) : new Date().getMonth());
+  currentDate.setFullYear(year ? Number(year) : new Date().getFullYear());
+
+  return currentDate;
 }

@@ -1,6 +1,6 @@
-import type { NextApiRequest, NextApiResponse } from "next";
-import { EventBaseType } from "../../types/events";
-import eventsData from "../../data/events";
+import { NextRequest, NextResponse } from "next/server";
+import { EventBaseType } from "../../../types/events";
+import eventsData from "../../../data/events";
 
 function getEventsFromDate(events: EventBaseType[], date: Date) {
   const year = date.getFullYear();
@@ -15,15 +15,13 @@ function getEventsFromDate(events: EventBaseType[], date: Date) {
   });
 }
 
-export default function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<EventBaseType[]>
-) {
-  const date = req.query.date;
+export async function GET(req: NextRequest) {
+  const { searchParams } = new URL(req.url);
+  const date = searchParams.get("date");
   const events = getEventsFromDate(eventsData, new Date(date as string));
   const sortedEvents = events.sort((a, b) =>
     a.startDate > b.startDate ? 1 : -1
   );
 
-  res.status(200).json(sortedEvents);
+  return NextResponse.json(sortedEvents, { status: 200 });
 }

@@ -1,0 +1,6 @@
+.title {
+  font-size: clamp(1rem, 8vw, 3.2rem);
+  line-height: 1.15;
+  margin: 0 0 1rem;
+  text-align: center;
+}

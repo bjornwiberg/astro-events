@@ -1,28 +1,34 @@
 import ical, { ICalCalendarMethod } from "ical-generator";
-import type { NextApiRequest, NextApiResponse } from "next";
-import eventsData from "../../data/events";
-import { EventType, EventBaseType } from "../../types/events";
-import { getIconAndNameFromType } from "../../utils/event";
+import { NextRequest, NextResponse } from "next/server";
+import eventsData from "../../../data/events";
+import { EventType, EventBaseType } from "../../../types/events";
+import { getIconAndNameFromType } from "../../../utils/event";
 import {
   getDateWithOffsetAndDST,
   getTripuraSundariDatesFromPeakDate,
   getFullMoonDatesFromPeakDate,
   isDateDST,
-} from "../../utils/date";
+} from "../../../utils/date";
 
-interface NormalizedEvent
-  extends Omit<
-    EventBaseType,
-    "startDate" | "endDate" | "peakDate" | "updatedAt"
-  > {
+type NormalizedEvent = Omit<
+  EventBaseType,
+  "startDate" | "endDate" | "peakDate" | "updatedAt"
+> & {
   startDate: Date;
   endDate?: Date;
   peakDate?: Date;
   updatedAt?: Date;
-}
+};
 
-const normalizeDate = (dateString?: string): Date | undefined => {
-  if (!dateString) return undefined;
+type CalendarEvent = {
+  start: Date;
+  end: Date;
+  summary: string;
+  description?: string;
+  lastModified?: Date;
+};
+
+const normalizeDate = (dateString: string): Date => {
   const date = new Date(dateString);
   const now = new Date();
   const offset = isDateDST(now) ? 2 : 1;
@@ -32,8 +38,8 @@ const normalizeDate = (dateString?: string): Date | undefined => {
 const normalizeEvent = (event: EventBaseType): NormalizedEvent => ({
   ...event,
   startDate: normalizeDate(event.startDate),
-  endDate: normalizeDate(event.endDate),
-  peakDate: normalizeDate(event.peakDate),
+  endDate: event.endDate ? normalizeDate(event.endDate) : undefined,
+  peakDate: event.peakDate ? normalizeDate(event.peakDate) : undefined,
   updatedAt: event.updatedAt ? new Date(event.updatedAt) : undefined,
 });
 
@@ -84,7 +90,7 @@ const createFullMoonEvents = (event: NormalizedEvent, name: string) => {
 };
 
 const createEclipseEvents = (event: NormalizedEvent, name: string) => {
-  const events = [];
+  const events: CalendarEvent[] = [];
 
   if (event.peakDate) {
     events.push({
@@ -114,7 +120,8 @@ const generateCalendar = (events: EventBaseType[]) => {
     .map(normalizeEvent)
     .sort((a, b) => (a.startDate > b.startDate ? 1 : -1))
     .forEach((event) => {
-      const { name } = getIconAndNameFromType(event.type);
+      const nameData = getIconAndNameFromType(event.type);
+      const name = nameData?.name ?? "";
 
       if (event.type === EventType.TRIPURA_SUNDARI_PEAK) {
         const events = createTripuraSundariEvents(event, name);
@@ -135,13 +142,20 @@ const generateCalendar = (events: EventBaseType[]) => {
   return calendar;
 };
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
+export async function GET(req: NextRequest) {
   try {
     const calendar = generateCalendar(eventsData);
-    res.setHeader("Content-Type", "text/calendar");
-    res.setHeader("Content-Disposition", 'attachment; filename="calendar.ics"');
-    res.status(200).send(calendar.toString());
+    const response = new NextResponse(calendar.toString(), {
+      headers: {
+        "Content-Type": "text/calendar",
+        "Content-Disposition": 'attachment; filename="calendar.ics"',
+      },
+    });
+    return response;
   } catch (error) {
-    res.status(500).json({ error: "Failed to generate calendar" });
+    return new NextResponse(
+      JSON.stringify({ error: "Failed to generate calendar" }),
+      { status: 500 }
+    );
   }
 }
