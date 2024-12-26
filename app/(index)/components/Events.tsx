@@ -2,13 +2,12 @@ import { EventBaseType } from "../../../types/events";
 
 import { Event } from "./Event";
 
-export default function Events({
-  events,
-  offset,
-}: {
+type EventsProps = {
   events: EventBaseType[];
   offset: number;
-}) {
+};
+
+export default function Events({ events, offset }: EventsProps) {
   return (
     <div>
       {!Boolean(events.length) && (

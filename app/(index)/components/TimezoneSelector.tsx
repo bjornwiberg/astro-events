@@ -1,21 +1,26 @@
-import TimezoneSelect from "react-timezone-select";
+import TimezoneSelect, { ITimezoneOption } from "react-timezone-select";
 
 import { track } from "../../../utils/mixpanel";
 
 import styles from "../styles/TimezoneSelector.module.css";
 
+type TimezoneSelectorProps = {
+  onChange: (timezone: ITimezoneOption) => void;
+  value: ITimezoneOption;
+};
+
 export default function TimezoneSelector({
-  selectedTimezone,
-  setSelectedTimezone,
-}) {
+  onChange: onChange,
+  value,
+}: TimezoneSelectorProps) {
   return (
     <div className={styles.timezoneSelector}>
       <TimezoneSelect
         labelStyle="abbrev"
-        value={selectedTimezone}
+        value={value}
         onChange={(timezone) => {
           track("Change Zimezone", timezone);
-          setSelectedTimezone(timezone);
+          onChange(timezone);
         }}
       />
     </div>

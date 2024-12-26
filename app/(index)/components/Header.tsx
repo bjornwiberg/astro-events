@@ -1,6 +1,12 @@
+"use client";
+
 import styles from "../styles/Header.module.css";
 
-export default function Header({ date }: { date: Date }) {
+type HeaderProps = {
+  date: Date;
+};
+
+export default function Header({ date }: HeaderProps) {
   const currentDateWithMonthAndYear = `${date.toLocaleDateString(undefined, {
     month: "long",
   })} ${date.getFullYear()}`;

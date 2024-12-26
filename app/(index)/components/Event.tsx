@@ -12,10 +12,11 @@ import { getIconAndNameFromType } from "../../../utils/event";
 
 import styles from "../styles/Event.module.css";
 
-interface EventProps {
+type EventProps = {
   event: EventBaseType;
   offset: number;
-}
+};
+
 export function Event({ event, offset }: EventProps) {
   const { type, peakDate, startDate, endDate, description } = event;
   const iconData = getIconAndNameFromType(type);
