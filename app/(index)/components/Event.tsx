@@ -78,6 +78,7 @@ export function Event({ event, offset }: EventProps) {
         {dateString}
         {description && (
           <>
+            {" "}
             (<strong>{description}</strong>)
           </>
         )}
