@@ -10,12 +10,12 @@ const shivaRatri: EventBaseType[] = [
     type: EventType.SHIVARATRI,
     startDate: "2025-02-26T23:00+01:00",
     endDate: "2025-02-27T01:42+01:00",
+    description: "Maha Shivaratri",
   },
   {
     type: EventType.SHIVARATRI,
     startDate: "2025-03-27T23:07+01:00",
     endDate: "2025-03-28T01:21+01:00",
-    description: "Maha Shivaratri",
   },
   {
     type: EventType.SHIVARATRI,
