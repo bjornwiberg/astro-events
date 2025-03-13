@@ -31,7 +31,7 @@ const tripuraSundari: EventBaseType[] = [
   },
   {
     type: EventType.TRIPURA_SUNDARI_PEAK,
-    startDate: "2025-08-08T07:32+01:00",
+    startDate: "2025-08-07T07:32+01:00",
   },
   {
     type: EventType.TRIPURA_SUNDARI_PEAK,
