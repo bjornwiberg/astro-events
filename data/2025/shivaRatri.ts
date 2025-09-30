@@ -44,8 +44,8 @@ const shivaRatri: EventBaseType[] = [
   },
   {
     type: EventType.SHIVARATRI,
-    startDate: "2025-09-19T22:54+01:00",
-    endDate: "2025-09-20T01:13+01:00",
+    startDate: "2025-09-19T23:54+01:00",
+    endDate: "2025-09-20T02:13+01:00",
   },
   {
     type: EventType.SHIVARATRI,
