@@ -1,6 +1,7 @@
 name: Build site
 
-on: push
+on:
+  pull_request:
 
 jobs:
   build:
@@ -12,7 +13,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: "lts/*"
+          node-version: "22"
       - name: Install dependencies
         run: yarn --frozen-lockfile
       - name: Build
