@@ -1,4 +1,4 @@
-import TimezoneSelect, { ITimezoneOption } from "react-timezone-select";
+import TimezoneSelect, { type ITimezoneOption } from "react-timezone-select";
 
 import { track } from "../../../utils/mixpanel";
 
@@ -9,10 +9,7 @@ type TimezoneSelectorProps = {
   value: ITimezoneOption;
 };
 
-export default function TimezoneSelector({
-  onChange: onChange,
-  value,
-}: TimezoneSelectorProps) {
+export default function TimezoneSelector({ onChange, value }: TimezoneSelectorProps) {
   return (
     <div className={styles.timezoneSelector}>
       <TimezoneSelect

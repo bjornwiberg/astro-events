@@ -1,11 +1,11 @@
 "use client";
 
-import type { ITimezone, ITimezoneOption } from "react-timezone-select";
 import { useEffect, useState } from "react";
+import type { ITimezone, ITimezoneOption } from "react-timezone-select";
 
-import { EventBaseType } from "../../../types/events";
+import type { EventBaseType } from "../../../types/events";
 import { initMixpanel } from "../../../utils/mixpanel";
-
+import styles from "../styles/IndexPage.module.css";
 import Chips from "./Chips";
 import Errors from "./Errors";
 import Events from "./Events";
@@ -13,8 +13,6 @@ import Footer from "./Footer";
 import Header from "./Header";
 import Navigation from "./Navigation";
 import TimezoneSelector from "./TimezoneSelector";
-
-import styles from "../styles/IndexPage.module.css";
 
 type IndexPageProps = {
   date: Date;

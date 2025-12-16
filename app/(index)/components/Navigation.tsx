@@ -29,20 +29,14 @@ export default function Navigation({ date }: NavigationProps) {
       </Link>
       {todayLink && (
         <Link
-          className={`${styles.link} ${
-            todayLink ? "" : styles["link-inactive"]
-          }`}
+          className={`${styles.link} ${todayLink ? "" : styles["link-inactive"]}`}
           href={todayLink ?? ""}
           onClick={() => track("Click Today Link")}
         >
           Today's month
         </Link>
       )}
-      <Link
-        className={styles.link}
-        href={nextLink}
-        onClick={() => track("Click Next Link")}
-      >
+      <Link className={styles.link} href={nextLink} onClick={() => track("Click Next Link")}>
         <span className={styles.desktop}>Next month</span> &rarr;
       </Link>
     </div>

@@ -1,3 +1,4 @@
+import type { TrackOptions } from "mixpanel-browser";
 import mixpanel from "mixpanel-browser";
 
 export function initMixpanel() {
@@ -10,7 +11,7 @@ export function initMixpanel() {
   }
 }
 
-export function track(message: string, options?: Record<string, any> | string) {
+export function track(message: string, options?: TrackOptions) {
   if (process.env.NODE_ENV === "production") {
     mixpanel.track(message, options);
   }

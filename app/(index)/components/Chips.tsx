@@ -1,5 +1,3 @@
-import React from "react";
-
 import { EventType } from "../../../types/events";
 
 import { getIconAndNameFromType } from "../../../utils/event";

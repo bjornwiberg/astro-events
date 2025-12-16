@@ -1,7 +1,7 @@
 import { addHours } from "date-fns/addHours";
 import { format } from "date-fns/format";
 import { subHours } from "date-fns/subHours";
-import { SearchParams } from "../types/searchParams";
+import type { SearchParams } from "../types/searchParams";
 
 export function isDateDST(d: Date) {
   const jan = new Date(d.getFullYear(), 0, 1).getTimezoneOffset();

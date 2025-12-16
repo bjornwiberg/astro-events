@@ -7,17 +7,14 @@ export function getLinkFromDate(date: Date) {
   const todaysDate = new Date();
 
   if (isSameYear(todaysDate, date) && isSameMonth(todaysDate, date)) return "/";
-  const yearString = isSameYear(todaysDate, date)
-    ? ""
-    : `year=${date.getFullYear()}&`;
+  const yearString = isSameYear(todaysDate, date) ? "" : `year=${date.getFullYear()}&`;
   return `/?${yearString}month=${date.getMonth()}`;
 }
 
 export function getTodayLinkFromDate(date: Date) {
   const todaysDate = new Date();
 
-  if (!isSameYear(todaysDate, date) || !isSameMonth(todaysDate, date))
-    return "/";
+  if (!isSameYear(todaysDate, date) || !isSameMonth(todaysDate, date)) return "/";
 
   return;
 }

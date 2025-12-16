@@ -15,8 +15,7 @@ export default function Header({ date }: HeaderProps) {
     <>
       <h1 className={styles.title}>Welcome to Astro Events</h1>
       <p>
-        Viewing astrological events for{" "}
-        <strong>{currentDateWithMonthAndYear}</strong>
+        Viewing astrological events for <strong>{currentDateWithMonthAndYear}</strong>
       </p>
     </>
   );
