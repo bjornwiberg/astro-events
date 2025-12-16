@@ -2,7 +2,7 @@ import type { TrackOptions } from "mixpanel-browser";
 import mixpanel from "mixpanel-browser";
 
 export function initMixpanel() {
-  if (process.env.NODE_ENV === "production") {
+  if (process.env.NODE_ENV === "production" && process.env.NEXT_PUBLIC_MIXPANEL_TOKEN) {
     const token = process.env.NEXT_PUBLIC_MIXPANEL_TOKEN;
     if (token) {
       mixpanel.init(token, {
