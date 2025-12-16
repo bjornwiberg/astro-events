@@ -5,12 +5,6 @@ import _2024 from "./2024";
 import _2025 from "./2025";
 import _2026 from "./2026";
 
-const events: EventBaseType[] = [
-	..._2022,
-	..._2023,
-	..._2024,
-	..._2025,
-	..._2026,
-];
+const events: EventBaseType[] = [..._2022, ..._2023, ..._2024, ..._2025, ..._2026];
 
 export default events;

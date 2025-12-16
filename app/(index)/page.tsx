@@ -1,7 +1,7 @@
 import { headers } from "next/headers";
 
-import { EventBaseType } from "../../types/events";
-import { SearchParams } from "../../types/searchParams";
+import type { EventBaseType } from "../../types/events";
+import type { SearchParams } from "../../types/searchParams";
 
 import { getDateFromSearchParams } from "../../utils/date";
 

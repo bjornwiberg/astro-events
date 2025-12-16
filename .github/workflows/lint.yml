@@ -1,0 +1,24 @@
+name: Lint and Format Check
+
+on:
+  pull_request:
+
+jobs:
+  lint:
+    name: Check linting and formatting
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Run Biome check
+        run: yarn check

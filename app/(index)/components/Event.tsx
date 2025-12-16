@@ -1,6 +1,6 @@
-import { JSX } from "react";
+import { Fragment, type JSX } from "react";
 
-import { EventBaseType, EventType } from "../../../types/events";
+import { type EventBaseType, EventType } from "../../../types/events";
 
 import {
   formatDate,
@@ -33,10 +33,7 @@ export function Event({ event, offset }: EventProps) {
     endDate ? ` - ${formatDateWithOffset(new Date(endDate))}` : ""
   }`;
 
-  if (
-    type === EventType.TRIPURA_SUNDARI_PEAK ||
-    type === EventType.FULL_MOON_PEAK
-  )
+  if (type === EventType.TRIPURA_SUNDARI_PEAK || type === EventType.FULL_MOON_PEAK)
     peakString = (
       <div>
         {formatDateWithOffset(new Date(startDate))} <em>(Peak)</em>
@@ -49,13 +46,11 @@ export function Event({ event, offset }: EventProps) {
         {formatDateWithOffset(new Date(peakDate))} <em>(Maximum)</em>
       </div>
     ) : (
-      <></>
+      <Fragment />
     );
 
   if (type === EventType.TRIPURA_SUNDARI_PEAK) {
-    const { start, end } = getTripuraSundariDatesFromPeakDate(
-      new Date(startDate)
-    );
+    const { start, end } = getTripuraSundariDatesFromPeakDate(new Date(startDate));
 
     dateString = `${formatDateWithOffset(
       new Date(start)
