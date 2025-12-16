@@ -1,4 +1,4 @@
-import { EventBaseType, EventType } from "../../types/events";
+import { type EventBaseType, EventType } from "../../types/events";
 
 const fullMoon: EventBaseType[] = [
   {

@@ -1,19 +1,16 @@
 import ical, { ICalCalendarMethod } from "ical-generator";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import eventsData from "../../../data/events";
-import { EventType, EventBaseType } from "../../../types/events";
-import { getIconAndNameFromType } from "../../../utils/event";
+import { type EventBaseType, EventType } from "../../../types/events";
 import {
   getDateWithOffsetAndDST,
-  getTripuraSundariDatesFromPeakDate,
   getFullMoonDatesFromPeakDate,
+  getTripuraSundariDatesFromPeakDate,
   isDateDST,
 } from "../../../utils/date";
+import { getIconAndNameFromType } from "../../../utils/event";
 
-type NormalizedEvent = Omit<
-  EventBaseType,
-  "startDate" | "endDate" | "peakDate" | "updatedAt"
-> & {
+type NormalizedEvent = Omit<EventBaseType, "startDate" | "endDate" | "peakDate" | "updatedAt"> & {
   startDate: Date;
   endDate?: Date;
   peakDate?: Date;
@@ -125,15 +122,19 @@ const generateCalendar = (events: EventBaseType[]) => {
 
       if (event.type === EventType.TRIPURA_SUNDARI_PEAK) {
         const events = createTripuraSundariEvents(event, name);
-        events.forEach((eventData) => calendar.createEvent(eventData));
+        events.forEach((eventData) => {
+          calendar.createEvent(eventData);
+        });
       } else if (event.type === EventType.FULL_MOON_PEAK) {
         const events = createFullMoonEvents(event, name);
-        events.forEach((eventData) => calendar.createEvent(eventData));
-      } else if (
-        [EventType.MOON_ECLIPSE, EventType.SOLAR_ECLIPSE].includes(event.type)
-      ) {
+        events.forEach((eventData) => {
+          calendar.createEvent(eventData);
+        });
+      } else if ([EventType.MOON_ECLIPSE, EventType.SOLAR_ECLIPSE].includes(event.type)) {
         const events = createEclipseEvents(event, name);
-        events.forEach((eventData) => calendar.createEvent(eventData));
+        events.forEach((eventData) => {
+          calendar.createEvent(eventData);
+        });
       } else {
         calendar.createEvent(createRegularEvent(event, name));
       }
@@ -142,7 +143,7 @@ const generateCalendar = (events: EventBaseType[]) => {
   return calendar;
 };
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   try {
     const calendar = generateCalendar(eventsData);
     const response = new NextResponse(calendar.toString(), {
@@ -152,10 +153,9 @@ export async function GET(req: NextRequest) {
       },
     });
     return response;
-  } catch (error) {
-    return new NextResponse(
-      JSON.stringify({ error: "Failed to generate calendar" }),
-      { status: 500 }
-    );
+  } catch {
+    return new NextResponse(JSON.stringify({ error: "Failed to generate calendar" }), {
+      status: 500,
+    });
   }
 }

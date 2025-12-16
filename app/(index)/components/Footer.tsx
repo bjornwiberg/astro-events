@@ -1,5 +1,3 @@
-import React from "react";
-
 import { track } from "../../../utils/mixpanel";
 
 export default function Footer() {
