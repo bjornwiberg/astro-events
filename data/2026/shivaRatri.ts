@@ -19,22 +19,22 @@ const shivaRatri: EventBaseType[] = [
   },
   {
     type: EventType.SHIVARATRI,
-    startDate: "2026-04-15T00:12:00+02:00",
+    startDate: "2026-04-16T00:12:00+02:00",
     endDate: "2026-04-16T02:18:00+02:00",
   },
   {
     type: EventType.SHIVARATRI,
-    startDate: "2026-05-15T00:17:00+02:00",
+    startDate: "2026-05-16T00:17:00+02:00",
     endDate: "2026-05-16T02:07:00+02:00",
   },
   {
     type: EventType.SHIVARATRI,
-    startDate: "2026-06-13T00:25:00+02:00",
+    startDate: "2026-06-14T00:25:00+02:00",
     endDate: "2026-06-14T02:07:00+02:00",
   },
   {
     type: EventType.SHIVARATRI,
-    startDate: "2026-07-12T00:29:00+02:00",
+    startDate: "2026-07-13T00:29:00+02:00",
     endDate: "2026-07-13T02:14:00+02:00",
   },
   {
@@ -44,7 +44,7 @@ const shivaRatri: EventBaseType[] = [
   },
   {
     type: EventType.SHIVARATRI,
-    startDate: "2026-09-09T00:06:00+02:00",
+    startDate: "2026-09-10T00:06:00+02:00",
     endDate: "2026-09-10T02:20:00+02:00",
   },
   {
