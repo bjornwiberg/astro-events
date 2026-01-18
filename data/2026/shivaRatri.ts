@@ -39,7 +39,7 @@ const shivaRatri: EventBaseType[] = [
   },
   {
     type: EventType.SHIVARATRI,
-    startDate: "2026-08-11T00:21:00+02:00",
+    startDate: "2026-08-12T00:21:00+02:00",
     endDate: "2026-08-12T02:18:00+02:00",
   },
   {
