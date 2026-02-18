@@ -873,11 +873,11 @@ react-select@^5.10.2:
     use-isomorphic-layout-effect "^1.2.0"
 
 react-timezone-select@^3.2.8:
-  version "3.2.8"
-  resolved "https://registry.yarnpkg.com/react-timezone-select/-/react-timezone-select-3.2.8.tgz#6d247f18cfd401df1af8d240b2d3b277331240be"
-  integrity sha512-efEIVmYAHtm+oS+YlE/9DbieMka1Lop0v1LsW1TdLq0yCBnnAzROKDUY09CICY8TCijZlo0fk+wHZZkV5NpVNw==
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/react-timezone-select/-/react-timezone-select-3.3.2.tgz#0607ee55fb2b335229a00248f8c62d4799dbdc37"
+  integrity sha512-LmsQJ5hjjJRy1mMkUKI6+8WWDtKWkpnv8X3pWw/0V32nd8WZNCIwy7l1rzOyVCmyz8pJ2LNalOIDmV3UPbX30A==
   dependencies:
-    spacetime "^7.6.0"
+    spacetime "^7.12.0"
     timezone-soft "^1.5.2"
 
 react-transition-group@^4.3.0:
@@ -963,10 +963,10 @@ source-map@^0.5.7:
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.5.7.tgz#8a039d2d1021d22d1ea14c80d8ea468ba2ef3fcc"
   integrity sha512-LbrmJOMUSdEVxIKvdcJzQC+nQhe8FUZQTXQy6+I75skNgn3OoQ0DZA8YnFa7gp8tqtL3KPf1kmo0R5DoApeSGQ==
 
-spacetime@^7.6.0:
-  version "7.6.1"
-  resolved "https://registry.yarnpkg.com/spacetime/-/spacetime-7.6.1.tgz#60610e4b41e47225216614e62a7073c680b47adf"
-  integrity sha512-LeqAU4HKi0DyJzhp6qHAGklipM81WvGDXVGlwXEZ1hHJCZUT4JhduBwovdnRvtqUPjDaI4DT2C/ZlsIXodSF8w==
+spacetime@^7.12.0:
+  version "7.12.0"
+  resolved "https://registry.yarnpkg.com/spacetime/-/spacetime-7.12.0.tgz#2377bd181772253542c0fd356676a082408ca62e"
+  integrity sha512-n7iQdr/oiTc0Yc0m5/8lpqRPMxuD9c6Yk7F8Np5+jH7tawt+dJZeCLDHNnr2kP5tUlv1H0fazdCOE9EQUv0B3g==
 
 styled-jsx@5.1.6:
   version "5.1.6"
