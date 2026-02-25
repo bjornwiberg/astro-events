@@ -430,38 +430,38 @@
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
 "@mixpanel/rrdom@^2.0.0-alpha.18":
-  version "2.0.0-alpha.18.2"
-  resolved "https://registry.yarnpkg.com/@mixpanel/rrdom/-/rrdom-2.0.0-alpha.18.2.tgz#0fc80cb110c5793e9371591f4807d1a7fa0aa264"
-  integrity sha512-vX/tbnS14ZzzatC7vOyvAm9tOLU8tof0BuppBlphzEx1YHTSw8DQiAmyAc0AmXidchLV0W+cUHV/WsehPLh2hQ==
+  version "2.0.0-alpha.18.3"
+  resolved "https://registry.yarnpkg.com/@mixpanel/rrdom/-/rrdom-2.0.0-alpha.18.3.tgz#6b2a939ccc584783cdcdf61d2ad2a86bc9f50e14"
+  integrity sha512-FpQ/WJkVgb0kF49ebqtqf5F7dsqU/o9CfzPR8BAafzVQkieaPCRBFyLh8CDCtKKY0k8DJRqcamj388MLd6QJpQ==
   dependencies:
     "@mixpanel/rrweb-snapshot" "^2.0.0-alpha.18"
 
-"@mixpanel/rrweb-plugin-console-record@2.0.0-alpha.18.2":
-  version "2.0.0-alpha.18.2"
-  resolved "https://registry.yarnpkg.com/@mixpanel/rrweb-plugin-console-record/-/rrweb-plugin-console-record-2.0.0-alpha.18.2.tgz#219fddfe6902276adfea0f60b8b9e3b94f339027"
-  integrity sha512-Xkwh2gSdLqHRkWSXv8CPVCPQj5L85KnWc5DZQ0CXNRFgm2hTl5/YP6zfUubVs2JVXZHGcSGU+g7JVO2WcFJyyg==
+"@mixpanel/rrweb-plugin-console-record@2.0.0-alpha.18.3":
+  version "2.0.0-alpha.18.3"
+  resolved "https://registry.yarnpkg.com/@mixpanel/rrweb-plugin-console-record/-/rrweb-plugin-console-record-2.0.0-alpha.18.3.tgz#d24dac13d556a89a88f16051ed037f313addc556"
+  integrity sha512-xau4CixCli8HepZ5snLXQAgUYluGeQg2ZHlv7bRFQTPaA02YfOiwjF295ohMtVOI1VWkFxeK5uDeFnOb/S5Uow==
 
 "@mixpanel/rrweb-snapshot@^2.0.0-alpha.18":
-  version "2.0.0-alpha.18.2"
-  resolved "https://registry.yarnpkg.com/@mixpanel/rrweb-snapshot/-/rrweb-snapshot-2.0.0-alpha.18.2.tgz#4bafed63e3b7dc6003791d2f00c7f918b35bf04e"
-  integrity sha512-2kSnjZZ3QZ9zOz/isOt8s54mXUUDgXk/u0eEi/rE0xBWDeuA0NHrBcqiMc+w4F/yWWUpo5F5zcuPeYpc6ufAsw==
+  version "2.0.0-alpha.18.3"
+  resolved "https://registry.yarnpkg.com/@mixpanel/rrweb-snapshot/-/rrweb-snapshot-2.0.0-alpha.18.3.tgz#35b9c4e789f52ec4d0f0ba5835f4b50320be92c1"
+  integrity sha512-s+OONdR5WGpw3DapBMUeXvNGQAZuAr/VzkG+D6f/DsK2sV2PyibmrQJUZUSGYqB3pGGWzmJPO9BvqPBzfAZ5SA==
   dependencies:
     postcss "^8.4.38"
 
 "@mixpanel/rrweb-types@^2.0.0-alpha.18":
-  version "2.0.0-alpha.18.2"
-  resolved "https://registry.yarnpkg.com/@mixpanel/rrweb-types/-/rrweb-types-2.0.0-alpha.18.2.tgz#c541e4764a1176484c18bcbaf8bfc7f15623aaeb"
-  integrity sha512-ucIYe1mfJ2UksvXW+d3bOySTB2/0yUSqQJlUydvbBz6OO2Bhq3nJHyLXV9ExkgUMZm1ZyDcvvmNUd1+5tAXlpA==
+  version "2.0.0-alpha.18.3"
+  resolved "https://registry.yarnpkg.com/@mixpanel/rrweb-types/-/rrweb-types-2.0.0-alpha.18.3.tgz#545310233182f6fb538729d91c2ae2fc9251fdb2"
+  integrity sha512-K6L0AQUm5SzW/nKbb68uFWwg1S+NlVt1QOW3YMROrpI0nhnntQmEfHnecjyPYE/s5MxH+kqW8bH5bVpT/uJa3A==
 
 "@mixpanel/rrweb-utils@^2.0.0-alpha.18":
-  version "2.0.0-alpha.18.2"
-  resolved "https://registry.yarnpkg.com/@mixpanel/rrweb-utils/-/rrweb-utils-2.0.0-alpha.18.2.tgz#fe544fd82d3fcb78735226a2730e587b971092d6"
-  integrity sha512-OomKIB6GTx5xvCLJ7iic2khT/t/tnCJUex13aEqsbSqIT/UzUUsqf+LTrgUK5ex+f6odmkCNjre2y5jvpNqn+g==
+  version "2.0.0-alpha.18.3"
+  resolved "https://registry.yarnpkg.com/@mixpanel/rrweb-utils/-/rrweb-utils-2.0.0-alpha.18.3.tgz#b4199607f3b740c04c14d61b44ee8caf248bbd1a"
+  integrity sha512-5hvfIhYaSlpJYKQn4nK1s3Rv63UExMq5l1FtAKFXznCqsnVIEb+yICKOiESSzIRwrCxInnUvFOGCfNWBXy9QLw==
 
-"@mixpanel/rrweb@2.0.0-alpha.18.2":
-  version "2.0.0-alpha.18.2"
-  resolved "https://registry.yarnpkg.com/@mixpanel/rrweb/-/rrweb-2.0.0-alpha.18.2.tgz#b8fb5aca21648a844c0f561f3e027ad047faf8ce"
-  integrity sha512-J3dVTEu6Z4p8di7y9KKvUooNuBjX97DdG6XGWoPEPi07A9512h9M8MEtvlY3mK0PGfuC0Mz5Pv/Ws6gjGYfKQg==
+"@mixpanel/rrweb@2.0.0-alpha.18.3":
+  version "2.0.0-alpha.18.3"
+  resolved "https://registry.yarnpkg.com/@mixpanel/rrweb/-/rrweb-2.0.0-alpha.18.3.tgz#7999d34145d704cca70acebf845129490a5ef9b6"
+  integrity sha512-di3QfGmRleiDN85+E6OoJHCr/vq/wX9Z8l/Jt4mqHoLcbLEa46dkZ/qSgl4pYFby1Q6BKEwfwGIav15Ay7szlg==
   dependencies:
     "@mixpanel/rrdom" "^2.0.0-alpha.18"
     "@mixpanel/rrweb-snapshot" "^2.0.0-alpha.18"
@@ -714,6 +714,11 @@ jsesc@^3.0.2:
   resolved "https://registry.yarnpkg.com/jsesc/-/jsesc-3.1.0.tgz#74d335a234f67ed19907fdadfac7ccf9d409825d"
   integrity sha512-/sM3dO2FOzXjKQhJuo0Q173wf2KOo8t4I8vHy6lF9poUp7bKT0/NHE8fPX23PwfhnykfqnC2xRxOnVw5XuGIaA==
 
+json-logic-js@2.0.5:
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/json-logic-js/-/json-logic-js-2.0.5.tgz#55f0c687dd6f56b02ccdcfdd64171ed998ab5499"
+  integrity sha512-rTT2+lqcuUmj4DgWfmzupZqQDA64AdmYqizzMPWj3DxGdfFNsxPpcNVSaTj4l8W2tG/+hg7/mQhxjU3aPacO6g==
+
 json-parse-even-better-errors@^2.3.0:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/json-parse-even-better-errors/-/json-parse-even-better-errors-2.3.1.tgz#7c47805a94319928e05777405dc12e1f7a4ee02d"
@@ -742,12 +747,13 @@ mitt@^3.0.0:
   integrity sha512-vKivATfr97l2/QBCYAkXYDbrIWPM2IIKEl7YPhjCvKlG3kE2gm+uBo6nEXK3M5/Ffh/FLpKExzOQ3JJoJGFKBw==
 
 mixpanel-browser@^2.72.0:
-  version "2.74.0"
-  resolved "https://registry.yarnpkg.com/mixpanel-browser/-/mixpanel-browser-2.74.0.tgz#c66767fb82fa4a928e4c1ba1603db4a23199ddac"
-  integrity sha512-FWifdAaI+8zKEROb9T+gy0NRZB0gaCC5iy20rDjZ3C+KCwCsJcITT6lAYErWbwwmk3Ei34JBjLsnrDLPYj+hOw==
+  version "2.75.0"
+  resolved "https://registry.yarnpkg.com/mixpanel-browser/-/mixpanel-browser-2.75.0.tgz#2aeb71e84f3d27c1665b23b1a35b44495bf41b29"
+  integrity sha512-jii/M8lXgHHgJ922t+lvUPSuzYEnME1WlXr2Okak6XdZ1WlTv/L2EOnCWAyM750zoHA6kbJIN2XswoGLnaLPnw==
   dependencies:
-    "@mixpanel/rrweb" "2.0.0-alpha.18.2"
-    "@mixpanel/rrweb-plugin-console-record" "2.0.0-alpha.18.2"
+    "@mixpanel/rrweb" "2.0.0-alpha.18.3"
+    "@mixpanel/rrweb-plugin-console-record" "2.0.0-alpha.18.3"
+    json-logic-js "2.0.5"
 
 ms@^2.1.3:
   version "2.1.3"
