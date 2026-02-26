@@ -6,6 +6,7 @@ import { useMemo, useState, useEffect } from "react";
 import { v2Theme } from "../theme";
 import { TranslationProvider } from "./TranslationProvider";
 import { LanguagePicker } from "./LanguagePicker";
+import { Navigation } from "./Navigation";
 import type { CalculatorEventType } from "../../types/calculatorEvent";
 import type { GeoLocation } from "../../lib/calculator";
 import type { Translations } from "../../lib/i18n";
@@ -42,6 +43,11 @@ export default function IndexPage({
     setLocale(lang);
   }, [lang]);
 
+  useEffect(() => {
+    setYearFilter(year);
+    setMonthFilter(month);
+  }, [year, month]);
+
   useMemo(() => {
     initMixpanel();
   }, []);
@@ -62,6 +68,7 @@ export default function IndexPage({
             {yearFilter} – month {monthFilter + 1} · {location.city ?? `${location.lat.toFixed(2)}, ${location.lng.toFixed(2)}`}
           </p>
           <LanguagePicker value={locale} onChange={handleLocaleChange} />
+          <Navigation year={yearFilter} month={monthFilter} />
           <pre style={{ fontSize: 12, overflow: "auto" }}>
             {filteredEvents.length} events this month
           </pre>
