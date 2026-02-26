@@ -33,7 +33,8 @@
   "calendarSubscribe": {
     "title": "Subscribe to calendar",
     "copy": "Copy URL",
-    "copied": "Copied!"
+    "copied": "Copied!",
+    "close": "Close"
   },
   "footer": {
     "createdBy": "Created by {{author}}"
