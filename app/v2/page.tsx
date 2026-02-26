@@ -104,6 +104,7 @@ export default async function V2Page(props: PageProps) {
       month={safeMonth}
       lang={lang}
       translations={translations}
+      baseUrl={`${protocol}://${host}`}
     />
   );
 }
