@@ -1,13 +1,13 @@
 import ical, { ICalCalendarMethod } from "ical-generator";
 import { type NextRequest, NextResponse } from "next/server";
-import type { CalculatorEventType } from "../../../types/calculatorEvent";
-import { EventType } from "../../../types/events";
-import { fetchCalculatorEvents } from "../../../lib/calculator";
-import { getIconAndNameFromType } from "../../../utils/event";
+import type { CalculatorEventType } from "../../../../types/calculatorEvent";
+import { EventType } from "../../../../types/events";
+import { fetchCalculatorEvents } from "../../../../lib/calculator";
+import { getIconAndNameFromType } from "../../../../utils/event";
 import {
   getTripuraSundariDatesFromPeakDate,
   getFullMoonDatesFromPeakDate,
-} from "../../../utils/dateNew";
+} from "../../../../utils/dateNew";
 
 function generateV2Calendar(events: CalculatorEventType[]) {
   const calendar = ical({

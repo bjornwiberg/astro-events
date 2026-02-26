@@ -16,10 +16,10 @@ import { Chips } from "./Chips";
 import { Footer } from "./Footer";
 import { Errors } from "./Errors";
 import { CalendarSubscribe } from "./CalendarSubscribe";
-import type { CalculatorEventType } from "../../types/calculatorEvent";
-import type { GeoLocation } from "../../lib/calculator";
-import type { Translations } from "../../lib/i18n";
-import { initMixpanel } from "../../utils/mixpanel";
+import type { CalculatorEventType } from "../../../types/calculatorEvent";
+import type { GeoLocation } from "../../../lib/calculator";
+import type { Translations } from "../../../lib/i18n";
+import { initMixpanel } from "../../../utils/mixpanel";
 
 type IndexPageProps = {
   events: CalculatorEventType[];

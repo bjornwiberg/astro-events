@@ -1,14 +1,14 @@
 "use client";
 
 import { Box, Typography } from "@mui/material";
-import type { CalculatorEventType } from "../../types/calculatorEvent";
-import { EventType } from "../../types/events";
-import { getIconAndNameFromType } from "../../utils/event";
+import type { CalculatorEventType } from "../../../types/calculatorEvent";
+import { EventType } from "../../../types/events";
+import { getIconAndNameFromType } from "../../../utils/event";
 import {
   formatDateInTimezone,
   getTripuraSundariDatesFromPeakDate,
   getFullMoonDatesFromPeakDate,
-} from "../../utils/dateNew";
+} from "../../../utils/dateNew";
 import { useTranslation } from "./TranslationProvider";
 
 type EventProps = {

@@ -2,7 +2,7 @@
 
 import { Box, Typography } from "@mui/material";
 import { Event } from "./Event";
-import type { CalculatorEventType } from "../../types/calculatorEvent";
+import type { CalculatorEventType } from "../../../types/calculatorEvent";
 
 type EventsProps = {
   events: CalculatorEventType[];
