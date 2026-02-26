@@ -7,6 +7,7 @@ import { v2Theme } from "../theme";
 import { TranslationProvider } from "./TranslationProvider";
 import { LanguagePicker } from "./LanguagePicker";
 import { Navigation } from "./Navigation";
+import { LocationSelector } from "./LocationSelector";
 import type { CalculatorEventType } from "../../types/calculatorEvent";
 import type { GeoLocation } from "../../lib/calculator";
 import type { Translations } from "../../lib/i18n";
@@ -39,6 +40,10 @@ export default function IndexPage({
     router.refresh();
   };
 
+  const handleLocationChange = (_location: GeoLocation) => {
+    router.refresh();
+  };
+
   useEffect(() => {
     setLocale(lang);
   }, [lang]);
@@ -68,6 +73,7 @@ export default function IndexPage({
             {yearFilter} – month {monthFilter + 1} · {location.city ?? `${location.lat.toFixed(2)}, ${location.lng.toFixed(2)}`}
           </p>
           <LanguagePicker value={locale} onChange={handleLocaleChange} />
+          <LocationSelector value={location} onChange={handleLocationChange} />
           <Navigation year={yearFilter} month={monthFilter} />
           <pre style={{ fontSize: 12, overflow: "auto" }}>
             {filteredEvents.length} events this month
