@@ -1,0 +1,44 @@
+{
+  "header": {
+    "title": "Welcome to Astro Events",
+    "viewing": "Viewing astrological events for {{monthYear}}"
+  },
+  "nav": {
+    "previousMonth": "Previous month",
+    "nextMonth": "Next month",
+    "today": "Today's month"
+  },
+  "event": {
+    "peak": "Peak",
+    "maximum": "Maximum"
+  },
+  "eventTypes": {
+    "EQUINOX": "Equinox",
+    "SOLSTICE": "Solstice",
+    "HIATUS_SOLAR": "Hiatus Solar",
+    "TRIPURA_SUNDARI_PEAK": "Tripura Sundari",
+    "FULL_MOON_PEAK": "Full moon",
+    "SHIVARATRI": "Shivaratri",
+    "NEW_MOON": "New moon",
+    "MOON_ECLIPSE": "Moon eclipse",
+    "SOLAR_ECLIPSE": "Solar eclipse"
+  },
+  "location": {
+    "placeholder": "Search city or place...",
+    "myLocation": "My location"
+  },
+  "angleToggle": {
+    "label": "Calculate from astrological angles"
+  },
+  "calendarSubscribe": {
+    "title": "Subscribe to calendar",
+    "copy": "Copy URL",
+    "copied": "Copied!"
+  },
+  "footer": {
+    "createdBy": "Created by {{author}}"
+  },
+  "errors": {
+    "fetchEvents": "Error fetching events"
+  }
+}
