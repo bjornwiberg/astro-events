@@ -1,11 +1,12 @@
 /**
- * Validates that the request Origin matches the app's own host.
- * Used by /api/v2/* routes to prevent external abuse.
+ * Validates that the request Origin matches the app's own host, or that
+ * Origin is missing (same-origin fetches sometimes omit Origin).
  */
 export function validateOrigin(request: Request): boolean {
   const origin = request.headers.get("origin");
   const host = request.headers.get("host");
-  if (!origin || !host) return false;
+  if (!host) return false;
+  if (!origin) return true; // same-origin request, no Origin header
   try {
     const originUrl = new URL(origin);
     return originUrl.host === host;
@@ -22,17 +23,17 @@ export function corsHeaders(request: Request): HeadersInit {
   const origin = request.headers.get("origin");
   const host = request.headers.get("host");
   const allowed =
-    origin &&
     host &&
-    (() => {
-      try {
-        return new URL(origin).host === host;
-      } catch {
-        return false;
-      }
-    })();
+    (!origin ||
+      (() => {
+        try {
+          return new URL(origin).host === host;
+        } catch {
+          return false;
+        }
+      })());
   return {
-    "Access-Control-Allow-Origin": allowed ? origin : "",
+    "Access-Control-Allow-Origin": allowed && origin ? origin : "",
     "Access-Control-Allow-Methods": "GET, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type",
     "Access-Control-Max-Age": "86400",

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState, useEffect } from "react";
+import { useCallback, useState, useEffect, useRef } from "react";
 import { Autocomplete, Button, TextField } from "@mui/material";
 import MyLocationIcon from "@mui/icons-material/MyLocation";
 import { useTranslation } from "./TranslationProvider";
@@ -38,9 +38,19 @@ async function reverseGeocode(lat: number, lon: number): Promise<{ display_name:
   const res = await fetch(`/api/v2/geocode?${params}`);
   if (!res.ok) return null;
   const data = await res.json();
-  const display_name = data.display_name ?? `${lat}, ${lon}`;
+  const display_name =
+    typeof data.display_name === "string"
+      ? data.display_name
+      : `${lat.toFixed(4)}, ${lon.toFixed(4)}`;
   const address = data.address ?? {};
-  const city = address.city ?? address.town ?? address.village ?? address.state ?? undefined;
+  const city =
+    address.city ??
+    address.town ??
+    address.village ??
+    address.municipality ??
+    address.county ??
+    address.state ??
+    undefined;
   return { display_name, city, timezone: undefined };
 }
 
@@ -51,7 +61,9 @@ type LocationSelectorProps = {
 
 export function LocationSelector({ value, onChange }: LocationSelectorProps) {
   const { t } = useTranslation();
-  const [inputValue, setInputValue] = useState(value?.city ?? (value ? `${value.lat.toFixed(2)}, ${value.lng.toFixed(2)}` : ""));
+  const valueDisplay =
+    value?.city ?? (value ? `${value.lat.toFixed(2)}, ${value.lng.toFixed(2)}` : "");
+  const [inputValue, setInputValue] = useState(valueDisplay);
   const [options, setOptions] = useState<NominatimSearchItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
@@ -71,16 +83,37 @@ export function LocationSelector({ value, onChange }: LocationSelectorProps) {
     }
   }, []);
 
-  useEffect(() => {
-    setInputValue(value?.city ?? (value ? `${value.lat.toFixed(2)}, ${value.lng.toFixed(2)}` : ""));
-  }, [value?.lat, value?.lng, value?.city]);
+  const searchTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    const q = inputValue.trim();
-    if (!q) return;
-    const id = setTimeout(() => fetchOptions(q), 300);
-    return () => clearTimeout(id);
-  }, [inputValue, fetchOptions]);
+    setInputValue(valueDisplay);
+    return () => {
+      if (searchTimeoutRef.current) {
+        clearTimeout(searchTimeoutRef.current);
+        searchTimeoutRef.current = null;
+      }
+    };
+  }, [valueDisplay]);
+
+  const handleInputChange = useCallback(
+    (v: string) => {
+      setInputValue(v);
+      if (v.trim() === valueDisplay.trim()) {
+        setOptions([]);
+        return;
+      }
+      if (searchTimeoutRef.current) clearTimeout(searchTimeoutRef.current);
+      searchTimeoutRef.current = setTimeout(() => {
+        searchTimeoutRef.current = null;
+        if (!v.trim()) {
+          setOptions([]);
+          return;
+        }
+        fetchOptions(v);
+      }, 300);
+    },
+    [valueDisplay, fetchOptions],
+  );
 
   const handleFocus = () => {
     setOpen(true);
@@ -121,12 +154,12 @@ export function LocationSelector({ value, onChange }: LocationSelectorProps) {
         const location: GeoLocation = {
           lng: lon,
           lat,
-          city: rev?.city ?? rev?.display_name,
+          city: rev?.city ?? rev?.display_name ?? undefined,
           timezone: rev?.timezone ?? "UTC",
         };
         setLocationCookie(location);
         onChange(location);
-        setInputValue(rev?.display_name ?? `${lat.toFixed(2)}, ${lon.toFixed(2)}`);
+        setInputValue(rev?.display_name ?? `${lat.toFixed(4)}, ${lon.toFixed(4)}`);
       },
       () => {
         track("Location Geolocation Denied");
@@ -142,7 +175,10 @@ export function LocationSelector({ value, onChange }: LocationSelectorProps) {
         onOpen={() => setOpen(true)}
         onClose={() => setOpen(false)}
         inputValue={inputValue}
-        onInputChange={(_, v) => setInputValue(v)}
+        onInputChange={(_, v, reason) => {
+          if (reason === "input") handleInputChange(v);
+          else setInputValue(v);
+        }}
         options={options}
         getOptionLabel={(opt) => (typeof opt === "string" ? opt : opt.display_name)}
         loading={loading}
