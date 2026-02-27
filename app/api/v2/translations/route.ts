@@ -38,6 +38,11 @@ function unflatten(entries: { path: string; value: string }[]): Translations {
   return out;
 }
 
+const LANG_CODE_MAP: Record<string, string> = {
+  zh: "zh-Hans",
+  no: "nb",
+};
+
 async function translateStrings(
   strings: string[],
   target: string,
@@ -47,14 +52,34 @@ async function translateStrings(
   if (!baseUrl) {
     return strings;
   }
+  const mappedTarget = LANG_CODE_MAP[target] ?? target;
   const url = `${baseUrl.replace(/\/$/, "")}/translate`;
   const body: { q: string[]; source: string; target: string; api_key?: string } = {
     q: strings,
     source: "en",
-    target,
+    target: mappedTarget,
   };
   if (apiKey) body.api_key = apiKey;
 
+  const placeholderRe = /\{\{(\w+)\}\}/g;
+  const placeholders = strings.map((s) => {
+    const matches: string[] = [];
+    let m: RegExpExecArray | null;
+    const re = new RegExp(placeholderRe.source, "g");
+    while ((m = re.exec(s)) !== null) matches.push(m[0]);
+    return matches;
+  });
+  const hasPlaceholders = placeholders.some((p) => p.length > 0);
+  const masked = strings.map((s, i) => {
+    let out = s;
+    placeholders[i].forEach((ph, j) => {
+      out = out.replace(ph, `<var id="p${j}" />`);
+    });
+    return out;
+  });
+
+  body.q = masked;
+  if (hasPlaceholders) (body as Record<string, unknown>).format = "html";
   const res = await fetch(url, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -64,7 +89,15 @@ async function translateStrings(
     throw new Error(`LibreTranslate error: ${res.status}`);
   }
   const data = (await res.json()) as { translatedText: string[] };
-  return data.translatedText || strings;
+  const translated = data.translatedText || masked;
+  return translated.map((s, i) => {
+    let out = s;
+    placeholders[i].forEach((ph, j) => {
+      const re = new RegExp(`<var\\s+id=["']p${j}["']\\s*\\/?>(?:</var>)?`, "i");
+      out = out.replace(re, ph);
+    });
+    return out;
+  });
 }
 
 export async function GET(req: NextRequest) {
