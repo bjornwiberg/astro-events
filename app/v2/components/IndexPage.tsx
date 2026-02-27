@@ -66,6 +66,10 @@ export default function IndexPage({
   const loadingTextRef = useRef("Changing language…");
   const overlayTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   useEffect(() => {
+    document.documentElement.setAttribute("data-theme", darkMode ? "dark" : "light");
+  }, [darkMode]);
+
+  useEffect(() => {
     if (initialDark !== null) return;
     const dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
     setDarkMode(dark);

@@ -36,6 +36,7 @@ export function Header({
         borderBottom: isDark ? "1px solid" : "none",
         borderColor: "divider",
         mb: 3,
+        transition: "background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease",
       }}
     >
       <Container disableGutters>

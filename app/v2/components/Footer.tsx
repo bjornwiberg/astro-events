@@ -21,6 +21,7 @@ export function Footer() {
         borderColor: "divider",
         zIndex: (theme) => theme.zIndex.appBar - 1,
         textAlign: "center",
+        transition: "background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease",
       }}
     >
       <Typography variant="caption" color="text.secondary" sx={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 0.5 }}>

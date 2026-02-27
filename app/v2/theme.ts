@@ -1,5 +1,7 @@
 import { createTheme, type ThemeOptions } from "@mui/material/styles";
 
+const themeTransition = "background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease";
+
 const shared: ThemeOptions = {
   typography: {
     fontFamily: [
@@ -14,6 +16,28 @@ const shared: ThemeOptions = {
       '"Segoe UI Emoji"',
       '"Segoe UI Symbol"',
     ].join(","),
+  },
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: { transition: themeTransition },
+      },
+    },
+    MuiCard: {
+      styleOverrides: {
+        root: { transition: themeTransition },
+      },
+    },
+    MuiPaper: {
+      styleOverrides: {
+        root: { transition: themeTransition },
+      },
+    },
+    MuiAppBar: {
+      styleOverrides: {
+        root: { transition: themeTransition },
+      },
+    },
   },
 };
 
@@ -30,7 +54,12 @@ export const lightTheme = createTheme({
     ...shared.components,
     MuiCard: {
       defaultProps: { elevation: 0 },
-      styleOverrides: { root: { border: "1px solid #E5E7EB" } },
+      styleOverrides: {
+        root: {
+          border: "1px solid #E5E7EB",
+          transition: themeTransition,
+        },
+      },
     },
   },
 });
@@ -48,7 +77,12 @@ export const darkTheme = createTheme({
     ...shared.components,
     MuiCard: {
       defaultProps: { elevation: 0 },
-      styleOverrides: { root: { border: "1px solid #2E2E2E" } },
+      styleOverrides: {
+        root: {
+          border: "1px solid #2E2E2E",
+          transition: themeTransition,
+        },
+      },
     },
   },
 });

@@ -1,8 +1,13 @@
+import { cookies } from "next/headers";
 import "./global.css";
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const cookieStore = await cookies();
+  const darkMode = cookieStore.get("darkMode")?.value === "true";
+  const dataTheme = darkMode ? "dark" : "light";
+
   return (
-    <html lang="en">
+    <html lang="en" data-theme={dataTheme}>
       <head>
         <title>Astro Events</title>
         <link
