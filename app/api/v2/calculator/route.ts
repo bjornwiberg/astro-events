@@ -34,7 +34,7 @@ export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const yearParam = searchParams.get("year");
   const year = yearParam ? parseInt(yearParam, 10) : new Date().getFullYear();
-  if (!Number.isInteger(year) || year < 2000 || year > 2100) {
+  if (!Number.isInteger(year)) {
     return NextResponse.json(
       { error: "Invalid year" },
       { status: 400, headers: corsHeaders(req) },
