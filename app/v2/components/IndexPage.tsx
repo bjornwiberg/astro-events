@@ -138,7 +138,7 @@ export default function IndexPage({
   }, [yearFilter, monthFilter, locale]);
 
   const timezone = location.timezone ?? "UTC";
-  const calendarUrl = `${baseUrl}/api/v2/calendar?lng=${location.lng}&lat=${location.lat}&year=${yearFilter}`;
+  const calendarUrl = `${baseUrl}/api/v2/calendar?lng=${location.lng}&lat=${location.lat}`;
 
   return (
     <ThemeProvider theme={theme}>

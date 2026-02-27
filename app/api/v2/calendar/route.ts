@@ -2,7 +2,7 @@ import ical, { ICalCalendarMethod } from "ical-generator";
 import { type NextRequest, NextResponse } from "next/server";
 import type { CalculatorEventType } from "../../../../types/calculatorEvent";
 import { EventType } from "../../../../types/events";
-import { fetchCalculatorEvents } from "../../../../lib/calculator";
+import { getCachedSubscriptionEvents } from "../../../../lib/calculator";
 import { getIconAndNameFromType } from "../../../../utils/event";
 import {
   getTripuraSundariDatesFromPeakDate,
@@ -79,18 +79,16 @@ export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const lngParam = searchParams.get("lng");
   const latParam = searchParams.get("lat");
-  const yearParam = searchParams.get("year");
 
   const lng = lngParam != null ? parseFloat(lngParam) : 13.0007;
   const lat = latParam != null ? parseFloat(latParam) : 55.6053;
-  const year = yearParam ? parseInt(yearParam, 10) : new Date().getFullYear();
 
-  if (!Number.isFinite(lng) || !Number.isFinite(lat) || !Number.isInteger(year) || year < 2000 || year > 2100) {
-    return NextResponse.json({ error: "Invalid lng, lat or year" }, { status: 400 });
+  if (!Number.isFinite(lng) || !Number.isFinite(lat)) {
+    return NextResponse.json({ error: "Invalid lng or lat" }, { status: 400 });
   }
 
   try {
-    const events = await fetchCalculatorEvents(year, lng, lat);
+    const events = await getCachedSubscriptionEvents(lng, lat);
     const calendar = generateV2Calendar(events);
     return new NextResponse(calendar.toString(), {
       headers: {
