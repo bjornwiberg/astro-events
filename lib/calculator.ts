@@ -23,13 +23,25 @@ export async function fetchCalculatorEvents(
   }
 
   const url = new URL(baseUrl);
-  url.searchParams.set("year", String(year));
-  url.searchParams.set("lng", String(lng));
-  url.searchParams.set("lat", String(lat));
-  if (apiKey) url.searchParams.set("key", apiKey);
+  url.searchParams.set("key", apiKey);
 
   const res = await fetch(url.toString(), {
-    headers: { Accept: "application/json" },
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify({
+      lng,
+      lat,
+      tmb: `${year}-01-01T00:00:00`,
+      tmf: `${year}-12-31T00:00:00`,
+      modules: {
+        eclipse: true,
+        season: true,
+        mphase: true,
+      },
+    }),
     next: { revalidate: 3600 },
   });
 
@@ -37,8 +49,8 @@ export async function fetchCalculatorEvents(
     throw new Error(`Calculator API error: ${res.status} ${res.statusText}`);
   }
 
-  const data = (await res.json()) as { events?: unknown[] };
-  const items = Array.isArray(data.events) ? data.events : [];
+  const data = (await res.json()) as unknown;
+  const items = Array.isArray(data) ? data : [];
   return mapApiResponseToEvents(items as Parameters<typeof mapApiResponseToEvents>[0]);
 }
 
