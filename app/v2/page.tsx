@@ -88,10 +88,11 @@ export default async function V2Page(props: PageProps) {
   const safeMonth = month >= 0 && month <= 11 ? month : new Date().getMonth();
 
   let events: CalculatorEventType[] = [];
+  let fetchError = false;
   try {
     events = await fetchCalculatorEvents(safeYear, location.lng, location.lat);
   } catch {
-    // pass empty; client can show error
+    fetchError = true;
   }
 
   const translations = await loadTranslations(lang, host);
@@ -105,6 +106,7 @@ export default async function V2Page(props: PageProps) {
       lang={lang}
       translations={translations}
       baseUrl={`${protocol}://${host}`}
+      fetchError={fetchError}
     />
   );
 }

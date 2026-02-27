@@ -13,6 +13,9 @@ export function Errors({ show }: ErrorsProps) {
   return (
     <Alert severity="error" sx={{ my: 2 }}>
       <Typography variant="body2">{t("errors.fetchEvents")}</Typography>
+      <Typography variant="body2" sx={{ mt: 1 }}>
+        {t("errors.fetchEventsHint")}
+      </Typography>
     </Alert>
   );
 }

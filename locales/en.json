@@ -40,6 +40,10 @@
     "createdBy": "Created by {{author}}"
   },
   "errors": {
-    "fetchEvents": "Error fetching events"
+    "fetchEvents": "Error fetching events",
+    "fetchEventsHint": "Set CALCULATOR_API_URL and CALCULATOR_API_KEY in .env.local (see .env.example)."
+  },
+  "loading": {
+    "changingLanguage": "Changing language…"
   }
 }
