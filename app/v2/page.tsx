@@ -1,6 +1,7 @@
 import { cookies, headers } from "next/headers";
 import type { GeoLocation } from "../../lib/calculator";
 import { getCachedSubscriptionEvents } from "../../lib/calculator";
+import { parseLocationCookie } from "../../lib/cookies";
 import { getLocationFromIp } from "../../lib/geoip";
 import type { Translations } from "../../lib/i18n";
 import { isSupportedLocale } from "../../lib/i18n";
@@ -8,35 +9,6 @@ import type { CalculatorEventType } from "../../types/calculatorEvent";
 import IndexPage from "./components/IndexPage";
 
 const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
-
-function parseLocationCookie(cookieValue: string | undefined): GeoLocation | null {
-  if (!cookieValue) return null;
-  try {
-    const decoded = decodeURIComponent(cookieValue);
-    const parsed = JSON.parse(decoded) as {
-      lng?: number;
-      lat?: number;
-      city?: string;
-      timezone?: string;
-    };
-    if (
-      typeof parsed.lng === "number" &&
-      typeof parsed.lat === "number" &&
-      Number.isFinite(parsed.lng) &&
-      Number.isFinite(parsed.lat)
-    ) {
-      return {
-        lng: parsed.lng,
-        lat: parsed.lat,
-        city: parsed.city,
-        timezone: parsed.timezone,
-      };
-    }
-  } catch {
-    // ignore
-  }
-  return null;
-}
 
 function parseAcceptLanguage(acceptLanguage: string | null): string {
   if (!acceptLanguage) return "en";

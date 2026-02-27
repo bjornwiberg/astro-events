@@ -1,30 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { corsHeaders, validateOrigin } from "../../../../lib/cors";
 import { fetchCalculatorEvents } from "../../../../lib/calculator";
-
-function parseLocationCookie(cookieHeader: string | null): {
-  lng?: number;
-  lat?: number;
-} {
-  if (!cookieHeader) return {};
-  const match = cookieHeader.match(/location=([^;]+)/);
-  if (!match) return {};
-  try {
-    const decoded = decodeURIComponent(match[1]);
-    const parsed = JSON.parse(decoded) as { lng?: number; lat?: number };
-    if (
-      typeof parsed.lng === "number" &&
-      typeof parsed.lat === "number" &&
-      Number.isFinite(parsed.lng) &&
-      Number.isFinite(parsed.lat)
-    ) {
-      return { lng: parsed.lng, lat: parsed.lat };
-    }
-  } catch {
-    // ignore
-  }
-  return {};
-}
+import { getCookieValue, parseLocationCookie } from "../../../../lib/cookies";
 
 export async function GET(req: NextRequest) {
   if (!validateOrigin(req)) {
@@ -41,7 +18,11 @@ export async function GET(req: NextRequest) {
     );
   }
 
-  const { lng, lat } = parseLocationCookie(req.headers.get("cookie") ?? null);
+  const location = parseLocationCookie(
+    getCookieValue(req.headers.get("cookie"), "location"),
+  );
+  const lng = location?.lng;
+  const lat = location?.lat;
 
   try {
     const events = await fetchCalculatorEvents(year, lng, lat);

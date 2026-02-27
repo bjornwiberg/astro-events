@@ -121,7 +121,7 @@ export default function IndexPage({
     setMonthFilter(month);
   }, [year, month]);
 
-  useMemo(() => {
+  useEffect(() => {
     initMixpanel();
   }, []);
 

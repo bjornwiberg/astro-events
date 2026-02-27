@@ -3,6 +3,7 @@
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { SUPPORTED_LOCALES } from "../../../lib/i18n";
 import { track } from "../../../utils/mixpanel";
+import { useTranslation } from "./TranslationProvider";
 
 const FLAGS: Record<string, string> = {
   en: "🇬🇧",
@@ -115,6 +116,7 @@ type LanguagePickerProps = {
 };
 
 export function LanguagePicker({ value, onChange, variant = "default" }: LanguagePickerProps) {
+  const { t } = useTranslation();
   const handleChange = (newLocale: string) => {
     // biome-ignore lint/suspicious/noDocumentCookie: cookie is set in the browser
     document.cookie = `lang=${encodeURIComponent(newLocale)};path=/;max-age=31536000;SameSite=Lax`;
@@ -126,10 +128,10 @@ export function LanguagePicker({ value, onChange, variant = "default" }: Languag
 
   return (
     <FormControl size="small" sx={{ minWidth: isAppbar ? 120 : 160 }}>
-      {!isAppbar && <InputLabel id="language-picker-label">Language</InputLabel>}
+      {!isAppbar && <InputLabel id="language-picker-label">{t("language.label")}</InputLabel>}
       <Select
         labelId={isAppbar ? undefined : "language-picker-label"}
-        label={isAppbar ? undefined : "Language"}
+        label={isAppbar ? undefined : t("language.label")}
         value={value}
         onChange={(e) => handleChange(e.target.value)}
         onOpen={() => track("Open Language Picker")}

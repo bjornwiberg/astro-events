@@ -88,9 +88,9 @@ export function CalendarSubscribe({ calendarUrl, variant = "default" }: Calendar
             }}
           />
           {copied && (
-            <span style={{ fontSize: 12, color: "success.main", marginTop: 4 }}>
+            <Typography variant="caption" sx={{ color: "success.main", mt: 0.5, display: "block" }}>
               {t("calendarSubscribe.copied")}
-            </span>
+            </Typography>
           )}
         </DialogContent>
         <DialogActions>

@@ -55,7 +55,13 @@ async function reverseGeocode(
     address.county ??
     address.state ??
     undefined;
-  return { display_name, city, timezone: undefined };
+  const timezone =
+    typeof data.timezone === "string"
+      ? data.timezone
+      : (data.address && typeof data.address.timezone === "string")
+        ? data.address.timezone
+        : undefined;
+  return { display_name, city, timezone };
 }
 
 type LocationSelectorProps = {

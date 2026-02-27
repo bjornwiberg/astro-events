@@ -5,6 +5,7 @@ import LightModeIcon from "@mui/icons-material/LightMode";
 import { AppBar, Box, Container, IconButton, Toolbar, Typography, useTheme } from "@mui/material";
 import { CalendarSubscribe } from "./CalendarSubscribe";
 import { LanguagePicker } from "./LanguagePicker";
+import { useTranslation } from "./TranslationProvider";
 
 type HeaderProps = {
   locale: string;
@@ -22,6 +23,7 @@ export function Header({
   onDarkModeToggle,
 }: HeaderProps) {
   const theme = useTheme();
+  const { t } = useTranslation();
   const isDark = theme.palette.mode === "dark";
 
   return (
@@ -44,7 +46,12 @@ export function Header({
           <Typography variant="h6" component="h1" sx={{ flexGrow: 1, whiteSpace: "nowrap" }}>
             Astro Events
           </Typography>
-          <IconButton color="inherit" onClick={onDarkModeToggle} size="small">
+          <IconButton
+            color="inherit"
+            onClick={onDarkModeToggle}
+            size="small"
+            aria-label={t("aria.toggleDarkMode")}
+          >
             {darkMode ? <LightModeIcon /> : <DarkModeIcon />}
           </IconButton>
           <LanguagePicker value={locale} onChange={onLocaleChange} variant="appbar" />

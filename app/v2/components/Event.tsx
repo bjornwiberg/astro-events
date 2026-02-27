@@ -16,7 +16,7 @@ const EVENT_COLORS: Record<EventType, string> = {
   [EventType.SOLSTICE]: "#fbbf24",
   [EventType.HIATUS_SOLAR]: "#f59e0b",
   [EventType.TRIPURA_SUNDARI_PEAK]: "#f43f5e",
-  [EventType.FULL_MOON_PEAK]: "#c4d0ff",
+  [EventType.FULL_MOON_PEAK]: "#6366b8",
   [EventType.SHIVARATRI]: "#d4af37",
   [EventType.NEW_MOON]: "#94a3b8",
   [EventType.MOON_ECLIPSE]: "#a78bfa",
