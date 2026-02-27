@@ -18,13 +18,13 @@ type EventProps = {
 };
 
 export function Event({ event, timezone, useAngleMode }: EventProps) {
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
   const { type, startDate, endDate, peakDate, description, angleBegDate, angleEndDate } = event;
   const iconData = getIconAndNameFromType(type);
   const icon = iconData?.icon ?? "";
   const name = iconData?.name ? t(`eventTypes.${type}`) || iconData.name : "";
 
-  const fmt = (utc: string) => formatDateInTimezone(utc, timezone);
+  const fmt = (utc: string) => formatDateInTimezone(utc, timezone, locale);
 
   let peakString: React.ReactNode = null;
   let dateString: string;

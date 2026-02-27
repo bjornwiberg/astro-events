@@ -10,8 +10,9 @@ import {
 export function formatDateInTimezone(
   utcDateString: string,
   timezone: string,
+  locale: string = "en-US",
 ): string {
-  return new Intl.DateTimeFormat("en-US", {
+  return new Intl.DateTimeFormat(locale, {
     timeZone: timezone,
     weekday: "short",
     day: "2-digit",
