@@ -7,6 +7,7 @@ import { Box, Button, IconButton } from "@mui/material";
 import { addMonths, isSameMonth, isSameYear, subMonths } from "date-fns";
 import { useRouter } from "next/navigation";
 import { track } from "../../../utils/mixpanel";
+import { V2_BASE_PATH } from "../constants";
 import { useTranslation } from "./TranslationProvider";
 
 type NavigationProps = {
@@ -21,8 +22,12 @@ export function Navigation({ year, month }: NavigationProps) {
   const isToday =
     isSameYear(now, new Date(year, month, 1)) && isSameMonth(now, new Date(year, month, 1));
 
+  // m is 0–11 (internal); use params only when not viewing current month (like v1)
   const go = (y: number, m: number) => {
-    router.push(`/v2?year=${y}&month=${m}`);
+    const isCurrentMonth =
+      isSameYear(now, new Date(y, m, 1)) && isSameMonth(now, new Date(y, m, 1));
+    const path = isCurrentMonth ? V2_BASE_PATH : `${V2_BASE_PATH}?year=${y}&month=${m + 1}`;
+    router.push(path);
   };
 
   const handlePrev = () => {
@@ -39,7 +44,7 @@ export function Navigation({ year, month }: NavigationProps) {
 
   const handleToday = () => {
     track("Click Today Link");
-    go(now.getFullYear(), now.getMonth());
+    router.push(V2_BASE_PATH);
   };
 
   return (

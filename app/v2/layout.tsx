@@ -1,9 +1,10 @@
 import type { Metadata, Viewport } from "next";
+import { V2_BASE_PATH } from "./constants";
 
 export const metadata: Metadata = {
   title: "Astro Events",
   description: "Astrological events calendar",
-  manifest: "/v2/manifest.json",
+  manifest: `${V2_BASE_PATH}/manifest.json`,
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
@@ -18,9 +19,5 @@ export const viewport: Viewport = {
 };
 
 export default function V2Layout({ children }: { children: React.ReactNode }) {
-  return (
-    <>
-      {children}
-    </>
-  );
+  return <>{children}</>;
 }

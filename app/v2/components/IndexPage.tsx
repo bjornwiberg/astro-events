@@ -18,6 +18,7 @@ import type { Translations } from "../../../lib/i18n";
 import type { CalculatorEventType } from "../../../types/calculatorEvent";
 import { initMixpanel } from "../../../utils/mixpanel";
 import { setDarkModeCookie as setDarkModeCookieAction } from "../actions";
+import { V2_BASE_PATH } from "../constants";
 import { darkTheme, lightTheme } from "../theme";
 import { AngleToggle } from "./AngleToggle";
 import { Errors } from "./Errors";
@@ -142,7 +143,7 @@ export default function IndexPage({
   }, [yearFilter, monthFilter, locale]);
 
   const timezone = location.timezone ?? "UTC";
-  const calendarUrl = `${baseUrl}/api/v2/calendar?lng=${location.lng}&lat=${location.lat}`;
+  const calendarUrl = `${baseUrl}${V2_BASE_PATH}/api/calendar?lng=${location.lng}&lat=${location.lat}`;
 
   return (
     <ThemeProvider theme={theme}>

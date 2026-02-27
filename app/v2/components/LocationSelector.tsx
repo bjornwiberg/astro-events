@@ -5,6 +5,7 @@ import { Autocomplete, Box, IconButton, TextField, Tooltip, Typography } from "@
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { GeoLocation } from "../../../lib/calculator";
 import { track } from "../../../utils/mixpanel";
+import { V2_BASE_PATH } from "../constants";
 import { useTranslation } from "./TranslationProvider";
 
 type NominatimSearchItem = {
@@ -24,7 +25,7 @@ function setLocationCookie(loc: GeoLocation) {
 
 async function searchPlaces(q: string): Promise<NominatimSearchItem[]> {
   const params = new URLSearchParams({ action: "search", q });
-  const res = await fetch(`/api/v2/geocode?${params}`);
+  const res = await fetch(`${V2_BASE_PATH}/api/geocode?${params}`);
   if (!res.ok) return [];
   const data = await res.json();
   return Array.isArray(data) ? data : [];
@@ -39,7 +40,7 @@ async function reverseGeocode(
     lat: String(lat),
     lon: String(lon),
   });
-  const res = await fetch(`/api/v2/geocode?${params}`);
+  const res = await fetch(`${V2_BASE_PATH}/api/geocode?${params}`);
   if (!res.ok) return null;
   const data = await res.json();
   const display_name =
@@ -58,7 +59,7 @@ async function reverseGeocode(
   const timezone =
     typeof data.timezone === "string"
       ? data.timezone
-      : (data.address && typeof data.address.timezone === "string")
+      : data.address && typeof data.address.timezone === "string"
         ? data.address.timezone
         : undefined;
   return { display_name, city, timezone };

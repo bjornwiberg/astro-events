@@ -7,6 +7,7 @@ import type { Translations } from "../../lib/i18n";
 import { isSupportedLocale } from "../../lib/i18n";
 import type { CalculatorEventType } from "../../types/calculatorEvent";
 import IndexPage from "./components/IndexPage";
+import { V2_BASE_PATH } from "./constants";
 
 const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
 
@@ -23,7 +24,7 @@ async function loadTranslations(lang: string, host: string): Promise<Translation
     const en = (await import("../../locales/en.json")).default;
     return en as Translations;
   }
-  const url = `${protocol}://${host}/api/v2/translations?lang=${encodeURIComponent(lang)}`;
+  const url = `${protocol}://${host}${V2_BASE_PATH}/api/translations?lang=${encodeURIComponent(lang)}`;
   const res = await fetch(url, { next: { revalidate: 86400 } });
   if (!res.ok) return (await import("../../locales/en.json")).default as Translations;
   const data = (await res.json()) as { translations?: Translations };
@@ -61,11 +62,14 @@ export default async function V2Page(props: PageProps) {
   const subStartYear = currentYear - 1;
   const subEndYear = currentYear + 3;
   const year = yearParam ? parseInt(yearParam, 10) : currentYear;
-  const month = monthParam != null ? parseInt(monthParam, 10) : now.getMonth();
-  const safeYear = Number.isInteger(year) && year >= subStartYear && year <= subEndYear
-    ? year
-    : currentYear;
-  const safeMonth = month >= 0 && month <= 11 ? month : now.getMonth();
+  // URL uses month 1–12 (Jan–Dec); convert to 0–11 for internal use
+  const monthFromUrl = monthParam != null ? parseInt(monthParam, 10) : now.getMonth() + 1;
+  const safeYear =
+    Number.isInteger(year) && year >= subStartYear && year <= subEndYear ? year : currentYear;
+  const safeMonth =
+    Number.isInteger(monthFromUrl) && monthFromUrl >= 1 && monthFromUrl <= 12
+      ? monthFromUrl - 1
+      : now.getMonth();
 
   let events: CalculatorEventType[] = [];
   let fetchError = false;
