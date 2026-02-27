@@ -12,6 +12,9 @@
     "peak": "Peak",
     "maximum": "Maximum"
   },
+  "events": {
+    "noEventsThisMonth": "No events this month."
+  },
   "eventTypes": {
     "EQUINOX": "Equinox",
     "SOLSTICE": "Solstice",
@@ -24,6 +27,7 @@
     "SOLAR_ECLIPSE": "Solar eclipse"
   },
   "location": {
+    "label": "Location",
     "placeholder": "Search city or place...",
     "myLocation": "My location"
   },
@@ -32,6 +36,7 @@
   },
   "calendarSubscribe": {
     "title": "Subscribe to calendar",
+    "url": "Calendar URL",
     "copy": "Copy URL",
     "copied": "Copied!",
     "close": "Close"

@@ -1,8 +1,9 @@
 "use client";
 
-import { Box, Typography } from "@mui/material";
-import { Event } from "./Event";
+import { Grid, Typography } from "@mui/material";
 import type { CalculatorEventType } from "../../../types/calculatorEvent";
+import { Event } from "./Event";
+import { useTranslation } from "./TranslationProvider";
 
 type EventsProps = {
   events: CalculatorEventType[];
@@ -11,25 +12,31 @@ type EventsProps = {
 };
 
 export function Events({ events, timezone, useAngleMode }: EventsProps) {
+  const { t } = useTranslation();
+
   if (events.length === 0) {
     return (
       <Typography variant="body2" color="text.secondary" sx={{ py: 2 }}>
-        No events this month.
+        {t("events.noEventsThisMonth")}
       </Typography>
     );
   }
 
   const sorted = [...events].sort(
-    (a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime(),
+    (a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
   );
 
   return (
-    <Box component="ul" sx={{ listStyle: "none", pl: 0, m: 0 }}>
-      {sorted.map((event, i) => (
-        <Box component="li" key={`${event.type}-${event.startDate}-${i}`}>
+    <Grid container spacing={2}>
+      {sorted.map((event) => (
+        <Grid
+          size={{ xs: 12, md: 6 }}
+          key={`${event.type}-${event.startDate}`}
+          sx={{ display: "flex", minWidth: 0 }}
+        >
           <Event event={event} timezone={timezone} useAngleMode={useAngleMode} />
-        </Box>
+        </Grid>
       ))}
-    </Box>
+    </Grid>
   );
 }

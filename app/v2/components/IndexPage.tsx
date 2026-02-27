@@ -1,25 +1,32 @@
 "use client";
 
+import {
+  Backdrop,
+  Box,
+  Card,
+  CardContent,
+  CircularProgress,
+  Container,
+  Typography,
+} from "@mui/material";
+import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider } from "@mui/material/styles";
-import { Backdrop, Box, CircularProgress, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
-import { useMemo, useRef, useState, useEffect, useTransition } from "react";
-import { v2Theme } from "../theme";
-import { TranslationProvider } from "./TranslationProvider";
-import { LanguagePicker } from "./LanguagePicker";
-import { Navigation } from "./Navigation";
-import { LocationSelector } from "./LocationSelector";
-import { Header } from "./Header";
-import { AngleToggle } from "./AngleToggle";
-import { Events } from "./Events";
-import { Chips } from "./Chips";
-import { Footer } from "./Footer";
-import { Errors } from "./Errors";
-import { CalendarSubscribe } from "./CalendarSubscribe";
-import type { CalculatorEventType } from "../../../types/calculatorEvent";
+import { useCallback, useEffect, useMemo, useRef, useState, useTransition } from "react";
 import type { GeoLocation } from "../../../lib/calculator";
 import type { Translations } from "../../../lib/i18n";
+import type { CalculatorEventType } from "../../../types/calculatorEvent";
 import { initMixpanel } from "../../../utils/mixpanel";
+import { setDarkModeCookie as setDarkModeCookieAction } from "../actions";
+import { darkTheme, lightTheme } from "../theme";
+import { AngleToggle } from "./AngleToggle";
+import { Errors } from "./Errors";
+import { Events } from "./Events";
+import { Footer } from "./Footer";
+import { Header } from "./Header";
+import { LocationSelector } from "./LocationSelector";
+import { Navigation } from "./Navigation";
+import { TranslationProvider } from "./TranslationProvider";
 
 type IndexPageProps = {
   events: CalculatorEventType[];
@@ -30,6 +37,7 @@ type IndexPageProps = {
   translations: Translations;
   baseUrl: string;
   fetchError?: boolean;
+  initialDark?: boolean | null;
 };
 
 export default function IndexPage({
@@ -41,17 +49,34 @@ export default function IndexPage({
   translations,
   baseUrl,
   fetchError: initialFetchError = false,
+  initialDark = false,
 }: IndexPageProps) {
+  const [darkMode, setDarkMode] = useState(Boolean(initialDark));
+
+  const theme = darkMode ? darkTheme : lightTheme;
+
   const [locale, setLocale] = useState(lang);
   const [monthFilter, setMonthFilter] = useState(month);
   const [yearFilter, setYearFilter] = useState(year);
   const [useAngleMode, setUseAngleMode] = useState(false);
-  const [error, setError] = useState(initialFetchError);
+  const [error] = useState(initialFetchError);
   const [isPending, startTransition] = useTransition();
   const [showOverlay, setShowOverlay] = useState(false);
   const router = useRouter();
   const loadingTextRef = useRef("Changing language…");
   const overlayTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(() => {
+    if (initialDark !== null) return;
+    const dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    setDarkMode(dark);
+    setDarkModeCookieAction(dark);
+  }, [initialDark]);
+
+  const handleDarkModeToggle = useCallback(() => {
+    const next = !darkMode;
+    setDarkMode(next);
+    setDarkModeCookieAction(next);
+  }, [darkMode]);
 
   useEffect(() => {
     if (isPending) {
@@ -116,34 +141,57 @@ export default function IndexPage({
   const calendarUrl = `${baseUrl}/api/v2/calendar?lng=${location.lng}&lat=${location.lat}&year=${yearFilter}`;
 
   return (
-    <ThemeProvider theme={v2Theme}>
-      <TranslationProvider locale={locale} translations={translations}>
-        <main style={{ padding: 24, maxWidth: 800, margin: "0 auto" }}>
-          <Header monthYear={monthYear} />
-          <Errors show={error} />
-          <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, alignItems: "center", my: 2 }}>
-            <LanguagePicker value={locale} onChange={handleLocaleChange} />
-            <LocationSelector value={location} onChange={handleLocationChange} />
-            <AngleToggle checked={useAngleMode} onChange={setUseAngleMode} />
-            <CalendarSubscribe calendarUrl={calendarUrl} />
-          </Box>
-          <Navigation year={yearFilter} month={monthFilter} />
-          <Events
-            events={filteredEvents}
-            timezone={timezone}
-            useAngleMode={useAngleMode}
+    <ThemeProvider theme={theme}>
+      <div style={{ width: "100%" }} suppressHydrationWarning>
+        <CssBaseline />
+        <TranslationProvider locale={locale} translations={translations}>
+          <Header
+            locale={locale}
+            onLocaleChange={handleLocaleChange}
+            calendarUrl={calendarUrl}
+            darkMode={darkMode}
+            onDarkModeToggle={handleDarkModeToggle}
           />
-          <Chips />
+
+          <Container sx={{ pb: 8 }}>
+            <Errors show={error} />
+
+            <Card>
+              <CardContent>
+                <LocationSelector value={location} onChange={handleLocationChange} />
+                <Box sx={{ mt: 1.5 }}>
+                  <AngleToggle checked={useAngleMode} onChange={setUseAngleMode} />
+                </Box>
+              </CardContent>
+            </Card>
+
+            <Navigation year={yearFilter} month={monthFilter} />
+
+            <Typography variant="body1" color="text.secondary" sx={{ mb: 2, textAlign: "center" }}>
+              {(
+                (translations as Record<string, Record<string, string>>).header?.viewing ?? ""
+              ).replace("{{monthYear}}", monthYear)}
+            </Typography>
+
+            <Events events={filteredEvents} timezone={timezone} useAngleMode={useAngleMode} />
+          </Container>
+
           <Footer />
+
           <Backdrop
             open={showOverlay}
-            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1, flexDirection: "column", gap: 2 }}
+            sx={{
+              color: "#fff",
+              zIndex: (theme) => theme.zIndex.drawer + 1,
+              flexDirection: "column",
+              gap: 2,
+            }}
           >
             <CircularProgress color="inherit" />
             <Typography variant="body1">{loadingTextRef.current}</Typography>
           </Backdrop>
-        </main>
-      </TranslationProvider>
+        </TranslationProvider>
+      </div>
     </ThemeProvider>
   );
 }

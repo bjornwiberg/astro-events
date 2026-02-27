@@ -1,11 +1,11 @@
 "use client";
 
-import { useCallback, useState, useEffect, useRef } from "react";
-import { Autocomplete, Button, TextField } from "@mui/material";
 import MyLocationIcon from "@mui/icons-material/MyLocation";
-import { useTranslation } from "./TranslationProvider";
-import { track } from "../../../utils/mixpanel";
+import { Autocomplete, Box, IconButton, TextField, Tooltip, Typography } from "@mui/material";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { GeoLocation } from "../../../lib/calculator";
+import { track } from "../../../utils/mixpanel";
+import { useTranslation } from "./TranslationProvider";
 
 type NominatimSearchItem = {
   display_name: string;
@@ -18,6 +18,7 @@ const LOCATION_COOKIE_MAX_AGE = 365 * 24 * 60 * 60;
 
 function setLocationCookie(loc: GeoLocation) {
   const value = encodeURIComponent(JSON.stringify(loc));
+  // biome-ignore lint/suspicious/noDocumentCookie: cookie is set in the browser
   document.cookie = `location=${value};path=/;max-age=${LOCATION_COOKIE_MAX_AGE};SameSite=Lax`;
 }
 
@@ -29,7 +30,10 @@ async function searchPlaces(q: string): Promise<NominatimSearchItem[]> {
   return Array.isArray(data) ? data : [];
 }
 
-async function reverseGeocode(lat: number, lon: number): Promise<{ display_name: string; city?: string; timezone?: string } | null> {
+async function reverseGeocode(
+  lat: number,
+  lon: number
+): Promise<{ display_name: string; city?: string; timezone?: string } | null> {
   const params = new URLSearchParams({
     action: "reverse",
     lat: String(lat),
@@ -112,7 +116,7 @@ export function LocationSelector({ value, onChange }: LocationSelectorProps) {
         fetchOptions(v);
       }, 300);
     },
-    [valueDisplay, fetchOptions],
+    [valueDisplay, fetchOptions]
   );
 
   const handleFocus = () => {
@@ -125,7 +129,11 @@ export function LocationSelector({ value, onChange }: LocationSelectorProps) {
     const lat = parseFloat(option.lat);
     const lon = parseFloat(option.lon);
     if (!Number.isFinite(lat) || !Number.isFinite(lon)) return;
-    const city = option.address?.city ?? option.address?.town ?? option.address?.village ?? option.display_name;
+    const city =
+      option.address?.city ??
+      option.address?.town ??
+      option.address?.village ??
+      option.display_name;
     const location: GeoLocation = {
       lng: lon,
       lat,
@@ -163,13 +171,17 @@ export function LocationSelector({ value, onChange }: LocationSelectorProps) {
       },
       () => {
         track("Location Geolocation Denied");
-      },
+      }
     );
   };
 
   return (
-    <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
+    <Box>
+      <Typography variant="body2" fontWeight={500} sx={{ mb: 0.5 }}>
+        {t("location.label")}
+      </Typography>
       <Autocomplete
+        fullWidth
         freeSolo
         open={open}
         onOpen={() => setOpen(true)}
@@ -187,20 +199,26 @@ export function LocationSelector({ value, onChange }: LocationSelectorProps) {
         renderInput={(params) => (
           <TextField
             {...params}
-            label={t("location.placeholder")}
+            placeholder={t("location.placeholder")}
             size="small"
-            sx={{ minWidth: 280 }}
+            slotProps={{
+              input: {
+                ...params.InputProps,
+                endAdornment: (
+                  <>
+                    <Tooltip title={t("location.myLocation")}>
+                      <IconButton onClick={handleMyLocation} edge="end" size="small">
+                        <MyLocationIcon fontSize="small" />
+                      </IconButton>
+                    </Tooltip>
+                    {params.InputProps.endAdornment}
+                  </>
+                ),
+              },
+            }}
           />
         )}
       />
-      <Button
-        variant="outlined"
-        startIcon={<MyLocationIcon />}
-        onClick={handleMyLocation}
-        size="medium"
-      >
-        {t("location.myLocation")}
-      </Button>
-    </div>
+    </Box>
   );
 }

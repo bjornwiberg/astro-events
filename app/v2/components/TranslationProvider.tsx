@@ -1,14 +1,8 @@
 "use client";
 
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useMemo,
-  type ReactNode,
-} from "react";
-import { isRtl } from "../../../lib/i18n";
+import { createContext, type ReactNode, useCallback, useContext, useMemo } from "react";
 import type { Translations } from "../../../lib/i18n";
+import { isRtl } from "../../../lib/i18n";
 
 type TranslationContextValue = {
   t: (key: string, vars?: Record<string, string>) => string;
@@ -38,26 +32,19 @@ type TranslationProviderProps = {
   children: ReactNode;
 };
 
-export function TranslationProvider({
-  locale,
-  translations,
-  children,
-}: TranslationProviderProps) {
+export function TranslationProvider({ locale, translations, children }: TranslationProviderProps) {
   const t = useCallback(
     (key: string, vars?: Record<string, string>) => {
       const raw = getNested(translations as Record<string, unknown>, key);
       const text = raw ?? key;
       return vars ? interpolate(text, vars) : text;
     },
-    [translations],
+    [translations]
   );
 
   const dir = useMemo(() => (isRtl(locale) ? "rtl" : "ltr"), [locale]);
 
-  const value = useMemo<TranslationContextValue>(
-    () => ({ t, locale, dir }),
-    [t, locale, dir],
-  );
+  const value = useMemo<TranslationContextValue>(() => ({ t, locale, dir }), [t, locale, dir]);
 
   return (
     <TranslationContext.Provider value={value}>

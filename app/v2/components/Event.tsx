@@ -1,14 +1,14 @@
 "use client";
 
-import { Box, Typography } from "@mui/material";
+import { Box, Card, CardContent, Typography } from "@mui/material";
 import type { CalculatorEventType } from "../../../types/calculatorEvent";
 import { EventType } from "../../../types/events";
-import { getIconAndNameFromType } from "../../../utils/event";
 import {
   formatDateInTimezone,
-  getTripuraSundariDatesFromPeakDate,
   getFullMoonDatesFromPeakDate,
+  getTripuraSundariDatesFromPeakDate,
 } from "../../../utils/dateNew";
+import { getIconAndNameFromType } from "../../../utils/event";
 import { useTranslation } from "./TranslationProvider";
 
 type EventProps = {
@@ -31,8 +31,8 @@ export function Event({ event, timezone, useAngleMode }: EventProps) {
 
   if (type === EventType.TRIPURA_SUNDARI_PEAK || type === EventType.FULL_MOON_PEAK) {
     peakString = (
-      <Typography component="div" variant="body2" color="text.secondary">
-        {fmt(startDate)} <em>({t("event.peak")})</em>
+      <Typography variant="caption" color="text.secondary">
+        {fmt(startDate)} — {t("event.peak")}
       </Typography>
     );
     if (useAngleMode && angleBegDate && angleEndDate) {
@@ -47,8 +47,8 @@ export function Event({ event, timezone, useAngleMode }: EventProps) {
   } else if (type === EventType.SOLAR_ECLIPSE || type === EventType.MOON_ECLIPSE) {
     if (peakDate) {
       peakString = (
-        <Typography component="div" variant="body2" color="text.secondary">
-          {fmt(peakDate)} <em>({t("event.maximum")})</em>
+        <Typography variant="caption" color="text.secondary">
+          {fmt(peakDate)} — {t("event.maximum")}
         </Typography>
       );
     }
@@ -60,25 +60,43 @@ export function Event({ event, timezone, useAngleMode }: EventProps) {
   }
 
   return (
-    <Box sx={{ display: "flex", gap: 1, alignItems: "flex-start", py: 0.5 }}>
-      <Box component="span" sx={{ fontSize: "1.25rem", lineHeight: 1.2 }}>
-        {icon}
-      </Box>
-      <Box>
-        <Typography variant="body2" fontWeight={500}>
-          {name}
-        </Typography>
-        {peakString}
-        <Typography variant="body2" color="text.secondary">
-          {dateString}
-          {description && (
-            <>
-              {" "}
-              (<strong>{description}</strong>)
-            </>
-          )}
-        </Typography>
-      </Box>
-    </Box>
+    <Card
+      sx={{
+        height: { xs: "auto", md: "120px" },
+        width: "100%",
+      }}
+    >
+      <CardContent
+        sx={{
+          display: "flex",
+          gap: 2,
+        }}
+      >
+        <Box
+          sx={{
+            fontSize: "1.5rem",
+            lineHeight: 1,
+            flexShrink: 0,
+          }}
+        >
+          {icon}
+        </Box>
+        <Box sx={{ minWidth: 0 }}>
+          <Typography variant="subtitle2" fontWeight={600}>
+            {name}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            {dateString}
+            {description && (
+              <>
+                {" "}
+                (<strong>{description}</strong>)
+              </>
+            )}
+          </Typography>
+          {peakString}
+        </Box>
+      </CardContent>
+    </Card>
   );
 }

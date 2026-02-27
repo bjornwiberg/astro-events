@@ -1,17 +1,28 @@
 "use client";
 
-import { useState } from "react";
-import { Button, Dialog, DialogTitle, DialogContent, DialogActions, IconButton, InputAdornment, TextField } from "@mui/material";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import { useTranslation } from "./TranslationProvider";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  InputAdornment,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { useState } from "react";
 import { track } from "../../../utils/mixpanel";
+import { useTranslation } from "./TranslationProvider";
 
 type CalendarSubscribeProps = {
   calendarUrl: string;
+  variant?: "default" | "appbar";
 };
 
-export function CalendarSubscribe({ calendarUrl }: CalendarSubscribeProps) {
+export function CalendarSubscribe({ calendarUrl, variant = "default" }: CalendarSubscribeProps) {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -39,31 +50,41 @@ export function CalendarSubscribe({ calendarUrl }: CalendarSubscribeProps) {
 
   return (
     <>
-      <Button
-        variant="outlined"
-        startIcon={<CalendarMonthIcon />}
-        onClick={handleOpen}
-        size="medium"
-      >
-        {t("calendarSubscribe.title")}
-      </Button>
+      {variant === "appbar" ? (
+        <IconButton color="inherit" onClick={handleOpen} aria-label={t("calendarSubscribe.title")}>
+          <CalendarMonthIcon />
+        </IconButton>
+      ) : (
+        <Button
+          variant="outlined"
+          startIcon={<CalendarMonthIcon />}
+          onClick={handleOpen}
+          size="medium"
+        >
+          {t("calendarSubscribe.title")}
+        </Button>
+      )}
       <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
         <DialogTitle>{t("calendarSubscribe.title")}</DialogTitle>
         <DialogContent>
+          <Typography variant="body2" fontWeight={500} sx={{ mb: 0.5 }}>
+            {t("calendarSubscribe.url")}
+          </Typography>
           <TextField
             fullWidth
             size="small"
-            label="URL"
             value={calendarUrl}
-            InputProps={{
-              readOnly: true,
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={handleCopy} aria-label={t("calendarSubscribe.copy")}>
-                    <ContentCopyIcon />
-                  </IconButton>
-                </InputAdornment>
-              ),
+            slotProps={{
+              input: {
+                readOnly: true,
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={handleCopy} aria-label={t("calendarSubscribe.copy")}>
+                      <ContentCopyIcon />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              },
             }}
           />
           {copied && (
