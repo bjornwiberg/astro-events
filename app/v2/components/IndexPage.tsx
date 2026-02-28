@@ -17,9 +17,9 @@ import type { GeoLocation } from "../../../lib/calculator";
 import type { Translations } from "../../../lib/i18n";
 import type { CalculatorEventType } from "../../../types/calculatorEvent";
 import { initMixpanel } from "../../../utils/mixpanel";
-import { setDarkModeCookie as setDarkModeCookieAction } from "../actions";
 import { V2_BASE_PATH } from "../constants";
 import { darkTheme, lightTheme } from "../theme";
+import { useV2Theme } from "./V2ThemeRoot";
 import { AngleToggle } from "./AngleToggle";
 import { Errors } from "./Errors";
 import { Events } from "./Events";
@@ -38,7 +38,6 @@ type IndexPageProps = {
   translations: Translations;
   baseUrl: string;
   fetchError?: boolean;
-  initialDark?: boolean | null;
 };
 
 export default function IndexPage({
@@ -50,9 +49,8 @@ export default function IndexPage({
   translations,
   baseUrl,
   fetchError: initialFetchError = false,
-  initialDark = false,
 }: IndexPageProps) {
-  const [darkMode, setDarkMode] = useState(Boolean(initialDark));
+  const { darkMode, setDarkMode } = useV2Theme();
 
   const theme = darkMode ? darkTheme : lightTheme;
 
@@ -66,22 +64,10 @@ export default function IndexPage({
   const router = useRouter();
   const loadingTextRef = useRef("Changing language…");
   const overlayTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  useEffect(() => {
-    document.documentElement.setAttribute("data-theme", darkMode ? "dark" : "light");
-  }, [darkMode]);
-
-  useEffect(() => {
-    if (initialDark !== null) return;
-    const dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    setDarkMode(dark);
-    setDarkModeCookieAction(dark);
-  }, [initialDark]);
 
   const handleDarkModeToggle = useCallback(() => {
-    const next = !darkMode;
-    setDarkMode(next);
-    setDarkModeCookieAction(next);
-  }, [darkMode]);
+    setDarkMode(!darkMode);
+  }, [darkMode, setDarkMode]);
 
   useEffect(() => {
     if (isPending) {

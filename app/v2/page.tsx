@@ -51,9 +51,6 @@ export default async function V2Page(props: PageProps) {
       ? langCookie
       : parseAcceptLanguage(h.get("accept-language"));
 
-  const darkModeCookie = cookieStore.get("darkMode")?.value;
-  const initialDark = darkModeCookie === "true" ? true : darkModeCookie === "false" ? false : null;
-
   const searchParams = await props.searchParams;
   const yearParam = searchParams.year;
   const monthParam = searchParams.month;
@@ -91,7 +88,6 @@ export default async function V2Page(props: PageProps) {
       translations={translations}
       baseUrl={`${protocol}://${host}`}
       fetchError={fetchError}
-      initialDark={initialDark}
     />
   );
 }

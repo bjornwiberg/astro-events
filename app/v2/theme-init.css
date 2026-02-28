@@ -1,0 +1,16 @@
+/* Initial paint for v2 theme. Wrapper is server-rendered with data-theme so no hydration mismatch. */
+.v2-theme-root {
+  min-height: 100dvh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.v2-theme-root[data-theme="dark"] {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+.v2-theme-root[data-theme="light"] {
+  background-color: #fafafa;
+  color: #1a1a2e;
+}
