@@ -4,7 +4,8 @@
   },
   "language": {
     "label": "Language",
-    "searchPlaceholder": "Search language…s"
+    "searchPlaceholder": "Search language…",
+    "noResults": "No languages found"
   },
   "header": {
     "title": "Welcome to Astro Events",

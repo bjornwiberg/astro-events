@@ -93,23 +93,34 @@ async function translateStrings(
 }
 
 const CACHE_TTL = 24 * 60 * 60 * 1000;
-const translationCache = new Map<string, { data: Translations; ts: number }>();
+const translationCache = new Map<string, { data: Translations; ts: number; sourceHash: string }>();
 
 export function getEnglishSource(): Translations {
   return en as unknown as Translations;
 }
 
+function computeSourceHash(): string {
+  const s = JSON.stringify(en);
+  let h = 5381;
+  for (let i = 0; i < s.length; i++) {
+    h = (h * 33) ^ s.charCodeAt(i);
+  }
+  return (h >>> 0).toString(36);
+}
+
 /**
  * Get translations for a language. Uses an in-memory server-side cache
  * so LibreTranslate is only called once per language per server lifetime
- * (or once per TTL expiry). Falls back to English on error.
+ * (or once per TTL expiry). Cache auto-invalidates when en.json changes.
+ * Falls back to English on error.
  */
 export async function getTranslations(lang: string): Promise<Translations> {
   const source = en as unknown as Translations;
   if (lang === "en") return source;
 
+  const currentHash = computeSourceHash();
   const cached = translationCache.get(lang);
-  if (cached && Date.now() - cached.ts < CACHE_TTL) {
+  if (cached && cached.sourceHash === currentHash && Date.now() - cached.ts < CACHE_TTL) {
     return cached.data;
   }
 
@@ -122,7 +133,7 @@ export async function getTranslations(lang: string): Promise<Translations> {
       value: translated[i] ?? e.value,
     }));
     const translations = unflatten(translatedEntries);
-    translationCache.set(lang, { data: translations, ts: Date.now() });
+    translationCache.set(lang, { data: translations, ts: Date.now(), sourceHash: currentHash });
     return translations;
   } catch {
     return source;

@@ -152,6 +152,7 @@ export function LanguagePicker({ value, onChange, variant = "default" }: Languag
       options={SUPPORTED_LOCALES}
       filterOptions={filterLanguageOptions}
       getOptionLabel={(code) => `${FLAGS[code] ?? "🌐"} ${NATIVE_NAMES[code] ?? code}`}
+      noOptionsText={t("language.noResults")}
       isOptionEqualToValue={(opt, v) => opt === v}
       sx={{
         minWidth: isAppbar ? 180 : 260,
