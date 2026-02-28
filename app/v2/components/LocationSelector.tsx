@@ -188,6 +188,7 @@ export function LocationSelector({ value, onChange }: LocationSelectorProps) {
         {t("location.label")}
       </Typography>
       <Autocomplete
+        id="v2-location-selector"
         fullWidth
         freeSolo
         open={open}

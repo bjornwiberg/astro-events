@@ -12,7 +12,7 @@ import {
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider } from "@mui/material/styles";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { GeoLocation } from "../../../lib/calculator";
 import {
   type Translations,
@@ -31,6 +31,7 @@ import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { LocationSelector } from "./LocationSelector";
 import { Navigation } from "./Navigation";
+import { ThemeRegistry } from "./ThemeRegistry";
 import { TranslationProvider } from "./TranslationProvider";
 
 type IndexPageProps = {
@@ -132,12 +133,11 @@ export default function IndexPage({
     setCurrentTranslations(translations);
   }, [lang, translations]);
 
-  // When source hash changed (e.g. en.json updated), clear cache; persist non-en only + cookie
+  // When source hash changed (en.json updated), clear stale cache + persist cookie
   useEffect(() => {
     clearTranslationCacheIfStale(clientI18nHash, sourceHash);
-    if (lang !== "en") setStoredTranslations(lang, translations);
     setI18nHashCookie(sourceHash);
-  }, [lang, sourceHash, translations, clientI18nHash]);
+  }, [sourceHash, clientI18nHash]);
 
   useEffect(() => {
     if (loadingTranslations) {
@@ -222,10 +222,11 @@ export default function IndexPage({
   const calendarUrl = `${baseUrl}${V2_BASE_PATH}/api/calendar?lng=${location.lng}&lat=${location.lat}`;
 
   return (
-    <ThemeProvider theme={theme}>
-      <div style={{ width: "100%" }} suppressHydrationWarning>
+    <ThemeRegistry>
+      <ThemeProvider theme={theme}>
         <CssBaseline />
         <TranslationProvider locale={locale} translations={currentTranslations}>
+        <Fragment>
           <Header
             locale={locale}
             onLocaleChange={handleLocaleChange}
@@ -271,8 +272,9 @@ export default function IndexPage({
             <CircularProgress color="inherit" />
             <Typography variant="body1">{loadingTextRef.current}</Typography>
           </Backdrop>
-        </TranslationProvider>
-      </div>
-    </ThemeProvider>
+        </Fragment>
+      </TranslationProvider>
+      </ThemeProvider>
+    </ThemeRegistry>
   );
 }

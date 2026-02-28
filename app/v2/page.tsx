@@ -3,36 +3,14 @@ import type { GeoLocation } from "../../lib/calculator";
 import { getCachedSubscriptionEvents } from "../../lib/calculator";
 import { parseLocationCookie } from "../../lib/cookies";
 import { getLocationFromIp } from "../../lib/geoip";
-import type { Translations } from "../../lib/i18n";
 import {
+  getPreferredLocale,
   I18N_HASH_COOKIE_NAME,
-  isSupportedLocale,
   translationHash,
 } from "../../lib/i18n";
+import { getEnglishSource, getTranslations } from "../../lib/translate";
 import type { CalculatorEventType } from "../../types/calculatorEvent";
 import IndexPage from "./components/IndexPage";
-
-const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
-
-function parseAcceptLanguage(acceptLanguage: string | null): string {
-  if (!acceptLanguage) return "en";
-  const first = acceptLanguage.split(",")[0]?.trim();
-  if (!first) return "en";
-  const code = first.split(";")[0]?.trim().slice(0, 2).toLowerCase();
-  return code && isSupportedLocale(code) ? code : "en";
-}
-
-async function loadTranslations(lang: string, host: string): Promise<Translations> {
-  if (lang === "en") {
-    const en = (await import("../../locales/en.json")).default;
-    return en as Translations;
-  }
-  const url = `${protocol}://${host}/api/v2/translations?lang=${encodeURIComponent(lang)}`;
-  const res = await fetch(url, { next: { revalidate: 86400 } });
-  if (!res.ok) return (await import("../../locales/en.json")).default as Translations;
-  const data = (await res.json()) as { translations?: Translations };
-  return data.translations ?? ((await import("../../locales/en.json")).default as Translations);
-}
 
 type PageProps = {
   searchParams: Promise<{ month?: string; year?: string }>;
@@ -43,16 +21,14 @@ export default async function V2Page(props: PageProps) {
   const h = await headers();
   const langCookie = cookieStore.get("lang")?.value ?? null;
   const forwardedFor = h.get("x-forwarded-for");
-  const host = h.get("host") ?? "localhost:3000";
+  const protocol = h.get("x-forwarded-proto") ?? "http";
+  const host = h.get("host") ?? "localhost:3330";
 
   const location: GeoLocation =
     parseLocationCookie(cookieStore.get("location")?.value) ??
     (await getLocationFromIp(forwardedFor));
 
-  const lang =
-    langCookie && isSupportedLocale(langCookie)
-      ? langCookie
-      : parseAcceptLanguage(h.get("accept-language"));
+  const lang = getPreferredLocale(langCookie, h.get("accept-language"));
 
   const searchParams = await props.searchParams;
   const yearParam = searchParams.year;
@@ -79,10 +55,11 @@ export default async function V2Page(props: PageProps) {
     fetchError = true;
   }
 
-  const translations = await loadTranslations(lang, host);
-  const enSource = (await import("../../locales/en.json")).default as Translations;
+  const enSource = getEnglishSource();
   const sourceHash = translationHash(enSource);
   const clientI18nHash = cookieStore.get(I18N_HASH_COOKIE_NAME)?.value ?? null;
+
+  const translations = await getTranslations(lang);
 
   return (
     <IndexPage

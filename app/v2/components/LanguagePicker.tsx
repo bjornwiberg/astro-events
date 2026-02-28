@@ -144,6 +144,7 @@ export function LanguagePicker({ value, onChange, variant = "default" }: Languag
 
   return (
     <Autocomplete
+      id="v2-language-picker"
       size="small"
       value={value}
       onChange={handleChange}
