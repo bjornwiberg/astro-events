@@ -4,10 +4,13 @@ import { getCachedSubscriptionEvents } from "../../lib/calculator";
 import { parseLocationCookie } from "../../lib/cookies";
 import { getLocationFromIp } from "../../lib/geoip";
 import type { Translations } from "../../lib/i18n";
-import { isSupportedLocale } from "../../lib/i18n";
+import {
+  I18N_HASH_COOKIE_NAME,
+  isSupportedLocale,
+  translationHash,
+} from "../../lib/i18n";
 import type { CalculatorEventType } from "../../types/calculatorEvent";
 import IndexPage from "./components/IndexPage";
-import { V2_BASE_PATH } from "./constants";
 
 const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
 
@@ -24,7 +27,7 @@ async function loadTranslations(lang: string, host: string): Promise<Translation
     const en = (await import("../../locales/en.json")).default;
     return en as Translations;
   }
-  const url = `${protocol}://${host}${V2_BASE_PATH}/api/translations?lang=${encodeURIComponent(lang)}`;
+  const url = `${protocol}://${host}/api/v2/translations?lang=${encodeURIComponent(lang)}`;
   const res = await fetch(url, { next: { revalidate: 86400 } });
   if (!res.ok) return (await import("../../locales/en.json")).default as Translations;
   const data = (await res.json()) as { translations?: Translations };
@@ -77,6 +80,9 @@ export default async function V2Page(props: PageProps) {
   }
 
   const translations = await loadTranslations(lang, host);
+  const enSource = (await import("../../locales/en.json")).default as Translations;
+  const sourceHash = translationHash(enSource);
+  const clientI18nHash = cookieStore.get(I18N_HASH_COOKIE_NAME)?.value ?? null;
 
   return (
     <IndexPage
@@ -86,6 +92,8 @@ export default async function V2Page(props: PageProps) {
       month={safeMonth}
       lang={lang}
       translations={translations}
+      sourceHash={sourceHash}
+      clientI18nHash={clientI18nHash}
       baseUrl={`${protocol}://${host}`}
       fetchError={fetchError}
     />

@@ -51,6 +51,7 @@ ul {
 }
 
 button {
-  padding: 0.5rem 1rem;
+  padding-block: 0.5rem;
+  padding-inline: 1rem;
   font-weight: bold;
 }

@@ -23,6 +23,12 @@ const EVENT_COLORS: Record<EventType, string> = {
   [EventType.SOLAR_ECLIPSE]: "#fb923c",
 };
 
+/** Event types that are proper names and are not translated (same in all languages). */
+const UNTRANSLATED_EVENT_TYPES: EventType[] = [
+  EventType.SHIVARATRI,
+  EventType.TRIPURA_SUNDARI_PEAK,
+];
+
 type EventProps = {
   event: CalculatorEventType;
   timezone: string;
@@ -35,13 +41,19 @@ export function Event({ event, timezone, useAngleMode }: EventProps) {
   const { type, startDate, endDate, peakDate, description, angleBegDate, angleEndDate } = event;
   const iconData = getIconAndNameFromType(type);
   const icon = iconData?.icon ?? "";
-  const title = iconData?.name ? t(`eventTypes.${type}`) || iconData.name : "";
+  const title = iconData?.name
+    ? UNTRANSLATED_EVENT_TYPES.includes(type)
+      ? iconData.name
+      : t(`eventTypes.${type}`) || iconData.name
+    : "";
 
   const fmt = (utc: string) => formatDateInTimezone(utc, timezone, locale);
 
   let dateRange: string;
   let peak: string | undefined;
-  const note = description ? `(${description})` : undefined;
+  const descKey = description ? `event.descriptions.${description}` : "";
+  const translatedDesc = descKey ? (t(descKey) !== descKey ? t(descKey) : description) : "";
+  const note = description ? `(${translatedDesc})` : undefined;
 
   if (type === EventType.TRIPURA_SUNDARI_PEAK || type === EventType.FULL_MOON_PEAK) {
     peak = `${fmt(startDate)} — ${t("event.peak")}`;
@@ -70,36 +82,41 @@ export function Event({ event, timezone, useAngleMode }: EventProps) {
   return (
     <Box
       sx={{
+        width: "100%",
         display: "flex",
         alignItems: "flex-start",
-        gap: 1,
-        py: 0.75,
-        borderLeft: "3px solid",
-        borderColor: color,
-        pl: 1,
-        pr: 0,
+        gap: 2,
+        paddingBlock: (theme) => theme.spacing(0.75),
+        paddingInline: (theme) => theme.spacing(2),
         minWidth: 0,
+        borderInlineStart: "3px solid",
+        borderColor: color,
+        bgcolor: (theme) =>
+          theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.015)" : "rgba(0, 0, 0, 0.012)",
+        borderRadius: 0,
       }}
     >
-      <Box sx={{ fontSize: "1.25rem", lineHeight: 1.35, flexShrink: 0 }}>
-        {icon}
-      </Box>
+      <Box sx={{ fontSize: "1.25rem", lineHeight: 1.35, flexShrink: 0 }}>{icon}</Box>
       <Box sx={{ flex: 1, minWidth: 0 }}>
-        <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.4 }}>
+        <Typography variant="body2" sx={{ lineHeight: 1.4 }}>
           <Box component="span" sx={{ fontWeight: 600, color: "text.primary" }}>
             {title}
           </Box>
-          {" · "}
-          {dateRange}
           {note && (
-            <Box component="span" sx={{ color, fontStyle: "italic" }}>
-              {" "}
+            <Box component="span" sx={{ color, fontStyle: "italic", marginInlineStart: (theme) => theme.spacing(0.5) }}>
               {note}
             </Box>
           )}
         </Typography>
+        <Typography
+          variant="caption"
+          color="text.secondary"
+          sx={{ display: "block", marginBlockStart: (theme) => theme.spacing(0.25), lineHeight: 1.4 }}
+        >
+          {dateRange}
+        </Typography>
         {peak && (
-          <Typography variant="caption" display="block" sx={{ color, mt: 0.25 }}>
+          <Typography variant="caption" sx={{ display: "block", marginBlockStart: (theme) => theme.spacing(0.25), lineHeight: 1.4, color }}>
             {peak}
           </Typography>
         )}

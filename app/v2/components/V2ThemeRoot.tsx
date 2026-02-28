@@ -16,12 +16,15 @@ type ThemeContextValue = {
   setDarkMode: (value: boolean) => void;
 };
 
-const ThemeContext = createContext<ThemeContextValue | null>(null);
+const fallbackTheme: ThemeContextValue = {
+  darkMode: false,
+  setDarkMode: () => {},
+};
+
+const ThemeContext = createContext<ThemeContextValue>(fallbackTheme);
 
 export function useV2Theme(): ThemeContextValue {
-  const ctx = useContext(ThemeContext);
-  if (!ctx) throw new Error("useV2Theme must be used within V2ThemeRoot");
-  return ctx;
+  return useContext(ThemeContext);
 }
 
 type V2ThemeRootProps = {

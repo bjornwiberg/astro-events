@@ -38,6 +38,22 @@ const shared: ThemeOptions = {
         root: { transition: themeTransition },
       },
     },
+    MuiButton: {
+      styleOverrides: {
+        startIcon: ({ theme }) => ({
+          marginRight: 0,
+          marginLeft: 0,
+          marginInlineEnd: theme.spacing(1),
+          marginInlineStart: -theme.spacing(0.5),
+        }),
+        endIcon: ({ theme }) => ({
+          marginLeft: 0,
+          marginRight: 0,
+          marginInlineStart: theme.spacing(1),
+          marginInlineEnd: -theme.spacing(0.5),
+        }),
+      },
+    },
   },
 };
 

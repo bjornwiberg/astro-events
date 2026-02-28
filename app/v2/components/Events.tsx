@@ -16,7 +16,7 @@ export function Events({ events, timezone, useAngleMode }: EventsProps) {
 
   if (events.length === 0) {
     return (
-      <Typography variant="body2" color="text.secondary" sx={{ py: 2 }}>
+      <Typography variant="body2" color="text.secondary" sx={{ paddingBlock: (theme) => theme.spacing(2) }}>
         {t("events.noEventsThisMonth")}
       </Typography>
     );

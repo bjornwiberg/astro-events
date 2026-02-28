@@ -17,7 +17,8 @@ type NavigationProps = {
 
 export function Navigation({ year, month }: NavigationProps) {
   const router = useRouter();
-  const { t } = useTranslation();
+  const { t, dir } = useTranslation();
+  const isRtl = dir === "rtl";
   const now = new Date();
   const isToday =
     isSameYear(now, new Date(year, month, 1)) && isSameMonth(now, new Date(year, month, 1));
@@ -49,14 +50,21 @@ export function Navigation({ year, month }: NavigationProps) {
 
   return (
     <Box
-      sx={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 1, mt: 2, mb: 2 }}
+      sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 1,
+          marginBlockStart: (theme) => theme.spacing(2),
+          marginBlockEnd: (theme) => theme.spacing(2),
+        }}
     >
       <IconButton
         onClick={handlePrev}
         aria-label={t("nav.previousMonth")}
         sx={{ width: 48, height: 48 }}
       >
-        <ChevronLeftIcon fontSize="medium" />
+        {isRtl ? <ChevronRightIcon fontSize="medium" /> : <ChevronLeftIcon fontSize="medium" />}
       </IconButton>
       <Button
         variant="outlined"
@@ -73,7 +81,7 @@ export function Navigation({ year, month }: NavigationProps) {
         aria-label={t("nav.nextMonth")}
         sx={{ width: 48, height: 48 }}
       >
-        <ChevronRightIcon fontSize="medium" />
+        {isRtl ? <ChevronLeftIcon fontSize="medium" /> : <ChevronRightIcon fontSize="medium" />}
       </IconButton>
     </Box>
   );

@@ -184,7 +184,7 @@ export function LocationSelector({ value, onChange }: LocationSelectorProps) {
 
   return (
     <Box>
-      <Typography variant="body2" fontWeight={500} sx={{ mb: 0.5 }}>
+      <Typography variant="body2" fontWeight={500} sx={{ marginBlockEnd: (theme) => theme.spacing(0.5) }}>
         {t("location.label")}
       </Typography>
       <Autocomplete
@@ -213,12 +213,12 @@ export function LocationSelector({ value, onChange }: LocationSelectorProps) {
                 ...params.InputProps,
                 endAdornment: (
                   <>
+                    {params.InputProps.endAdornment}
                     <Tooltip title={t("location.myLocation")}>
                       <IconButton onClick={handleMyLocation} edge="end" size="small">
                         <MyLocationIcon fontSize="small" />
                       </IconButton>
                     </Tooltip>
-                    {params.InputProps.endAdornment}
                   </>
                 ),
               },

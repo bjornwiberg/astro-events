@@ -1,6 +1,7 @@
 "use client";
 
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import type { HTMLAttributes } from "react";
+import { Autocomplete, TextField } from "@mui/material";
 import { SUPPORTED_LOCALES } from "../../../lib/i18n";
 import { track } from "../../../utils/mixpanel";
 import { useTranslation } from "./TranslationProvider";
@@ -115,9 +116,24 @@ type LanguagePickerProps = {
   variant?: "default" | "appbar";
 };
 
+function filterLanguageOptions(
+  options: string[],
+  state: { inputValue: string },
+): string[] {
+  const q = state.inputValue.trim().toLowerCase();
+  if (!q) return options;
+  return options.filter(
+    (code) =>
+      code.toLowerCase().includes(q) ||
+      (NATIVE_NAMES[code] ?? "").toLowerCase().includes(q),
+  );
+}
+
 export function LanguagePicker({ value, onChange, variant = "default" }: LanguagePickerProps) {
   const { t } = useTranslation();
-  const handleChange = (newLocale: string) => {
+
+  const handleChange = (_: unknown, newLocale: string | null) => {
+    if (!newLocale) return;
     // biome-ignore lint/suspicious/noDocumentCookie: cookie is set in the browser
     document.cookie = `lang=${encodeURIComponent(newLocale)};path=/;max-age=31536000;SameSite=Lax`;
     onChange(newLocale);
@@ -127,41 +143,47 @@ export function LanguagePicker({ value, onChange, variant = "default" }: Languag
   const isAppbar = variant === "appbar";
 
   return (
-    <FormControl size="small" sx={{ minWidth: isAppbar ? 120 : 160 }}>
-      {!isAppbar && <InputLabel id="language-picker-label">{t("language.label")}</InputLabel>}
-      <Select
-        labelId={isAppbar ? undefined : "language-picker-label"}
-        label={isAppbar ? undefined : t("language.label")}
-        value={value}
-        onChange={(e) => handleChange(e.target.value)}
-        onOpen={() => track("Open Language Picker")}
-        renderValue={(v) => (
-          <>
-            <span style={{ marginRight: 6 }}>{FLAGS[v] ?? "🌐"}</span>
-            {NATIVE_NAMES[v] ?? v}
-          </>
-        )}
-        sx={
-          isAppbar
-            ? {
-                color: "#fff",
-                ".MuiOutlinedInput-notchedOutline": { borderColor: "rgba(255,255,255,0.3)" },
-                "&:hover .MuiOutlinedInput-notchedOutline": {
-                  borderColor: "rgba(255,255,255,0.6)",
-                },
-                "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "#fff" },
-                ".MuiSvgIcon-root": { color: "#fff" },
-              }
-            : undefined
-        }
-      >
-        {SUPPORTED_LOCALES.map((code) => (
-          <MenuItem key={code} value={code}>
-            <span style={{ marginRight: 8 }}>{FLAGS[code] ?? "🌐"}</span>
+    <Autocomplete
+      size="small"
+      value={value}
+      onChange={handleChange}
+      onOpen={() => track("Open Language Picker")}
+      options={SUPPORTED_LOCALES}
+      filterOptions={filterLanguageOptions}
+      getOptionLabel={(code) => `${FLAGS[code] ?? "🌐"} ${NATIVE_NAMES[code] ?? code}`}
+      isOptionEqualToValue={(opt, v) => opt === v}
+      sx={{
+        minWidth: isAppbar ? 180 : 260,
+        ...(isAppbar
+          ? {
+              color: "#fff",
+              ".MuiOutlinedInput-notchedOutline": { borderColor: "rgba(255,255,255,0.3)" },
+              "&:hover .MuiOutlinedInput-notchedOutline": {
+                borderColor: "rgba(255,255,255,0.6)",
+              },
+              "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "#fff" },
+              ".MuiSvgIcon-root": { color: "#fff" },
+              "& .MuiInputBase-input": { color: "#fff" },
+              "& .MuiInputBase-input::placeholder": { color: "rgba(255,255,255,0.7)" },
+            }
+          : {}),
+      }}
+      renderInput={(params) => (
+        <TextField
+          {...params}
+          label={isAppbar ? undefined : t("language.label")}
+          placeholder={t("language.searchPlaceholder")}
+        />
+      )}
+      renderOption={(props, code) => {
+        const { key: _key, ...rest } = props as HTMLAttributes<HTMLLIElement> & { key?: string };
+        return (
+          <li key={code} {...rest}>
+            <span style={{ marginInlineEnd: 8 }}>{FLAGS[code] ?? "🌐"}</span>
             {NATIVE_NAMES[code] ?? code}
-          </MenuItem>
-        ))}
-      </Select>
-    </FormControl>
+          </li>
+        );
+      }}
+    />
   );
 }

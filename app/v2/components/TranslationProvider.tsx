@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, type ReactNode, useCallback, useContext, useMemo } from "react";
+import { createContext, type ReactNode, useCallback, useContext, useEffect, useMemo } from "react";
 import type { Translations } from "../../../lib/i18n";
 import { isRtl } from "../../../lib/i18n";
 
@@ -10,7 +10,14 @@ type TranslationContextValue = {
   dir: "ltr" | "rtl";
 };
 
-const TranslationContext = createContext<TranslationContextValue | null>(null);
+const fallbackTranslation: TranslationContextValue = {
+  t: (key: string, vars?: Record<string, string>) =>
+    vars ? key.replace(/\{\{(\w+)\}\}/g, (_, name) => vars[name] ?? `{{${name}}}`) : key,
+  locale: "en",
+  dir: "ltr",
+};
+
+const TranslationContext = createContext<TranslationContextValue>(fallbackTranslation);
 
 function getNested(obj: Record<string, unknown>, path: string): string | undefined {
   const parts = path.split(".");
@@ -44,6 +51,12 @@ export function TranslationProvider({ locale, translations, children }: Translat
 
   const dir = useMemo(() => (isRtl(locale) ? "rtl" : "ltr"), [locale]);
 
+  useEffect(() => {
+    if (typeof document !== "undefined") {
+      document.documentElement.lang = locale;
+    }
+  }, [locale]);
+
   const value = useMemo<TranslationContextValue>(() => ({ t, locale, dir }), [t, locale, dir]);
 
   return (
@@ -56,7 +69,5 @@ export function TranslationProvider({ locale, translations, children }: Translat
 }
 
 export function useTranslation(): TranslationContextValue {
-  const ctx = useContext(TranslationContext);
-  if (!ctx) throw new Error("useTranslation must be used within TranslationProvider");
-  return ctx;
+  return useContext(TranslationContext);
 }

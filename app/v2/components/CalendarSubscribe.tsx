@@ -23,7 +23,7 @@ type CalendarSubscribeProps = {
 };
 
 export function CalendarSubscribe({ calendarUrl, variant = "default" }: CalendarSubscribeProps) {
-  const { t } = useTranslation();
+  const { t, dir } = useTranslation();
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
 
@@ -64,10 +64,10 @@ export function CalendarSubscribe({ calendarUrl, variant = "default" }: Calendar
           {t("calendarSubscribe.title")}
         </Button>
       )}
-      <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
+      <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth PaperProps={{ dir }}>
         <DialogTitle>{t("calendarSubscribe.title")}</DialogTitle>
         <DialogContent>
-          <Typography variant="body2" fontWeight={500} sx={{ mb: 0.5 }}>
+          <Typography variant="body2" fontWeight={500} sx={{ marginBlockEnd: (theme) => theme.spacing(0.5) }}>
             {t("calendarSubscribe.url")}
           </Typography>
           <TextField
@@ -78,7 +78,7 @@ export function CalendarSubscribe({ calendarUrl, variant = "default" }: Calendar
               input: {
                 readOnly: true,
                 endAdornment: (
-                  <InputAdornment position="end">
+                  <InputAdornment position={dir === "rtl" ? "start" : "end"}>
                     <IconButton onClick={handleCopy} aria-label={t("calendarSubscribe.copy")}>
                       <ContentCopyIcon />
                     </IconButton>
@@ -88,7 +88,7 @@ export function CalendarSubscribe({ calendarUrl, variant = "default" }: Calendar
             }}
           />
           {copied && (
-            <Typography variant="caption" sx={{ color: "success.main", mt: 0.5, display: "block" }}>
+            <Typography variant="caption" sx={{ color: "success.main", marginBlockStart: (theme) => theme.spacing(0.5), display: "block" }}>
               {t("calendarSubscribe.copied")}
             </Typography>
           )}

@@ -66,10 +66,13 @@ export function translationHash(obj: Translations): string {
   return (h >>> 0).toString(36);
 }
 
-/** Cache key for translated JSON: lang + hash of source. */
-export function translationCacheKey(lang: string, sourceHash: string): string {
-  return `v2:i18n:${lang}:${sourceHash}`;
+/** localStorage key for translated JSON (per lang). Hash is in cookie for invalidation. */
+export function translationCacheKey(lang: string): string {
+  return `v2:i18n:${lang}`;
 }
+
+/** Cookie name for the source (en.json) hash so the server can check if client cache is still valid. */
+export const I18N_HASH_COOKIE_NAME = "v2_i18n_hash";
 
 export function isSupportedLocale(locale: string): locale is SupportedLocale {
   return (SUPPORTED_LANGUAGES as readonly string[]).includes(locale);

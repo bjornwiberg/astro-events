@@ -33,15 +33,15 @@ export function Header({
         bgcolor: isDark ? "background.paper" : "#1A1A2E",
         color: isDark ? "text.primary" : "#fff",
         borderRadius: 0,
-        borderBottom: isDark ? "1px solid" : "none",
+        borderBlockEnd: isDark ? "1px solid" : "none",
         borderColor: "divider",
-        mb: 3,
+        marginBlockEnd: (theme) => theme.spacing(3),
         transition: "background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease",
       }}
     >
       <Container disableGutters>
         <Toolbar sx={{ gap: 1 }}>
-          <Box component="span" sx={{ fontSize: "1.5rem", mr: 0.5 }}>
+          <Box component="span" sx={{ fontSize: "1.5rem", marginInlineEnd: (theme) => theme.spacing(0.5) }}>
             🪐
           </Box>
           <Typography variant="h6" component="h1" sx={{ flexGrow: 1, whiteSpace: "nowrap" }}>

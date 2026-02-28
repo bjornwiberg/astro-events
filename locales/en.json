@@ -1,1 +1,70 @@
-{"aria":{"toggleDarkMode":"Toggle dark mode"},"language":{"label":"Language"},"header":{"title":"Welcome to Astro Events","viewing":"Viewing astrological events for {{monthYear}}"},"nav":{"previousMonth":"Previous month","nextMonth":"Next month","today":"Today's month"},"event":{"peak":"Peak","maximum":"Maximum"},"events":{"noEventsThisMonth":"No events this month."},"eventTypes":{"EQUINOX":"Equinox","SOLSTICE":"Solstice","HIATUS_SOLAR":"Hiatus Solar","TRIPURA_SUNDARI_PEAK":"Tripura Sundari","FULL_MOON_PEAK":"Full moon","SHIVARATRI":"Shivaratri","NEW_MOON":"New moon","MOON_ECLIPSE":"Moon eclipse","SOLAR_ECLIPSE":"Solar eclipse"},"location":{"label":"Location","placeholder":"Search city or place...","myLocation":"My location"},"angleToggle":{"label":"Calculate from astrological angles"},"calendarSubscribe":{"title":"Subscribe to calendar","url":"Calendar URL","copy":"Copy URL","copied":"Copied!","close":"Close"},"footer":{"createdBy":"Created by {{author}}"},"errors":{"fetchEvents":"Error fetching events","fetchEventsHint":"Set CALCULATOR_API_URL and CALCULATOR_API_KEY in .env.local (see .env.example)."},"loading":{"changingLanguage":"Changing language…"}}
+{
+  "aria": {
+    "toggleDarkMode": "Toggle dark mode"
+  },
+  "language": {
+    "label": "Language",
+    "searchPlaceholder": "Search language…s"
+  },
+  "header": {
+    "title": "Welcome to Astro Events",
+    "viewing": "Viewing astrological events for {{monthYear}}"
+  },
+  "nav": {
+    "previousMonth": "Previous month",
+    "nextMonth": "Next month",
+    "today": "Today's month"
+  },
+  "event": {
+    "peak": "Peak",
+    "maximum": "Maximum",
+    "descriptions": {
+      "Partial": "Partial",
+      "Full": "Full",
+      "Shadow": "Shadow",
+      "Annular": "Annular",
+      "Penumbral": "Penumbral",
+      "Micro Full Moon": "Micro Full Moon",
+      "Super Full Moon": "Super Full Moon",
+      "Micro New Moon": "Micro New Moon",
+      "Super New Moon": "Super New Moon"
+    }
+  },
+  "events": {
+    "noEventsThisMonth": "No events this month."
+  },
+  "eventTypes": {
+    "EQUINOX": "Equinox",
+    "SOLSTICE": "Solstice",
+    "HIATUS_SOLAR": "Hiatus Solar",
+    "FULL_MOON_PEAK": "Full moon",
+    "NEW_MOON": "New moon",
+    "MOON_ECLIPSE": "Moon eclipse",
+    "SOLAR_ECLIPSE": "Solar eclipse"
+  },
+  "location": {
+    "label": "Location",
+    "placeholder": "Search city or place...",
+    "myLocation": "My location"
+  },
+  "angleToggle": {
+    "label": "Show start/end dates based on astrological angles"
+  },
+  "calendarSubscribe": {
+    "title": "Subscribe to calendar",
+    "url": "Calendar URL",
+    "copy": "Copy URL",
+    "copied": "Copied!",
+    "close": "Close"
+  },
+  "footer": {
+    "createdBy": "Created by {{author}}"
+  },
+  "errors": {
+    "fetchEvents": "Error fetching events",
+    "fetchEventsHint": "Set CALCULATOR_API_URL and CALCULATOR_API_KEY in .env.local"
+  },
+  "loading": {
+    "changingLanguage": "Changing language…"
+  }
+}
