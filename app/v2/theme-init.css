@@ -1,16 +1,43 @@
-/* Initial paint for v2 theme. Wrapper is server-rendered with data-theme so no hydration mismatch. */
-.v2-theme-root {
+/* v2: body gets layout when it has the class (set client-side); theme from html[data-theme] to avoid wrapper divs. */
+body.v2-theme-root {
   min-height: 100dvh;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
 }
-.v2-theme-root[data-theme="dark"] {
+body.v2-theme-root > main {
+  flex: 1 1 auto;
+  width: 100%;
+}
+html[data-theme="dark"] body.v2-theme-root {
   background-color: #121212;
   color: #e0e0e0;
 }
-.v2-theme-root[data-theme="light"] {
+html[data-theme="light"] body.v2-theme-root {
   background-color: #fafafa;
   color: #1a1a2e;
+}
+
+/* v2 header: sticky, full width; styles here to avoid MUI/Emotion on wrapper (hydration). */
+body.v2-theme-root > .v2-header {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 1100;
+  flex-shrink: 0;
+  border-radius: 0;
+  margin-block-end: 24px;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+html[data-theme="dark"] body.v2-theme-root > .v2-header {
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+  border-block-end: 1px solid rgba(255, 255, 255, 0.12);
+}
+html[data-theme="light"] body.v2-theme-root > .v2-header {
+  background-color: #1a1a2e;
+  color: #fff;
+  border-block-end: none;
 }

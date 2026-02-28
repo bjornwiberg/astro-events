@@ -1,6 +1,14 @@
 "use client";
 
-import { createContext, type ReactNode, useCallback, useContext, useEffect, useMemo } from "react";
+import {
+  createContext,
+  Fragment,
+  type ReactNode,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+} from "react";
 import type { Translations } from "../../../lib/i18n";
 import { isRtl } from "../../../lib/i18n";
 
@@ -54,16 +62,15 @@ export function TranslationProvider({ locale, translations, children }: Translat
   useEffect(() => {
     if (typeof document !== "undefined") {
       document.documentElement.lang = locale;
+      document.documentElement.dir = dir;
     }
-  }, [locale]);
+  }, [locale, dir]);
 
   const value = useMemo<TranslationContextValue>(() => ({ t, locale, dir }), [t, locale, dir]);
 
   return (
     <TranslationContext.Provider value={value}>
-      <div dir={dir} style={{ minHeight: "100%" }}>
-        {children}
-      </div>
+      <Fragment>{children}</Fragment>
     </TranslationContext.Provider>
   );
 }

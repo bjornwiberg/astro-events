@@ -2,6 +2,7 @@
 
 import {
   createContext,
+  Fragment,
   useCallback,
   useContext,
   useEffect,
@@ -27,6 +28,8 @@ export function useV2Theme(): ThemeContextValue {
   return useContext(ThemeContext);
 }
 
+const BODY_V2_CLASS = "v2-theme-root";
+
 type V2ThemeRootProps = {
   initialDark: boolean | null;
   children: ReactNode;
@@ -49,13 +52,19 @@ export function V2ThemeRoot({ initialDark, children }: V2ThemeRootProps) {
 
   const value = useMemo(() => ({ darkMode, setDarkMode }), [darkMode, setDarkMode]);
 
-  const dataTheme = darkMode ? "dark" : "light";
+  useEffect(() => {
+    const theme = darkMode ? "dark" : "light";
+    document.documentElement.setAttribute("data-theme", theme);
+    document.body.classList.add(BODY_V2_CLASS);
+    return () => {
+      document.body.classList.remove(BODY_V2_CLASS);
+      document.documentElement.removeAttribute("data-theme");
+    };
+  }, [darkMode]);
 
   return (
     <ThemeContext.Provider value={value}>
-      <div className="v2-theme-root" data-theme={dataTheme}>
-        {children}
-      </div>
+      <Fragment>{children}</Fragment>
     </ThemeContext.Provider>
   );
 }

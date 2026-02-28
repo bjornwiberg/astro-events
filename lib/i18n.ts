@@ -84,3 +84,16 @@ export const RTL_LOCALES = new Set<string>(["ar", "he", "fa", "ur"]);
 export function isRtl(locale: string): boolean {
   return RTL_LOCALES.has(locale);
 }
+
+/** Resolve locale from lang cookie or Accept-Language header. */
+export function getPreferredLocale(
+  langCookie: string | null | undefined,
+  acceptLanguage: string | null | undefined,
+): string {
+  if (langCookie && isSupportedLocale(langCookie)) return langCookie;
+  if (!acceptLanguage) return "en";
+  const first = acceptLanguage.split(",")[0]?.trim();
+  if (!first) return "en";
+  const code = first.split(";")[0]?.trim().slice(0, 2).toLowerCase();
+  return code && isSupportedLocale(code) ? code : "en";
+}

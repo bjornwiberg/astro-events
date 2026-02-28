@@ -2,7 +2,7 @@
 
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
-import { AppBar, Box, Container, IconButton, Toolbar, Typography, useTheme } from "@mui/material";
+import { Box, Container, IconButton, Toolbar, Typography } from "@mui/material";
 import { CalendarSubscribe } from "./CalendarSubscribe";
 import { LanguagePicker } from "./LanguagePicker";
 import { useTranslation } from "./TranslationProvider";
@@ -22,26 +22,16 @@ export function Header({
   darkMode,
   onDarkModeToggle,
 }: HeaderProps) {
-  const theme = useTheme();
   const { t } = useTranslation();
-  const isDark = theme.palette.mode === "dark";
 
   return (
-    <AppBar
-      position="sticky"
-      sx={{
-        bgcolor: isDark ? "background.paper" : "#1A1A2E",
-        color: isDark ? "text.primary" : "#fff",
-        borderRadius: 0,
-        borderBlockEnd: isDark ? "1px solid" : "none",
-        borderColor: "divider",
-        marginBlockEnd: (theme) => theme.spacing(3),
-        transition: "background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease",
-      }}
-    >
+    <header className="v2-header">
       <Container disableGutters>
         <Toolbar sx={{ gap: 1 }}>
-          <Box component="span" sx={{ fontSize: "1.5rem", marginInlineEnd: (theme) => theme.spacing(0.5) }}>
+          <Box
+            component="span"
+            sx={{ fontSize: "1.5rem", marginInlineEnd: (theme) => theme.spacing(0.5) }}
+          >
             🪐
           </Box>
           <Typography variant="h6" component="h1" sx={{ flexGrow: 1, whiteSpace: "nowrap" }}>
@@ -59,6 +49,6 @@ export function Header({
           <CalendarSubscribe calendarUrl={calendarUrl} variant="appbar" />
         </Toolbar>
       </Container>
-    </AppBar>
+    </header>
   );
 }
