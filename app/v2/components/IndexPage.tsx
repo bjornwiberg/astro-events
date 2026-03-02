@@ -229,7 +229,7 @@ export default function IndexPage({
   }, [yearFilter, monthFilter, locale]);
 
   const timezone = (location.timezone && location.timezone !== "UTC") ? location.timezone : browserTimezone;
-  const calendarUrl = `${baseUrl}${V2_BASE_PATH}/api/calendar?lng=${location.lng}&lat=${location.lat}`;
+  const calendarUrl = `${baseUrl}/api/v2/calendar?lng=${location.lng}&lat=${location.lat}`;
 
   return (
     <ThemeRegistry>
