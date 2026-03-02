@@ -87,7 +87,12 @@ export function LocationSelector({ value, onChange }: LocationSelectorProps) {
     track("Location Search", { query: q });
     try {
       const items = await searchPlaces(q);
-      setOptions(items);
+      const seen = new Set<string>();
+      setOptions(
+        items.filter((item) =>
+          seen.has(item.display_name) ? false : seen.add(item.display_name) && true
+        )
+      );
     } finally {
       setLoading(false);
     }
@@ -184,7 +189,11 @@ export function LocationSelector({ value, onChange }: LocationSelectorProps) {
 
   return (
     <Box>
-      <Typography variant="body2" fontWeight={500} sx={{ marginBlockEnd: (theme) => theme.spacing(0.5) }}>
+      <Typography
+        variant="body2"
+        fontWeight={500}
+        sx={{ marginBlockEnd: (theme) => theme.spacing(0.5) }}
+      >
         {t("location.label")}
       </Typography>
       <Autocomplete
