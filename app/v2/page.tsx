@@ -28,6 +28,9 @@ export default async function V2Page(props: PageProps) {
     parseLocationCookie(cookieStore.get("location")?.value) ??
     (await getLocationFromIp(forwardedFor));
 
+  const tzCookie = cookieStore.get("tz")?.value;
+  const browserTimezone = tzCookie ? decodeURIComponent(tzCookie) : null;
+
   const lang = getPreferredLocale(langCookie, h.get("accept-language"));
 
   const searchParams = await props.searchParams;
@@ -73,6 +76,7 @@ export default async function V2Page(props: PageProps) {
       clientI18nHash={clientI18nHash}
       baseUrl={`${protocol}://${host}`}
       fetchError={fetchError}
+      browserTimezone={browserTimezone}
     />
   );
 }

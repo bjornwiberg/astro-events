@@ -46,6 +46,8 @@ type IndexPageProps = {
   clientI18nHash?: string | null;
   baseUrl: string;
   fetchError?: boolean;
+  /** Browser IANA timezone read from the `tz` cookie on the server. Null on first visit. */
+  browserTimezone?: string | null;
 };
 
 function getStoredTranslations(lang: string): Translations | null {
@@ -106,6 +108,7 @@ export default function IndexPage({
   clientI18nHash,
   baseUrl,
   fetchError: initialFetchError = false,
+  browserTimezone: initialBrowserTimezone = null,
 }: IndexPageProps) {
   const { darkMode, setDarkMode } = useV2Theme();
 
@@ -119,6 +122,7 @@ export default function IndexPage({
   const [error] = useState(initialFetchError);
   const [loadingTranslations, setLoadingTranslations] = useState(false);
   const [showOverlay, setShowOverlay] = useState(false);
+  const [browserTimezone, setBrowserTimezone] = useState(initialBrowserTimezone ?? "UTC");
   const router = useRouter();
   const loadingTextRef = useRef("Changing language…");
   const overlayTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -203,6 +207,12 @@ export default function IndexPage({
   }, [year, month]);
 
   useEffect(() => {
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    setBrowserTimezone(tz);
+    document.cookie = `tz=${encodeURIComponent(tz)};path=/;max-age=31536000;SameSite=Lax`;
+  }, []);
+
+  useEffect(() => {
     initMixpanel();
   }, []);
 
@@ -218,7 +228,7 @@ export default function IndexPage({
     return d.toLocaleDateString(locale, { month: "long", year: "numeric" });
   }, [yearFilter, monthFilter, locale]);
 
-  const timezone = location.timezone ?? "UTC";
+  const timezone = (location.timezone && location.timezone !== "UTC") ? location.timezone : browserTimezone;
   const calendarUrl = `${baseUrl}${V2_BASE_PATH}/api/calendar?lng=${location.lng}&lat=${location.lat}`;
 
   return (

@@ -130,7 +130,7 @@ export function LocationSelector({ value, onChange }: LocationSelectorProps) {
     track("Location Focus");
   };
 
-  const handleSelect = (_: unknown, option: NominatimSearchItem | string | null) => {
+  const handleSelect = async (_: unknown, option: NominatimSearchItem | string | null) => {
     if (!option || typeof option === "string") return;
     const lat = parseFloat(option.lat);
     const lon = parseFloat(option.lon);
@@ -140,11 +140,12 @@ export function LocationSelector({ value, onChange }: LocationSelectorProps) {
       option.address?.town ??
       option.address?.village ??
       option.display_name;
+    const rev = await reverseGeocode(lat, lon);
     const location: GeoLocation = {
       lng: lon,
       lat,
       city: city ?? option.display_name,
-      timezone: "UTC",
+      timezone: rev?.timezone,
     };
     setLocationCookie(location);
     onChange(location);
