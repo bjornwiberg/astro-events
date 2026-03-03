@@ -33,6 +33,7 @@ import { LocationSelector } from "./LocationSelector";
 import { Navigation } from "./Navigation";
 import { ThemeRegistry } from "./ThemeRegistry";
 import { TranslationProvider } from "./TranslationProvider";
+import { V1Banner } from "./V1Banner";
 
 type IndexPageProps = {
   events: CalculatorEventType[];
@@ -237,6 +238,7 @@ export default function IndexPage({
         <CssBaseline />
         <TranslationProvider locale={locale} translations={currentTranslations}>
         <Fragment>
+          <V1Banner />
           <Header
             locale={locale}
             onLocaleChange={handleLocaleChange}

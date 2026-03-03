@@ -67,5 +67,13 @@
   },
   "loading": {
     "changingLanguage": "Changing language…"
+  },
+  "v1Banner": {
+    "text": "Looking for the classic version?",
+    "link": "Go back"
+  },
+  "v2Banner": {
+    "link": "Try out the new version",
+    "badge": "beta"
   }
 }
