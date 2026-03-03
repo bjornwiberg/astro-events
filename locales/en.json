@@ -59,7 +59,21 @@
     "close": "Close"
   },
   "footer": {
-    "createdBy": "Created by {{author}}"
+    "createdBy": "Created by {{author}}",
+    "supportProject": "Support this project"
+  },
+  "info": {
+    "title": "About Astro Events",
+    "description": "Astro Events is a free app showing astrological events — moon phases, eclipses, equinoxes, and solstices — based on your location and timezone.",
+    "contact": {
+      "title": "Made by"
+    },
+    "support": {
+      "title": "Support this project",
+      "description": "If you enjoy the app, consider sending a donation via Revolut to",
+      "orSwish": "or via Swish to",
+      "scanQr": "Scan to pay via Revolut"
+    }
   },
   "errors": {
     "fetchEvents": "Error fetching events",
