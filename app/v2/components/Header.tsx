@@ -2,7 +2,7 @@
 
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
-import { Box, Container, IconButton, Toolbar, Typography, useMediaQuery } from "@mui/material";
+import { Box, Container, IconButton, Toolbar, Typography, } from "@mui/material";
 import { CalendarSubscribe } from "./CalendarSubscribe";
 import { LanguagePicker } from "./LanguagePicker";
 import { useTranslation } from "./TranslationProvider";
@@ -23,7 +23,6 @@ export function Header({
   onDarkModeToggle,
 }: HeaderProps) {
   const { t } = useTranslation();
-  const isMobile = useMediaQuery((theme) => theme.breakpoints.down("sm"));
 
   return (
     <header className="v2-header">
@@ -34,7 +33,7 @@ export function Header({
               🪐
             </Box>
             <Typography
-            className={isMobile ? "visually-hidden": ""}
+            className="visually-hidden-mobile"
               variant="h6"
               component="h1"
             >
