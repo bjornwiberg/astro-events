@@ -2,7 +2,7 @@
 
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
-import { Box, Container, IconButton, Toolbar, Typography } from "@mui/material";
+import { Box, Container, IconButton, Toolbar, Typography, useMediaQuery } from "@mui/material";
 import { CalendarSubscribe } from "./CalendarSubscribe";
 import { LanguagePicker } from "./LanguagePicker";
 import { useTranslation } from "./TranslationProvider";
@@ -23,20 +23,24 @@ export function Header({
   onDarkModeToggle,
 }: HeaderProps) {
   const { t } = useTranslation();
+  const isMobile = useMediaQuery((theme) => theme.breakpoints.down("sm"));
 
   return (
     <header className="v2-header">
       <Container disableGutters>
         <Toolbar sx={{ gap: 1 }}>
-          <Box
-            component="span"
-            sx={{ fontSize: "1.5rem", marginInlineEnd: (theme) => theme.spacing(0.5) }}
-          >
-            🪐
+          <Box sx={{ flexGrow: 1, display: "flex", alignItems: "center", gap: 2 }}>
+            <Box component="span" sx={{ fontSize: "1.5rem" }}>
+              🪐
+            </Box>
+            <Typography
+            className={isMobile ? "visually-hidden": ""}
+              variant="h6"
+              component="h1"
+            >
+              Astro Events
+            </Typography>
           </Box>
-          <Typography variant="h6" component="h1" sx={{ flexGrow: 1, whiteSpace: "nowrap" }}>
-            Astro Events
-          </Typography>
           <IconButton
             color="inherit"
             onClick={onDarkModeToggle}
