@@ -52,7 +52,7 @@ export function InfoDialog({ open, onClose }: InfoDialogProps) {
         <Typography variant="h6" component="span" fontWeight={600}>
           {t("info.title")}
         </Typography>
-        <IconButton onClick={onClose} size="small" aria-label="close" edge="end">
+        <IconButton onClick={() => { track("Close Info Dialog"); onClose(); }} size="small" aria-label="close" edge="end">
           <CloseIcon fontSize="small" />
         </IconButton>
       </DialogTitle>

@@ -15,7 +15,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { GeoLocation } from "../../../lib/calculator";
 import { I18N_HASH_COOKIE_NAME, type Translations, translationCacheKey } from "../../../lib/i18n";
 import type { CalculatorEventType } from "../../../types/calculatorEvent";
-import { initMixpanel } from "../../../utils/mixpanel";
+import { initMixpanel, track } from "../../../utils/mixpanel";
 import { darkTheme, lightTheme } from "../theme";
 import { AppProvider } from "./AppProvider";
 import { Errors } from "./Errors";
@@ -126,7 +126,9 @@ export default function IndexPage({
   const overlayTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handleDarkModeToggle = useCallback(() => {
-    setDarkMode(!darkMode);
+    const next = !darkMode;
+    setDarkMode(next);
+    track("Toggle Dark Mode", { darkMode: next });
   }, [darkMode, setDarkMode]);
 
   // Sync from server when lang/translations change (e.g. navigation)
