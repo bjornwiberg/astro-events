@@ -107,4 +107,22 @@ export async function getCachedSubscriptionEvents(
   )();
 }
 
+/** Cached events for a single year. Uses lng/lat rounded to 1 decimal so nearby locations share the same cache. */
+export async function getCachedYearEvents(
+  year: number,
+  lng: number,
+  lat: number
+): Promise<CalculatorEventType[]> {
+  const lngRounded = roundGeoCoord(lng);
+  const latRounded = roundGeoCoord(lat);
+  const tmb = `${year}-01-01T00:00:00`;
+  const tmf = `${year}-12-31T23:59:59`;
+
+  return unstable_cache(
+    () => fetchCalculatorEventsByRange(lngRounded, latRounded, tmb, tmf),
+    ["calc-year", String(year), String(lngRounded), String(latRounded)],
+    { revalidate: CACHE_REVALIDATE_SECONDS }
+  )();
+}
+
 export { DEFAULT_LOCATION };

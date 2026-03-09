@@ -1,6 +1,6 @@
 import { cookies, headers } from "next/headers";
 import type { GeoLocation } from "../../lib/calculator";
-import { getCachedSubscriptionEvents } from "../../lib/calculator";
+import { getCachedYearEvents } from "../../lib/calculator";
 import { parseLocationCookie } from "../../lib/cookies";
 import { getLocationFromIp } from "../../lib/geoip";
 import {
@@ -38,13 +38,10 @@ export default async function V2Page(props: PageProps) {
   const monthParam = searchParams.month;
   const now = new Date();
   const currentYear = now.getFullYear();
-  const subStartYear = currentYear - 1;
-  const subEndYear = currentYear + 3;
-  const year = yearParam ? parseInt(yearParam, 10) : currentYear;
+  const yearParsed = yearParam ? parseInt(yearParam, 10) : currentYear;
   // URL uses month 1–12 (Jan–Dec); convert to 0–11 for internal use
   const monthFromUrl = monthParam != null ? parseInt(monthParam, 10) : now.getMonth() + 1;
-  const safeYear =
-    Number.isInteger(year) && year >= subStartYear && year <= subEndYear ? year : currentYear;
+  const safeYear = Number.isInteger(yearParsed) ? yearParsed : currentYear;
   const safeMonth =
     Number.isInteger(monthFromUrl) && monthFromUrl >= 1 && monthFromUrl <= 12
       ? monthFromUrl - 1
@@ -53,7 +50,7 @@ export default async function V2Page(props: PageProps) {
   let events: CalculatorEventType[] = [];
   let fetchError = false;
   try {
-    events = await getCachedSubscriptionEvents(location.lng, location.lat);
+    events = await getCachedYearEvents(safeYear, location.lng, location.lat);
   } catch {
     fetchError = true;
   }
