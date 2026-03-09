@@ -23,6 +23,68 @@ const EVENT_COLORS: Record<EventType, string> = {
   [EventType.SOLAR_ECLIPSE]: "#fb923c",
 };
 
+function getRelativeTime(date: Date, locale: string): string {
+  const now = new Date();
+  const todayMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const eventMidnight = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  const diffDays = Math.round((eventMidnight.getTime() - todayMidnight.getTime()) / (1000 * 60 * 60 * 24));
+  const sign = Math.sign(diffDays);
+  const absDays = Math.abs(diffDays);
+
+  // For less than a week, use simple relative format ("today", "in 3 days", "2 days ago")
+  if (absDays < 7) {
+    return new Intl.RelativeTimeFormat(locale, { numeric: "auto" }).format(sign * absDays, "day");
+  }
+
+  const rtf = new Intl.RelativeTimeFormat(locale, { numeric: "always" });
+  const unitFmt = (v: number, u: string) =>
+    new Intl.NumberFormat(locale, { style: "unit", unit: u, unitDisplay: "long" }).format(v);
+  const listFmt = new Intl.ListFormat(locale, { type: "conjunction" });
+
+  let primaryValue: number;
+  let primaryUnit: Intl.RelativeTimeFormatUnit;
+  let parts: string[];
+
+  if (absDays < 60) {
+    const weeks = Math.floor(absDays / 7);
+    const days = absDays % 7;
+    primaryValue = weeks;
+    primaryUnit = "week";
+    parts = [unitFmt(weeks, "week")];
+    if (days > 0) parts.push(unitFmt(days, "day"));
+  } else if (absDays < 365) {
+    const months = Math.floor(absDays / 30);
+    const weeks = Math.floor((absDays % 30) / 7);
+    primaryValue = months;
+    primaryUnit = "month";
+    parts = [unitFmt(months, "month")];
+    if (weeks > 0) parts.push(unitFmt(weeks, "week"));
+  } else {
+    const years = Math.floor(absDays / 365);
+    const months = Math.floor((absDays % 365) / 30);
+    primaryValue = years;
+    primaryUnit = "year";
+    parts = [unitFmt(years, "year")];
+    if (months > 0) parts.push(unitFmt(months, "month"));
+  }
+
+  // Single unit with no remainder → use "auto" for natural phrasing ("next week", "last month")
+  if (parts.length === 1) {
+    return new Intl.RelativeTimeFormat(locale, { numeric: "auto" }).format(
+      sign * primaryValue,
+      primaryUnit,
+    );
+  }
+
+  // Compound: replace the primary unit in the RTF output with the full compound string,
+  // preserving locale-correct "in X" / "X ago" wrapping
+  const combined = listFmt.format(parts);
+  const primaryFormatted = unitFmt(primaryValue, primaryUnit);
+  const fullRelative = rtf.format(sign * primaryValue, primaryUnit);
+
+  return fullRelative.replace(primaryFormatted, combined);
+}
+
 /** Event types that are proper names and are not translated (same in all languages). */
 const UNTRANSLATED_EVENT_TYPES: EventType[] = [
   EventType.SHIVARATRI,
@@ -32,13 +94,12 @@ const UNTRANSLATED_EVENT_TYPES: EventType[] = [
 type EventProps = {
   event: CalculatorEventType;
   timezone: string;
-  useAngleMode: boolean;
 };
 
-export function Event({ event, timezone, useAngleMode }: EventProps) {
+export function Event({ event, timezone }: EventProps) {
   const theme = useTheme();
   const { t, locale } = useTranslation();
-  const { type, startDate, endDate, peakDate, description, angleBegDate, angleEndDate } = event;
+  const { type, startDate, endDate, peakDate, description } = event;
   const iconData = getIconAndNameFromType(type);
   const icon = iconData?.icon ?? "";
   const title = iconData?.name
@@ -57,9 +118,7 @@ export function Event({ event, timezone, useAngleMode }: EventProps) {
 
   if (type === EventType.TRIPURA_SUNDARI_PEAK || type === EventType.FULL_MOON_PEAK) {
     peak = `${fmt(startDate)} — ${t("event.peak")}`;
-    if (useAngleMode && angleBegDate && angleEndDate) {
-      dateRange = `${fmt(angleBegDate)} – ${fmt(angleEndDate)}`;
-    } else if (type === EventType.TRIPURA_SUNDARI_PEAK) {
+    if (type === EventType.TRIPURA_SUNDARI_PEAK) {
       const { start, end } = getTripuraSundariDatesFromPeakDate(new Date(startDate));
       dateRange = `${fmt(start.toISOString())} – ${fmt(end.toISOString())}`;
     } else {
@@ -77,6 +136,8 @@ export function Event({ event, timezone, useAngleMode }: EventProps) {
     if (endDate) dateRange += ` – ${fmt(endDate)}`;
   }
 
+  const isPast = new Date(endDate ?? startDate) < new Date();
+  const relativeTime = getRelativeTime(new Date(startDate), locale);
   const color = EVENT_COLORS[type] ?? theme.palette.primary.main;
 
   return (
@@ -94,6 +155,7 @@ export function Event({ event, timezone, useAngleMode }: EventProps) {
         bgcolor: (theme) =>
           theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.015)" : "rgba(0, 0, 0, 0.012)",
         borderRadius: 0,
+        opacity: isPast ? 0.45 : 1,
       }}
     >
       <Box sx={{ fontSize: "1.25rem", lineHeight: 1.35, flexShrink: 0 }}>{icon}</Box>
@@ -101,6 +163,9 @@ export function Event({ event, timezone, useAngleMode }: EventProps) {
         <Typography variant="body2" sx={{ lineHeight: 1.4 }}>
           <Box component="span" sx={{ fontWeight: 600, color: "text.primary" }}>
             {title}
+          </Box>
+          <Box component="span" sx={{ color: "text.secondary", fontWeight: 400, marginInlineStart: (theme) => theme.spacing(0.5) }}>
+            ({relativeTime})
           </Box>
           {note && (
             <Box component="span" sx={{ color, fontStyle: "italic", marginInlineStart: (theme) => theme.spacing(0.5) }}>

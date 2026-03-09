@@ -8,10 +8,9 @@ import { useTranslation } from "./TranslationProvider";
 type EventsProps = {
   events: CalculatorEventType[];
   timezone: string;
-  useAngleMode: boolean;
 };
 
-export function Events({ events, timezone, useAngleMode }: EventsProps) {
+export function Events({ events, timezone }: EventsProps) {
   const { t } = useTranslation();
 
   if (events.length === 0) {
@@ -34,7 +33,7 @@ export function Events({ events, timezone, useAngleMode }: EventsProps) {
           key={`${event.type}-${event.startDate}`}
           sx={{ display: "flex", minWidth: 0 }}
         >
-          <Event event={event} timezone={timezone} useAngleMode={useAngleMode} />
+          <Event event={event} timezone={timezone} />
         </Grid>
       ))}
     </Grid>

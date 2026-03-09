@@ -24,7 +24,6 @@ import { initMixpanel } from "../../../utils/mixpanel";
 import { V2_BASE_PATH } from "../constants";
 import { darkTheme, lightTheme } from "../theme";
 import { useV2Theme } from "./V2ThemeRoot";
-import { AngleToggle } from "./AngleToggle";
 import { Errors } from "./Errors";
 import { Events } from "./Events";
 import { Footer } from "./Footer";
@@ -119,7 +118,6 @@ export default function IndexPage({
   const [currentTranslations, setCurrentTranslations] = useState(translations);
   const [monthFilter, setMonthFilter] = useState(month);
   const [yearFilter, setYearFilter] = useState(year);
-  const [useAngleMode, setUseAngleMode] = useState(false);
   const [error] = useState(initialFetchError);
   const [loadingTranslations, setLoadingTranslations] = useState(false);
   const [showOverlay, setShowOverlay] = useState(false);
@@ -253,9 +251,6 @@ export default function IndexPage({
             <Card>
               <CardContent>
                 <LocationSelector value={location} onChange={handleLocationChange} />
-                <Box sx={{ marginBlockStart: (theme) => theme.spacing(1.5) }}>
-                  <AngleToggle checked={useAngleMode} onChange={setUseAngleMode} />
-                </Box>
               </CardContent>
             </Card>
 
@@ -267,7 +262,7 @@ export default function IndexPage({
               ).replace("{{monthYear}}", monthYear)}
             </Typography>
 
-            <Events events={filteredEvents} timezone={timezone} useAngleMode={useAngleMode} />
+            <Events events={filteredEvents} timezone={timezone} />
           </Container>
 
           <Footer />
