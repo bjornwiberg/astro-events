@@ -232,7 +232,7 @@ export default function IndexPage({
     <ThemeRegistry>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <AppProvider locale={locale} translations={currentTranslations} timezone={timezone}>
+        <AppProvider locale={locale} translations={currentTranslations} timezone={timezone} isCurrentMonth={yearFilter === new Date().getFullYear() && monthFilter === new Date().getMonth()}>
         <Fragment>
           <V1Banner />
           <Header

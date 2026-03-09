@@ -17,6 +17,7 @@ type AppContextValue = {
   locale: string;
   dir: "ltr" | "rtl";
   timezone: string;
+  isCurrentMonth: boolean;
 };
 
 const fallbackValue: AppContextValue = {
@@ -25,6 +26,7 @@ const fallbackValue: AppContextValue = {
   locale: "en",
   dir: "ltr",
   timezone: "UTC",
+  isCurrentMonth: true,
 };
 
 const AppContext = createContext<AppContextValue>(fallbackValue);
@@ -47,10 +49,11 @@ type AppProviderProps = {
   locale: string;
   translations: Translations;
   timezone: string;
+  isCurrentMonth: boolean;
   children: ReactNode;
 };
 
-export function AppProvider({ locale, translations, timezone, children }: AppProviderProps) {
+export function AppProvider({ locale, translations, timezone, isCurrentMonth, children }: AppProviderProps) {
   const t = useCallback(
     (key: string, vars?: Record<string, string>) => {
       const raw = getNested(translations as Record<string, unknown>, key);
@@ -69,7 +72,7 @@ export function AppProvider({ locale, translations, timezone, children }: AppPro
     }
   }, [locale, dir]);
 
-  const value = useMemo<AppContextValue>(() => ({ t, locale, dir, timezone }), [t, locale, dir, timezone]);
+  const value = useMemo<AppContextValue>(() => ({ t, locale, dir, timezone, isCurrentMonth }), [t, locale, dir, timezone, isCurrentMonth]);
 
   return (
     <AppContext.Provider value={value}>

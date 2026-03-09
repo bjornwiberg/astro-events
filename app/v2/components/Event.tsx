@@ -27,7 +27,9 @@ function getRelativeTime(date: Date, locale: string): string {
   const now = new Date();
   const todayMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
   const eventMidnight = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-  const diffDays = Math.round((eventMidnight.getTime() - todayMidnight.getTime()) / (1000 * 60 * 60 * 24));
+  const diffDays = Math.round(
+    (eventMidnight.getTime() - todayMidnight.getTime()) / (1000 * 60 * 60 * 24)
+  );
   const sign = Math.sign(diffDays);
   const absDays = Math.abs(diffDays);
 
@@ -72,7 +74,7 @@ function getRelativeTime(date: Date, locale: string): string {
   if (parts.length === 1) {
     return new Intl.RelativeTimeFormat(locale, { numeric: "auto" }).format(
       sign * primaryValue,
-      primaryUnit,
+      primaryUnit
     );
   }
 
@@ -97,7 +99,7 @@ type EventProps = {
 
 export function Event({ event }: EventProps) {
   const theme = useTheme();
-  const { t, locale, timezone } = useAppContext();
+  const { t, locale, timezone, isCurrentMonth } = useAppContext();
   const { type, startDate, endDate, peakDate, description } = event;
   const iconData = getIconAndNameFromType(type);
   const icon = iconData?.icon ?? "";
@@ -154,7 +156,7 @@ export function Event({ event }: EventProps) {
         bgcolor: (theme) =>
           theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.015)" : "rgba(0, 0, 0, 0.012)",
         borderRadius: 0,
-        opacity: isPast ? 0.45 : 1,
+        opacity: isPast && isCurrentMonth ? 0.6 : 1,
       }}
     >
       <Box sx={{ fontSize: "1.25rem", lineHeight: 1.35, flexShrink: 0 }}>{icon}</Box>
@@ -163,11 +165,21 @@ export function Event({ event }: EventProps) {
           <Box component="span" sx={{ fontWeight: 600, color: "text.primary" }}>
             {title}
           </Box>
-          <Box component="span" sx={{ color: "text.secondary", fontWeight: 400, marginInlineStart: (theme) => theme.spacing(0.5) }}>
+          <Box
+            component="span"
+            sx={{
+              color: "text.secondary",
+              fontWeight: 400,
+              marginInlineStart: (theme) => theme.spacing(0.5),
+            }}
+          >
             ({relativeTime})
           </Box>
           {note && (
-            <Box component="span" sx={{ color, fontStyle: "italic", marginInlineStart: (theme) => theme.spacing(0.5) }}>
+            <Box
+              component="span"
+              sx={{ color, fontStyle: "italic", marginInlineStart: (theme) => theme.spacing(0.5) }}
+            >
               {note}
             </Box>
           )}
@@ -175,12 +187,24 @@ export function Event({ event }: EventProps) {
         <Typography
           variant="caption"
           color="text.secondary"
-          sx={{ display: "block", marginBlockStart: (theme) => theme.spacing(0.25), lineHeight: 1.4 }}
+          sx={{
+            display: "block",
+            marginBlockStart: (theme) => theme.spacing(0.25),
+            lineHeight: 1.4,
+          }}
         >
           {dateRange}
         </Typography>
         {peak && (
-          <Typography variant="caption" sx={{ display: "block", marginBlockStart: (theme) => theme.spacing(0.25), lineHeight: 1.4, color }}>
+          <Typography
+            variant="caption"
+            sx={{
+              display: "block",
+              marginBlockStart: (theme) => theme.spacing(0.25),
+              lineHeight: 1.4,
+              color,
+            }}
+          >
             {peak}
           </Typography>
         )}
