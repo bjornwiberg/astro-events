@@ -2,7 +2,6 @@
 
 import {
   Backdrop,
-  Box,
   Card,
   CardContent,
   CircularProgress,
@@ -12,17 +11,13 @@ import {
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider } from "@mui/material/styles";
 import { useRouter } from "next/navigation";
-import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { GeoLocation } from "../../../lib/calculator";
-import {
-  type Translations,
-  I18N_HASH_COOKIE_NAME,
-  translationCacheKey,
-} from "../../../lib/i18n";
+import { I18N_HASH_COOKIE_NAME, type Translations, translationCacheKey } from "../../../lib/i18n";
 import type { CalculatorEventType } from "../../../types/calculatorEvent";
 import { initMixpanel } from "../../../utils/mixpanel";
 import { darkTheme, lightTheme } from "../theme";
-import { useV2Theme } from "./V2ThemeRoot";
+import { AppProvider } from "./AppProvider";
 import { Errors } from "./Errors";
 import { Events } from "./Events";
 import { Footer } from "./Footer";
@@ -30,8 +25,8 @@ import { Header } from "./Header";
 import { LocationSelector } from "./LocationSelector";
 import { Navigation } from "./Navigation";
 import { ThemeRegistry } from "./ThemeRegistry";
-import { AppProvider } from "./AppProvider";
 import { V1Banner } from "./V1Banner";
+import { useV2Theme } from "./V2ThemeRoot";
 
 type IndexPageProps = {
   events: CalculatorEventType[];
@@ -72,13 +67,19 @@ function setStoredTranslations(lang: string, data: Translations): void {
 
 function setI18nHashCookie(sourceHash: string): void {
   if (typeof window === "undefined") return;
-  cookieStore.set({ name: I18N_HASH_COOKIE_NAME, value: sourceHash, path: "/", expires: Date.now() + 31536000 * 1000, sameSite: "lax" });
+  cookieStore.set({
+    name: I18N_HASH_COOKIE_NAME,
+    value: sourceHash,
+    path: "/",
+    expires: Date.now() + 31536000 * 1000,
+    sameSite: "lax",
+  });
 }
 
 /** Clear all translation cache when source (en.json) hash changed (cookie !== current). */
 function clearTranslationCacheIfStale(
   clientI18nHash: string | null | undefined,
-  currentSourceHash: string,
+  currentSourceHash: string
 ): void {
   if (typeof window === "undefined") return;
   if (clientI18nHash == null || clientI18nHash === currentSourceHash) return;
@@ -164,8 +165,7 @@ export default function IndexPage({
         }
         return typeof current === "string" ? current : undefined;
       };
-      loadingTextRef.current =
-        currentT("loading.changingLanguage") ?? "Changing language…";
+      loadingTextRef.current = currentT("loading.changingLanguage") ?? "Changing language…";
 
       const cached = getStoredTranslations(newLocale);
       if (cached) {
@@ -177,7 +177,7 @@ export default function IndexPage({
       setLoadingTranslations(true);
       try {
         const res = await fetch(
-          `${baseUrl}/api/v2/translations?lang=${encodeURIComponent(newLocale)}`,
+          `${baseUrl}/api/v2/translations?lang=${encodeURIComponent(newLocale)}`
         );
         if (!res.ok) throw new Error(String(res.status));
         const data = (await res.json()) as { translations?: Translations };
@@ -191,7 +191,7 @@ export default function IndexPage({
         setLoadingTranslations(false);
       }
     },
-    [baseUrl, currentTranslations],
+    [baseUrl, currentTranslations]
   );
 
   const handleLocationChange = (_location: GeoLocation) => {
@@ -206,7 +206,13 @@ export default function IndexPage({
   useEffect(() => {
     const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
     setBrowserTimezone(tz);
-    cookieStore.set({ name: "tz", value: tz, path: "/", expires: Date.now() + 31536000 * 1000, sameSite: "lax" });
+    cookieStore.set({
+      name: "tz",
+      value: tz,
+      path: "/",
+      expires: Date.now() + 31536000 * 1000,
+      sameSite: "lax",
+    });
   }, []);
 
   useEffect(() => {
@@ -225,15 +231,22 @@ export default function IndexPage({
     return d.toLocaleDateString(locale, { month: "long", year: "numeric" });
   }, [yearFilter, monthFilter, locale]);
 
-  const timezone = (location.timezone && location.timezone !== "UTC") ? location.timezone : browserTimezone;
+  const timezone =
+    location.timezone && location.timezone !== "UTC" ? location.timezone : browserTimezone;
   const calendarUrl = `${baseUrl}/api/v2/calendar?lng=${location.lng}&lat=${location.lat}`;
 
   return (
     <ThemeRegistry>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <AppProvider locale={locale} translations={currentTranslations} timezone={timezone} isCurrentMonth={yearFilter === new Date().getFullYear() && monthFilter === new Date().getMonth()}>
-        <Fragment>
+        <AppProvider
+          locale={locale}
+          translations={currentTranslations}
+          timezone={timezone}
+          isCurrentMonth={
+            yearFilter === new Date().getFullYear() && monthFilter === new Date().getMonth()
+          }
+        >
           <V1Banner />
           <Header
             locale={locale}
@@ -254,9 +267,14 @@ export default function IndexPage({
 
             <Navigation year={yearFilter} month={monthFilter} />
 
-            <Typography variant="body1" color="text.secondary" sx={{ marginBlockEnd: (theme) => theme.spacing(2), textAlign: "center" }}>
+            <Typography
+              variant="body1"
+              color="text.secondary"
+              sx={{ marginBlockEnd: (theme) => theme.spacing(2), textAlign: "center" }}
+            >
               {(
-                (currentTranslations as Record<string, Record<string, string>>).header?.viewing ?? ""
+                (currentTranslations as Record<string, Record<string, string>>).header?.viewing ??
+                ""
               ).replace("{{monthYear}}", monthYear)}
             </Typography>
 
@@ -277,8 +295,7 @@ export default function IndexPage({
             <CircularProgress color="inherit" />
             <Typography variant="body1">{loadingTextRef.current}</Typography>
           </Backdrop>
-        </Fragment>
-      </AppProvider>
+        </AppProvider>
       </ThemeProvider>
     </ThemeRegistry>
   );
