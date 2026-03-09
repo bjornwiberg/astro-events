@@ -2,10 +2,10 @@
 
 import { Box, Link, Typography } from "@mui/material";
 import { track } from "../../../utils/mixpanel";
-import { useTranslation } from "./TranslationProvider";
+import { useAppContext } from "./AppProvider";
 
 export function V1Banner() {
-  const { t } = useTranslation();
+  const { t } = useAppContext();
   return (
     <Box
       sx={{

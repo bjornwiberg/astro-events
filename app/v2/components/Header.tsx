@@ -5,7 +5,7 @@ import LightModeIcon from "@mui/icons-material/LightMode";
 import { Box, Container, IconButton, Toolbar, Typography, } from "@mui/material";
 import { CalendarSubscribe } from "./CalendarSubscribe";
 import { LanguagePicker } from "./LanguagePicker";
-import { useTranslation } from "./TranslationProvider";
+import { useAppContext } from "./AppProvider";
 
 type HeaderProps = {
   locale: string;
@@ -22,7 +22,7 @@ export function Header({
   darkMode,
   onDarkModeToggle,
 }: HeaderProps) {
-  const { t } = useTranslation();
+  const { t } = useAppContext();
 
   return (
     <header className="v2-header">

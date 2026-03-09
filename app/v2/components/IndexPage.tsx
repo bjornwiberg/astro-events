@@ -21,7 +21,6 @@ import {
 } from "../../../lib/i18n";
 import type { CalculatorEventType } from "../../../types/calculatorEvent";
 import { initMixpanel } from "../../../utils/mixpanel";
-import { V2_BASE_PATH } from "../constants";
 import { darkTheme, lightTheme } from "../theme";
 import { useV2Theme } from "./V2ThemeRoot";
 import { Errors } from "./Errors";
@@ -31,7 +30,7 @@ import { Header } from "./Header";
 import { LocationSelector } from "./LocationSelector";
 import { Navigation } from "./Navigation";
 import { ThemeRegistry } from "./ThemeRegistry";
-import { TranslationProvider } from "./TranslationProvider";
+import { AppProvider } from "./AppProvider";
 import { V1Banner } from "./V1Banner";
 
 type IndexPageProps = {
@@ -234,7 +233,7 @@ export default function IndexPage({
     <ThemeRegistry>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <TranslationProvider locale={locale} translations={currentTranslations}>
+        <AppProvider locale={locale} translations={currentTranslations} timezone={timezone}>
         <Fragment>
           <V1Banner />
           <Header
@@ -262,7 +261,7 @@ export default function IndexPage({
               ).replace("{{monthYear}}", monthYear)}
             </Typography>
 
-            <Events events={filteredEvents} timezone={timezone} />
+            <Events events={filteredEvents} />
           </Container>
 
           <Footer />
@@ -280,7 +279,7 @@ export default function IndexPage({
             <Typography variant="body1">{loadingTextRef.current}</Typography>
           </Backdrop>
         </Fragment>
-      </TranslationProvider>
+      </AppProvider>
       </ThemeProvider>
     </ThemeRegistry>
   );

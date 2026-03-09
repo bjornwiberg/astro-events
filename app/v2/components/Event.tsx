@@ -9,7 +9,7 @@ import {
   getTripuraSundariDatesFromPeakDate,
 } from "../../../utils/dateNew";
 import { getIconAndNameFromType } from "../../../utils/event";
-import { useTranslation } from "./TranslationProvider";
+import { useAppContext } from "./AppProvider";
 
 const EVENT_COLORS: Record<EventType, string> = {
   [EventType.EQUINOX]: "#4ade80",
@@ -93,12 +93,11 @@ const UNTRANSLATED_EVENT_TYPES: EventType[] = [
 
 type EventProps = {
   event: CalculatorEventType;
-  timezone: string;
 };
 
-export function Event({ event, timezone }: EventProps) {
+export function Event({ event }: EventProps) {
   const theme = useTheme();
-  const { t, locale } = useTranslation();
+  const { t, locale, timezone } = useAppContext();
   const { type, startDate, endDate, peakDate, description } = event;
   const iconData = getIconAndNameFromType(type);
   const icon = iconData?.icon ?? "";

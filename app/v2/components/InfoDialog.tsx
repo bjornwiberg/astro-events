@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { track } from "../../../utils/mixpanel";
-import { useTranslation } from "./TranslationProvider";
+import { useAppContext } from "./AppProvider";
 
 type InfoDialogProps = {
   open: boolean;
@@ -20,7 +20,7 @@ type InfoDialogProps = {
 };
 
 export function InfoDialog({ open, onClose }: InfoDialogProps) {
-  const { t } = useTranslation();
+  const { t } = useAppContext();
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
 

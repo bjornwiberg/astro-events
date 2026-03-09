@@ -3,15 +3,14 @@
 import { Grid, Typography } from "@mui/material";
 import type { CalculatorEventType } from "../../../types/calculatorEvent";
 import { Event } from "./Event";
-import { useTranslation } from "./TranslationProvider";
+import { useAppContext } from "./AppProvider";
 
 type EventsProps = {
   events: CalculatorEventType[];
-  timezone: string;
 };
 
-export function Events({ events, timezone }: EventsProps) {
-  const { t } = useTranslation();
+export function Events({ events }: EventsProps) {
+  const { t } = useAppContext();
 
   if (events.length === 0) {
     return (
@@ -33,7 +32,7 @@ export function Events({ events, timezone }: EventsProps) {
           key={`${event.type}-${event.startDate}`}
           sx={{ display: "flex", minWidth: 0 }}
         >
-          <Event event={event} timezone={timezone} />
+          <Event event={event} />
         </Grid>
       ))}
     </Grid>

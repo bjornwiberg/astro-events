@@ -12,20 +12,22 @@ import {
 import type { Translations } from "../../../lib/i18n";
 import { isRtl } from "../../../lib/i18n";
 
-type TranslationContextValue = {
+type AppContextValue = {
   t: (key: string, vars?: Record<string, string>) => string;
   locale: string;
   dir: "ltr" | "rtl";
+  timezone: string;
 };
 
-const fallbackTranslation: TranslationContextValue = {
+const fallbackValue: AppContextValue = {
   t: (key: string, vars?: Record<string, string>) =>
     vars ? key.replace(/\{\{(\w+)\}\}/g, (_, name) => vars[name] ?? `{{${name}}}`) : key,
   locale: "en",
   dir: "ltr",
+  timezone: "UTC",
 };
 
-const TranslationContext = createContext<TranslationContextValue>(fallbackTranslation);
+const AppContext = createContext<AppContextValue>(fallbackValue);
 
 function getNested(obj: Record<string, unknown>, path: string): string | undefined {
   const parts = path.split(".");
@@ -41,13 +43,14 @@ function interpolate(template: string, vars: Record<string, string>): string {
   return template.replace(/\{\{(\w+)\}\}/g, (_, name) => vars[name] ?? `{{${name}}}`);
 }
 
-type TranslationProviderProps = {
+type AppProviderProps = {
   locale: string;
   translations: Translations;
+  timezone: string;
   children: ReactNode;
 };
 
-export function TranslationProvider({ locale, translations, children }: TranslationProviderProps) {
+export function AppProvider({ locale, translations, timezone, children }: AppProviderProps) {
   const t = useCallback(
     (key: string, vars?: Record<string, string>) => {
       const raw = getNested(translations as Record<string, unknown>, key);
@@ -66,15 +69,15 @@ export function TranslationProvider({ locale, translations, children }: Translat
     }
   }, [locale, dir]);
 
-  const value = useMemo<TranslationContextValue>(() => ({ t, locale, dir }), [t, locale, dir]);
+  const value = useMemo<AppContextValue>(() => ({ t, locale, dir, timezone }), [t, locale, dir, timezone]);
 
   return (
-    <TranslationContext.Provider value={value}>
+    <AppContext.Provider value={value}>
       <Fragment>{children}</Fragment>
-    </TranslationContext.Provider>
+    </AppContext.Provider>
   );
 }
 
-export function useTranslation(): TranslationContextValue {
-  return useContext(TranslationContext);
+export function useAppContext(): AppContextValue {
+  return useContext(AppContext);
 }

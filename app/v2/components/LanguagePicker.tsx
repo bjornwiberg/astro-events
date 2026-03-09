@@ -4,7 +4,7 @@ import type { HTMLAttributes } from "react";
 import { Autocomplete, TextField } from "@mui/material";
 import { SUPPORTED_LOCALES } from "../../../lib/i18n";
 import { track } from "../../../utils/mixpanel";
-import { useTranslation } from "./TranslationProvider";
+import { useAppContext } from "./AppProvider";
 
 const FLAGS: Record<string, string> = {
   en: "🇬🇧",
@@ -130,7 +130,7 @@ function filterLanguageOptions(
 }
 
 export function LanguagePicker({ value, onChange, variant = "default" }: LanguagePickerProps) {
-  const { t } = useTranslation();
+  const { t } = useAppContext();
 
   const handleChange = (_: unknown, newLocale: string | null) => {
     if (!newLocale) return;

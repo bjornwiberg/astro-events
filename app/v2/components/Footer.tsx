@@ -3,12 +3,12 @@
 import { useState } from "react";
 import { Box, Typography } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { useTranslation } from "./TranslationProvider";
+import { useAppContext } from "./AppProvider";
 import { track } from "../../../utils/mixpanel";
 import { InfoDialog } from "./InfoDialog";
 
 export function Footer() {
-  const { t } = useTranslation();
+  const { t } = useAppContext();
   const [infoOpen, setInfoOpen] = useState(false);
 
   return (

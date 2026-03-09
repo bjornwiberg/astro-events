@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { track } from "../../../utils/mixpanel";
-import { useTranslation } from "./TranslationProvider";
+import { useAppContext } from "./AppProvider";
 
 type CalendarSubscribeProps = {
   calendarUrl: string;
@@ -23,7 +23,7 @@ type CalendarSubscribeProps = {
 };
 
 export function CalendarSubscribe({ calendarUrl, variant = "default" }: CalendarSubscribeProps) {
-  const { t, dir } = useTranslation();
+  const { t, dir } = useAppContext();
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
 

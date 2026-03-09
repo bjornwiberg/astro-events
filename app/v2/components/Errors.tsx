@@ -1,14 +1,14 @@
 "use client";
 
 import { Alert, Typography } from "@mui/material";
-import { useTranslation } from "./TranslationProvider";
+import { useAppContext } from "./AppProvider";
 
 type ErrorsProps = {
   show: boolean;
 };
 
 export function Errors({ show }: ErrorsProps) {
-  const { t } = useTranslation();
+  const { t } = useAppContext();
   if (!show) return null;
   return (
     <Alert severity="error" sx={{ marginBlock: (theme) => theme.spacing(2) }}>

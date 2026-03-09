@@ -5,7 +5,7 @@ import { Autocomplete, Box, IconButton, TextField, Tooltip, Typography } from "@
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { GeoLocation } from "../../../lib/calculator";
 import { track } from "../../../utils/mixpanel";
-import { useTranslation } from "./TranslationProvider";
+import { useAppContext } from "./AppProvider";
 
 type NominatimSearchItem = {
   display_name: string;
@@ -70,7 +70,7 @@ type LocationSelectorProps = {
 };
 
 export function LocationSelector({ value, onChange }: LocationSelectorProps) {
-  const { t } = useTranslation();
+  const { t } = useAppContext();
   const valueDisplay =
     value?.city ?? (value ? `${value.lat.toFixed(2)}, ${value.lng.toFixed(2)}` : "");
   const [inputValue, setInputValue] = useState(valueDisplay);

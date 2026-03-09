@@ -8,7 +8,7 @@ import { addMonths, isSameMonth, isSameYear, subMonths } from "date-fns";
 import { useRouter } from "next/navigation";
 import { track } from "../../../utils/mixpanel";
 import { V2_BASE_PATH } from "../constants";
-import { useTranslation } from "./TranslationProvider";
+import { useAppContext } from "./AppProvider";
 
 type NavigationProps = {
   year: number;
@@ -17,7 +17,7 @@ type NavigationProps = {
 
 export function Navigation({ year, month }: NavigationProps) {
   const router = useRouter();
-  const { t, dir } = useTranslation();
+  const { t, dir } = useAppContext();
   const isRtl = dir === "rtl";
   const now = new Date();
   const isToday =
