@@ -71,9 +71,8 @@ function setStoredTranslations(lang: string, data: Translations): void {
 }
 
 function setI18nHashCookie(sourceHash: string): void {
-  if (typeof document === "undefined") return;
-  // biome-ignore lint/suspicious/noDocumentCookie: cookie is set in the browser for server to read on next load
-  document.cookie = `${I18N_HASH_COOKIE_NAME}=${encodeURIComponent(sourceHash)};path=/;max-age=31536000;SameSite=Lax`;
+  if (typeof window === "undefined") return;
+  cookieStore.set({ name: I18N_HASH_COOKIE_NAME, value: sourceHash, path: "/", expires: Date.now() + 31536000 * 1000, sameSite: "lax" });
 }
 
 /** Clear all translation cache when source (en.json) hash changed (cookie !== current). */
@@ -207,7 +206,7 @@ export default function IndexPage({
   useEffect(() => {
     const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
     setBrowserTimezone(tz);
-    document.cookie = `tz=${encodeURIComponent(tz)};path=/;max-age=31536000;SameSite=Lax`;
+    cookieStore.set({ name: "tz", value: tz, path: "/", expires: Date.now() + 31536000 * 1000, sameSite: "lax" });
   }, []);
 
   useEffect(() => {
