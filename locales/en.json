@@ -1,0 +1,93 @@
+{
+  "aria": {
+    "toggleDarkMode": "Toggle dark mode"
+  },
+  "language": {
+    "label": "Language",
+    "searchPlaceholder": "Search language…",
+    "noResults": "No languages found"
+  },
+  "header": {
+    "title": "Welcome to Astro Events",
+    "viewing": "Viewing astrological events for {{monthYear}}"
+  },
+  "nav": {
+    "previousMonth": "Previous month",
+    "nextMonth": "Next month",
+    "today": "Today's month"
+  },
+  "event": {
+    "peak": "Peak",
+    "maximum": "Maximum",
+    "descriptions": {
+      "Partial": "Partial",
+      "Full": "Full",
+      "Shadow": "Shadow",
+      "Annular": "Annular",
+      "Penumbral": "Penumbral",
+      "Micro Full Moon": "Micro Full Moon",
+      "Super Full Moon": "Super Full Moon",
+      "Micro New Moon": "Micro New Moon",
+      "Super New Moon": "Super New Moon"
+    }
+  },
+  "events": {
+    "noEventsThisMonth": "No events this month."
+  },
+  "eventTypes": {
+    "EQUINOX": "Equinox",
+    "SOLSTICE": "Solstice",
+    "HIATUS_SOLAR": "Hiatus Solar",
+    "FULL_MOON_PEAK": "Full moon",
+    "NEW_MOON": "New moon",
+    "MOON_ECLIPSE": "Moon eclipse",
+    "SOLAR_ECLIPSE": "Solar eclipse"
+  },
+  "location": {
+    "label": "Location",
+    "placeholder": "Search city or place...",
+    "myLocation": "My location"
+  },
+  "angleToggle": {
+    "label": "Show start/end dates based on astrological angles"
+  },
+  "calendarSubscribe": {
+    "title": "Subscribe to calendar",
+    "url": "Calendar URL",
+    "copy": "Copy URL",
+    "copied": "Copied!",
+    "close": "Close"
+  },
+  "footer": {
+    "createdBy": "Created by {{author}}",
+    "supportProject": "Support this project"
+  },
+  "info": {
+    "title": "About Astro Events",
+    "description": "Astro Events is a free app showing astrological events — moon phases, eclipses, equinoxes, and solstices — based on your location and timezone.",
+    "contact": {
+      "title": "Made by"
+    },
+    "support": {
+      "title": "Support this project",
+      "description": "If you enjoy the app, consider sending a donation via Revolut to",
+      "orSwish": "or via Swish to",
+      "scanQr": "Scan to pay via Revolut"
+    }
+  },
+  "errors": {
+    "fetchEvents": "Error fetching events",
+    "fetchEventsHint": "Set CALCULATOR_API_URL and CALCULATOR_API_KEY in .env.local"
+  },
+  "loading": {
+    "changingLanguage": "Changing language…"
+  },
+  "v1Banner": {
+    "text": "Looking for the classic version?",
+    "link": "Go back"
+  },
+  "v2Banner": {
+    "link": "Try out the new version",
+    "badge": "beta"
+  }
+}

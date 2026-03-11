@@ -13,6 +13,7 @@ import Footer from "./Footer";
 import Header from "./Header";
 import Navigation from "./Navigation";
 import TimezoneSelector from "./TimezoneSelector";
+import V2Banner from "./V2Banner";
 
 type IndexPageProps = {
   date: Date;
@@ -42,6 +43,7 @@ export default function IndexPage({ date, error, events }: IndexPageProps) {
 
   return (
     <>
+      <V2Banner />
       <main className={styles.main}>
         <Header date={date} />
         <Errors show={error} />

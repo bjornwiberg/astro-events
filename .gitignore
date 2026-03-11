@@ -30,3 +30,5 @@ yarn-error.log*
 .env.production.local
 
 next-env.d.ts
+.env.example
+tsconfig.tsbuildinfo

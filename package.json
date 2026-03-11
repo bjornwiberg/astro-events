@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev & tsc --watch",
     "build": "next build",
     "start": "next start",
     "lint": "biome check .",
@@ -10,6 +10,11 @@
     "check": "biome check ."
   },
   "dependencies": {
+    "@emotion/cache": "^11.14.0",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/icons-material": "^7.3.8",
+    "@mui/material": "^7.3.8",
     "date-fns": "^4.1.0",
     "ical-generator": "^10.0.0",
     "mixpanel-browser": "^2.72.0",
