@@ -52,6 +52,7 @@ export function getFullMoonDatesFromPeakDate(date: Date) {
 
 export function getDateFromSearchParams({ month, year }: SearchParams) {
   const currentDate = new Date();
+  currentDate.setDate(1);
   currentDate.setMonth(month ? Number(month) : new Date().getMonth());
   currentDate.setFullYear(year ? Number(year) : new Date().getFullYear());
 
