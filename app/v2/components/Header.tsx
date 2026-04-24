@@ -1,13 +1,11 @@
 "use client";
 
 import DarkModeIcon from "@mui/icons-material/DarkMode";
-import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import { Box, Container, IconButton, Toolbar, Typography } from "@mui/material";
 import { useAppContext } from "./AppProvider";
 import { CalendarSubscribe } from "./CalendarSubscribe";
 import { LanguagePicker } from "./LanguagePicker";
-import { startTour } from "./Tour";
 
 type HeaderProps = {
   locale: string;
@@ -38,14 +36,6 @@ export function Header({
               Astro Events
             </Typography>
           </Box>
-          <IconButton
-            color="inherit"
-            onClick={() => startTour("intro", { replay: true })}
-            size="small"
-            aria-label={t("tour.replayAppTour")}
-          >
-            <HelpOutlineIcon />
-          </IconButton>
           <IconButton
             color="inherit"
             onClick={onDarkModeToggle}

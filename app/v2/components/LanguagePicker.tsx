@@ -151,7 +151,11 @@ export function LanguagePicker({ value, onChange, variant = "default" }: Languag
       noOptionsText={t("language.noResults")}
       isOptionEqualToValue={(opt, v) => opt === v}
       sx={{
-        minWidth: isAppbar ? 180 : 260,
+        // Shrink to a flag-only width on narrow screens so the header doesn't
+        // overflow on mobile. At >= sm viewports we restore the roomier size.
+        minWidth: isAppbar ? { xs: 80, sm: 180 } : 260,
+        maxWidth: isAppbar ? { xs: 140, sm: "none" } : undefined,
+        flexShrink: isAppbar ? 1 : 0,
         ...(isAppbar
           ? {
               color: "#fff",
