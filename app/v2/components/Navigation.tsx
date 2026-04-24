@@ -50,14 +50,15 @@ export function Navigation({ year, month }: NavigationProps) {
 
   return (
     <Box
+      data-tour="navigation"
       sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: 1,
-          marginBlockStart: (theme) => theme.spacing(2),
-          marginBlockEnd: (theme) => theme.spacing(2),
-        }}
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: 1,
+        marginBlockStart: (theme) => theme.spacing(2),
+        marginBlockEnd: (theme) => theme.spacing(2),
+      }}
     >
       <IconButton
         onClick={handlePrev}

@@ -2,7 +2,9 @@
 
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import {
+  Box,
   Button,
   Dialog,
   DialogActions,
@@ -16,6 +18,7 @@ import {
 import { useState } from "react";
 import { track } from "../../../utils/mixpanel";
 import { useAppContext } from "./AppProvider";
+import { hasUnseenSteps, startTour } from "./Tour";
 
 type CalendarSubscribeProps = {
   calendarUrl: string;
@@ -31,6 +34,9 @@ export function CalendarSubscribe({ calendarUrl, variant = "default" }: Calendar
     track("Calendar Subscribe Open");
     setOpen(true);
     setCopied(false);
+    if (hasUnseenSteps("calendar-dialog")) {
+      window.setTimeout(() => startTour("calendar-dialog"), 350);
+    }
   };
 
   const handleClose = () => {
@@ -51,7 +57,12 @@ export function CalendarSubscribe({ calendarUrl, variant = "default" }: Calendar
   return (
     <>
       {variant === "appbar" ? (
-        <IconButton color="inherit" onClick={handleOpen} aria-label={t("calendarSubscribe.title")}>
+        <IconButton
+          color="inherit"
+          onClick={handleOpen}
+          aria-label={t("calendarSubscribe.title")}
+          data-tour="calendar"
+        >
           <CalendarMonthIcon />
         </IconButton>
       ) : (
@@ -60,26 +71,49 @@ export function CalendarSubscribe({ calendarUrl, variant = "default" }: Calendar
           startIcon={<CalendarMonthIcon />}
           onClick={handleOpen}
           size="medium"
+          data-tour="calendar"
         >
           {t("calendarSubscribe.title")}
         </Button>
       )}
       <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth PaperProps={{ dir }}>
-        <DialogTitle>{t("calendarSubscribe.title")}</DialogTitle>
+        <DialogTitle>
+          <Box
+            sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 1 }}
+          >
+            <span>{t("calendarSubscribe.title")}</span>
+            <IconButton
+              size="small"
+              onClick={() => startTour("calendar-dialog", { replay: true })}
+              aria-label={t("tour.replayCalendarTour")}
+            >
+              <HelpOutlineIcon fontSize="small" />
+            </IconButton>
+          </Box>
+        </DialogTitle>
         <DialogContent>
-          <Typography variant="body2" fontWeight={500} sx={{ marginBlockEnd: (theme) => theme.spacing(0.5) }}>
+          <Typography
+            variant="body2"
+            fontWeight={500}
+            sx={{ marginBlockEnd: (theme) => theme.spacing(0.5) }}
+          >
             {t("calendarSubscribe.url")}
           </Typography>
           <TextField
             fullWidth
             size="small"
             value={calendarUrl}
+            data-tour="calendar-url"
             slotProps={{
               input: {
                 readOnly: true,
                 endAdornment: (
                   <InputAdornment position={dir === "rtl" ? "start" : "end"}>
-                    <IconButton onClick={handleCopy} aria-label={t("calendarSubscribe.copy")}>
+                    <IconButton
+                      onClick={handleCopy}
+                      aria-label={t("calendarSubscribe.copy")}
+                      data-tour="calendar-copy"
+                    >
                       <ContentCopyIcon />
                     </IconButton>
                   </InputAdornment>
@@ -88,7 +122,14 @@ export function CalendarSubscribe({ calendarUrl, variant = "default" }: Calendar
             }}
           />
           {copied && (
-            <Typography variant="caption" sx={{ color: "success.main", marginBlockStart: (theme) => theme.spacing(0.5), display: "block" }}>
+            <Typography
+              variant="caption"
+              sx={{
+                color: "success.main",
+                marginBlockStart: (theme) => theme.spacing(0.5),
+                display: "block",
+              }}
+            >
               {t("calendarSubscribe.copied")}
             </Typography>
           )}

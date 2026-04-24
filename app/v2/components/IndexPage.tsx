@@ -25,6 +25,7 @@ import { Header } from "./Header";
 import { LocationSelector } from "./LocationSelector";
 import { Navigation } from "./Navigation";
 import { ThemeRegistry } from "./ThemeRegistry";
+import { Tour } from "./Tour";
 import { V1Banner } from "./V1Banner";
 import { useV2Theme } from "./V2ThemeRoot";
 
@@ -284,6 +285,8 @@ export default function IndexPage({
           </Container>
 
           <Footer />
+
+          <Tour />
 
           <Backdrop
             open={showOverlay}
