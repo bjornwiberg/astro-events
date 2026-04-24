@@ -72,13 +72,34 @@ export function hasUnseenSteps(tourId: string): boolean {
   return tour.steps.some((s) => !seen.has(s.id));
 }
 
+const TOUR_READY_FLAG = "__v2TourReady";
+
+type WindowWithReadyFlag = Window & { [TOUR_READY_FLAG]?: boolean };
+
 export function startTour(id: string, opts?: StartOptions): void {
   if (typeof window === "undefined") return;
-  window.dispatchEvent(
-    new CustomEvent(TOUR_START_EVENT, {
-      detail: { id, replay: opts?.replay === true },
-    })
-  );
+  const detail = { id, replay: opts?.replay === true };
+  const dispatch = () =>
+    window.dispatchEvent(new CustomEvent(TOUR_START_EVENT, { detail }));
+
+  // Tour mounts its listener in a useEffect. If startTour is called before
+  // that effect runs (e.g. a dialog open-handler firing during hydration),
+  // a fire-and-forget dispatch would be silently dropped. Poll briefly for
+  // the ready flag set by Tour; if it never arrives, we just give up so
+  // we never block forever.
+  if ((window as WindowWithReadyFlag)[TOUR_READY_FLAG]) {
+    dispatch();
+    return;
+  }
+  const start = Date.now();
+  const interval = window.setInterval(() => {
+    if ((window as WindowWithReadyFlag)[TOUR_READY_FLAG]) {
+      window.clearInterval(interval);
+      dispatch();
+    } else if (Date.now() - start > 3000) {
+      window.clearInterval(interval);
+    }
+  }, 40);
 }
 
 export function Tour() {
@@ -187,6 +208,7 @@ export function Tour() {
       run(detail.id, "manual", detail.replay === true);
     };
     window.addEventListener(TOUR_START_EVENT, handler);
+    (window as WindowWithReadyFlag)[TOUR_READY_FLAG] = true;
 
     const autoTour = TOURS.find((tour) => {
       if (tour.trigger !== "auto") return false;
@@ -200,6 +222,7 @@ export function Tour() {
     return () => {
       if (timer != null) window.clearTimeout(timer);
       window.removeEventListener(TOUR_START_EVENT, handler);
+      (window as WindowWithReadyFlag)[TOUR_READY_FLAG] = false;
       activeDriverRef.current?.destroy();
     };
   }, [t, dir]);

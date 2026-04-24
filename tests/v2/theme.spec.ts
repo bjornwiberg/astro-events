@@ -25,6 +25,17 @@ test.describe("theme toggle", () => {
     const afterClick = await page.locator("html").getAttribute("data-theme");
     expect(afterClick).not.toBe(initialTheme);
 
+    // The client flips data-theme synchronously, but persistence goes
+    // through a server action (setDarkModeCookie). Wait for that cookie
+    // to actually land before reloading so SSR reads the new value.
+    const expectedCookieValue = afterClick === "dark" ? "true" : "false";
+    await expect
+      .poll(async () => {
+        const cookies = await page.context().cookies();
+        return cookies.find((c) => c.name === "darkMode")?.value;
+      })
+      .toBe(expectedCookieValue);
+
     await page.reload();
     const afterReload = await page.locator("html").getAttribute("data-theme");
     expect(afterReload).toBe(afterClick);

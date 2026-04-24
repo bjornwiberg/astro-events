@@ -10,8 +10,12 @@ export default defineConfig({
   testDir: "./tests/v2",
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
+  retries: process.env.CI ? 2 : 1,
+  // Cap local workers so the single next-start instance isn't starved.
+  // CI already runs serially; the cap matters for local parallel runs
+  // where 6 workers bombard the dev server with SSR during hydration
+  // and race the Tour component's effect that attaches the start listener.
+  workers: process.env.CI ? 1 : 2,
   reporter: process.env.CI ? [["html", { open: "never" }], ["list"]] : [["list"]],
   timeout: 30_000,
   expect: { timeout: 5_000 },
