@@ -2,10 +2,10 @@
 
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
-import { Box, Container, IconButton, Toolbar, Typography, } from "@mui/material";
+import { Box, Container, IconButton, Toolbar, Typography } from "@mui/material";
+import { useAppContext } from "./AppProvider";
 import { CalendarSubscribe } from "./CalendarSubscribe";
 import { LanguagePicker } from "./LanguagePicker";
-import { useAppContext } from "./AppProvider";
 
 type HeaderProps = {
   locale: string;
@@ -32,11 +32,7 @@ export function Header({
             <Box component="span" sx={{ fontSize: "1.5rem" }}>
               🪐
             </Box>
-            <Typography
-            className="visually-hidden-mobile"
-              variant="h6"
-              component="h1"
-            >
+            <Typography className="visually-hidden-mobile" variant="h6" component="h1">
               Astro Events
             </Typography>
           </Box>
@@ -45,6 +41,7 @@ export function Header({
             onClick={onDarkModeToggle}
             size="small"
             aria-label={t("aria.toggleDarkMode")}
+            data-tour="theme"
           >
             {darkMode ? <LightModeIcon /> : <DarkModeIcon />}
           </IconButton>

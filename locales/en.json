@@ -82,6 +82,59 @@
   "loading": {
     "changingLanguage": "Changing language…"
   },
+  "tour": {
+    "next": "Next",
+    "previous": "Back",
+    "done": "Got it",
+    "replayAppTour": "Replay app tour",
+    "replayCalendarTour": "Replay this tour",
+    "intro": {
+      "label": "Welcome tour",
+      "welcome": {
+        "title": "Welcome to Astro Events 🪐",
+        "description": "A quick tour of what's new in v2. You can skip any time."
+      },
+      "theme": {
+        "title": "Dark & light mode",
+        "description": "Toggle between dark and light themes to match your vibe."
+      },
+      "language": {
+        "title": "Pick your language",
+        "description": "Events and the interface translate into 40+ languages."
+      },
+      "calendar": {
+        "title": "Subscribe to your calendar",
+        "description": "Add a feed so events show up directly in your phone or desktop calendar."
+      },
+      "location": {
+        "title": "Set your location",
+        "description": "Events are calculated for your exact location and timezone — search a place or tap the target icon to use your current position."
+      },
+      "navigation": {
+        "title": "Browse months",
+        "description": "Step back and forward through months, or jump back to today."
+      },
+      "events": {
+        "title": "Astrological events",
+        "description": "Moon phases, eclipses, equinoxes, and solstices — with relative time and color-coding. Past events in the current month are dimmed."
+      }
+    },
+    "calendarDialog": {
+      "label": "Calendar subscribe",
+      "welcome": {
+        "title": "Subscribe to your calendar",
+        "description": "Add astro events directly to your calendar app — here's how."
+      },
+      "url": {
+        "title": "Your calendar feed URL",
+        "description": "Copy this URL and paste it into your phone or desktop calendar as a new subscription."
+      },
+      "copy": {
+        "title": "One-tap copy",
+        "description": "Tap to copy the URL to your clipboard. Then paste it into Apple Calendar, Google Calendar, or any app that accepts iCal feeds."
+      }
+    }
+  },
   "v1Banner": {
     "text": "Looking for the classic version?",
     "link": "Go back"

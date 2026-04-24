@@ -1,7 +1,7 @@
 "use client";
 
-import type { HTMLAttributes } from "react";
 import { Autocomplete, TextField } from "@mui/material";
+import type { HTMLAttributes } from "react";
 import { SUPPORTED_LOCALES } from "../../../lib/i18n";
 import { track } from "../../../utils/mixpanel";
 import { useAppContext } from "./AppProvider";
@@ -116,16 +116,11 @@ type LanguagePickerProps = {
   variant?: "default" | "appbar";
 };
 
-function filterLanguageOptions(
-  options: string[],
-  state: { inputValue: string },
-): string[] {
+function filterLanguageOptions(options: string[], state: { inputValue: string }): string[] {
   const q = state.inputValue.trim().toLowerCase();
   if (!q) return options;
   return options.filter(
-    (code) =>
-      code.toLowerCase().includes(q) ||
-      (NATIVE_NAMES[code] ?? "").toLowerCase().includes(q),
+    (code) => code.toLowerCase().includes(q) || (NATIVE_NAMES[code] ?? "").toLowerCase().includes(q)
   );
 }
 
@@ -145,6 +140,7 @@ export function LanguagePicker({ value, onChange, variant = "default" }: Languag
   return (
     <Autocomplete
       id="v2-language-picker"
+      data-tour="language"
       size="small"
       value={value}
       onChange={handleChange}

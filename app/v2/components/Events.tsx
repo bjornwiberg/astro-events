@@ -2,8 +2,8 @@
 
 import { Grid, Typography } from "@mui/material";
 import type { CalculatorEventType } from "../../../types/calculatorEvent";
-import { Event } from "./Event";
 import { useAppContext } from "./AppProvider";
+import { Event } from "./Event";
 
 type EventsProps = {
   events: CalculatorEventType[];
@@ -14,7 +14,11 @@ export function Events({ events }: EventsProps) {
 
   if (events.length === 0) {
     return (
-      <Typography variant="body2" color="text.secondary" sx={{ paddingBlock: (theme) => theme.spacing(2) }}>
+      <Typography
+        variant="body2"
+        color="text.secondary"
+        sx={{ paddingBlock: (theme) => theme.spacing(2) }}
+      >
         {t("events.noEventsThisMonth")}
       </Typography>
     );
@@ -25,7 +29,7 @@ export function Events({ events }: EventsProps) {
   );
 
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={2} data-tour="events">
       {sorted.map((event) => (
         <Grid
           size={{ xs: 12, md: 6 }}

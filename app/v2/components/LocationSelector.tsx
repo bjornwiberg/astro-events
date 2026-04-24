@@ -188,7 +188,7 @@ export function LocationSelector({ value, onChange }: LocationSelectorProps) {
   };
 
   return (
-    <Box>
+    <Box data-tour="location">
       <Typography
         variant="body2"
         fontWeight={500}
