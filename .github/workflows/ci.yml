@@ -60,19 +60,18 @@ jobs:
           # wires these into next start via webServer.env.
           CALCULATOR_API_URL: http://127.0.0.1:3333
           CALCULATOR_API_KEY: ci-test-key
-      - name: Upload Playwright report
-        if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: playwright-report
-          path: playwright-report/
-          retention-days: 14
-      - name: Upload trace + video on failure
+      # Only upload artifacts when something fails — on green runs the
+      # HTML report is just "20 passed" and traces/videos aren't produced
+      # (playwright.config.ts uses retain-on-failure), so there's nothing
+      # worth storing.
+      - name: Upload Playwright report on failure
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-test-results
-          path: test-results/
+          name: playwright-report
+          path: |
+            playwright-report/
+            test-results/
           retention-days: 14
 
   # ────────────────────────────────────────────────────────────────
