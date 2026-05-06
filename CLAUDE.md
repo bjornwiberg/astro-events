@@ -65,6 +65,15 @@ What happens automatically:
 
 Do both #1 and #2 in the same PR. They're independent entries in `TOURS`, and the per-step seen map is keyed by `tourId` so they don't interfere.
 
+### Close vs complete
+
+Both close (X button) and complete ("Got it" on the last step) write to the seen map, but they write **different things**:
+
+- **Complete**: marks just the steps shown in this run. For a delta run (returning user with new steps), that's only the new ones — the rest were already in seen.
+- **Close**: marks **all current step ids** for the tour, regardless of how many were shown. This is the "I dismissed this tour, stop nagging me on every reload" signal. Autostart only fires when there are unseen steps in the tour definition, so once everything is marked seen via close, future page loads won't auto-trigger. Adding **new** step ids to the tour later still triggers autostart for those — exactly the behaviour we want.
+
+Don't change close to "mark only what was viewed" — that re-introduces the bug where closing on step 1 left steps 2–N unseen, and the autostart re-fired on every reload until the user clicked through every step. Mixpanel caught this with three `Tour Start` events in 30 seconds for the same `distinct_id`. Locked in by `tests/v2/intro-tour.spec.ts:closing mid-tour marks all current step ids so the auto-tour does not re-fire`.
+
 ### Forcing a re-see after a major rewrite
 
 Two options if you rewrite an existing step's copy and want everyone to see it again:

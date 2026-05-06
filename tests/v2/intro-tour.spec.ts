@@ -53,18 +53,28 @@ test.describe("intro tour", () => {
     expect(await tourTitle(page)).toContain("Welcome to Astro Events");
   });
 
-  test("closing mid-tour marks only the steps shown so far", async ({ page }) => {
+  test("closing mid-tour marks all current step ids so the auto-tour does not re-fire", async ({
+    page,
+  }) => {
+    // This was a real production bug: closing on step 1 only marked step 1
+    // as seen, so on the next page load the runner saw 6 unseen steps and
+    // auto-started again. Mixpanel showed users hitting Tour Start three
+    // times in 30 seconds. Closing must signal "I'm done with this tour"
+    // — autostart should not re-nag. Replay via the footer ? still works.
     await page.goto("/v2");
     await waitForTourPopover(page);
 
-    // Advance past welcome → theme → language, then close via the X button.
-    await page.getByRole("button", { name: "Next", exact: true }).click(); // → theme
-    await page.getByRole("button", { name: "Next", exact: true }).click(); // → language
+    // Close immediately on step 1 (welcome).
     await page.locator(".driver-popover-close-btn").click();
-
     await expect(page.locator(".driver-popover.v2-tour-popover")).toHaveCount(0);
+
     const seen = await readSeen(page);
-    expect(seen.intro).toEqual(["welcome", "theme", "language"]);
+    expect(new Set(seen.intro)).toEqual(new Set(INTRO_STEPS));
+
+    // Reload — autostart must NOT fire because everything is marked seen.
+    await page.reload();
+    await page.waitForTimeout(900);
+    await expect(page.locator(".driver-popover.v2-tour-popover")).toHaveCount(0);
   });
 
   test("clicking the backdrop does not close the tour", async ({ page }) => {

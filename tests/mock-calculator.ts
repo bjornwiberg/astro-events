@@ -13,22 +13,22 @@ type CalculatorItem =
   | { type: "simple"; id: "ss" | "ws" | "se" | "ae"; time: string };
 
 function fixtureFor(year: number): CalculatorItem[] {
-  return [
-    // Full moon in Jan
-    { type: "mphase", id: "fm", time: `${year}-01-14T04:27:00Z`, pos: 0 },
-    // New moon in Jan
-    { type: "mphase", id: "nm", time: `${year}-01-29T12:36:00Z`, pos: 0 },
-    // Full moon in April (the "current" month for most tests)
-    { type: "mphase", id: "fm", time: `${year}-04-12T02:22:00Z`, pos: 0 },
-    // New moon in April
-    { type: "mphase", id: "nm", time: `${year}-04-26T17:31:00Z`, pos: 0 },
-    // Vernal equinox
-    { type: "simple", id: "ae", time: `${year}-03-20T04:45:00Z` },
-    // Summer solstice
-    { type: "simple", id: "ss", time: `${year}-06-21T02:11:00Z` },
-    // Solar eclipse
-    { type: "eclipse", id: "se", planet: "sun", time: `${year}-08-12T10:43:00Z`, pos: 0 },
-  ];
+  // One full moon + one new moon for every month so the v2 page always
+  // renders the events grid regardless of which month "today" lands in
+  // — without that, the intro tour's `events` step gets filtered out
+  // (no [data-tour="events"] anchor), the tour shrinks by one step, and
+  // any test that loops INTRO_STEPS.length - 1 times mis-counts.
+  const items: CalculatorItem[] = [];
+  for (let month = 1; month <= 12; month++) {
+    const mm = String(month).padStart(2, "0");
+    items.push({ type: "mphase", id: "fm", time: `${year}-${mm}-12T02:22:00Z`, pos: 0 });
+    items.push({ type: "mphase", id: "nm", time: `${year}-${mm}-26T17:31:00Z`, pos: 0 });
+  }
+  // Plus a couple of seasonal markers + an eclipse for variety.
+  items.push({ type: "simple", id: "ae", time: `${year}-03-20T04:45:00Z` });
+  items.push({ type: "simple", id: "ss", time: `${year}-06-21T02:11:00Z` });
+  items.push({ type: "eclipse", id: "se", planet: "sun", time: `${year}-08-12T10:43:00Z`, pos: 0 });
+  return items;
 }
 
 export function startMockCalculator(port: number): Promise<Server> {
