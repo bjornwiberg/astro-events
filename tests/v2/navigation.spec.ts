@@ -15,19 +15,22 @@ test.describe("month navigation", () => {
   });
 
   test("prev/next buttons update the URL and rendered month label", async ({ page }) => {
-    await page.goto("/v2?year=2026&month=6");
+    // Use a year safely far from "now" so navigating doesn't accidentally
+    // land on the current month — Navigation.tsx strips ?year/&month from
+    // the URL when the target IS the current month, which would make the
+    // toHaveURL assertion fail in May 2030.
+    await page.goto("/v2?year=2030&month=6");
 
-    // June 2026 rendered.
-    await expect(page.getByText(/June 2026/i)).toBeVisible();
+    await expect(page.getByText(/June 2030/i)).toBeVisible();
 
     await page.getByRole("button", { name: "Next month" }).click();
-    await expect(page).toHaveURL(/year=2026&month=7/);
-    await expect(page.getByText(/July 2026/i)).toBeVisible();
+    await expect(page).toHaveURL(/year=2030&month=7/);
+    await expect(page.getByText(/July 2030/i)).toBeVisible();
 
     await page.getByRole("button", { name: "Previous month" }).click();
     await page.getByRole("button", { name: "Previous month" }).click();
-    await expect(page).toHaveURL(/year=2026&month=5/);
-    await expect(page.getByText(/May 2026/i)).toBeVisible();
+    await expect(page).toHaveURL(/year=2030&month=5/);
+    await expect(page.getByText(/May 2030/i)).toBeVisible();
   });
 
   test("today button jumps back to the current month and drops URL params", async ({ page }) => {

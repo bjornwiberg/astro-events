@@ -105,9 +105,25 @@ export function startTour(id: string, opts?: StartOptions): void {
 export function Tour() {
   const { t, dir } = useAppContext();
   const activeDriverRef = useRef<Driver | null>(null);
+  const isCleanupDestroyRef = useRef(false);
+  // Keep refs to the latest t/dir so the mount-once effect closure can
+  // read current values without itself depending on them. Tying the
+  // effect to [t, dir] (or to the AppContext value) caused it to re-run
+  // on context updates, which destroyed any in-progress driver and
+  // re-fired autostart — manifesting as duplicate Tour Start events
+  // and tours that vanished mid-step.
+  const tRef = useRef(t);
+  const dirRef = useRef(dir);
+  useEffect(() => {
+    tRef.current = t;
+  }, [t]);
+  useEffect(() => {
+    dirRef.current = dir;
+  }, [dir]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
+    isCleanupDestroyRef.current = false;
 
     const resolveSteps = (tourId: string, replay: boolean): TourStep[] => {
       const tour = findTour(tourId);
@@ -117,7 +133,12 @@ export function Tour() {
       return pool.filter((s) => !s.element || document.querySelector(s.element) != null);
     };
 
-    const run = (tourId: string, trigger: "first-visit" | "manual", replay: boolean) => {
+    const run = (tourId: string, trigger: "auto" | "manual", replay: boolean) => {
+      // Read latest t/dir at run time — the effect mounts once but t/dir
+      // change as the user picks a different language.
+      const t = tRef.current;
+      const dir = dirRef.current;
+
       activeDriverRef.current?.destroy();
 
       const tour = findTour(tourId);
@@ -161,9 +182,28 @@ export function Tour() {
           });
         },
         onDestroyStarted: () => {
+          if (isCleanupDestroyRef.current) {
+            // React-driven destroy (effect cleanup, unmount). Don't touch
+            // the seen map — the user didn't explicitly dismiss the tour.
+            d.destroy();
+            return;
+          }
           const activeIndex = d.getActiveIndex();
           const completed = activeIndex != null && activeIndex >= totalShown - 1;
-          const seenNow = activeIndex != null ? shownStepIds.slice(0, activeIndex + 1) : [];
+
+          // On complete: just record what was actually shown — for delta runs
+          // that's only the new steps; the rest were already seen.
+          // On close (mid-tour dismiss): mark ALL current step ids as seen so
+          // the auto-tour doesn't re-fire on every page load until the user
+          // happens to click through everything. The contextual `?` icon is
+          // always there if they want to come back. Adding NEW steps to the
+          // tour later still triggers autostart because those new ids won't
+          // be in the seen set yet.
+          const seenNow = completed
+            ? activeIndex != null
+              ? shownStepIds.slice(0, activeIndex + 1)
+              : []
+            : tour.steps.map((s) => s.id);
           markStepsSeen(tourId, seenNow);
 
           const payload = {
@@ -216,16 +256,19 @@ export function Tour() {
     });
     let timer: number | null = null;
     if (autoTour) {
-      timer = window.setTimeout(() => run(autoTour.id, "first-visit", false), 600);
+      timer = window.setTimeout(() => run(autoTour.id, "auto", false), 600);
     }
 
     return () => {
       if (timer != null) window.clearTimeout(timer);
       window.removeEventListener(TOUR_START_EVENT, handler);
       (window as WindowWithReadyFlag)[TOUR_READY_FLAG] = false;
+      isCleanupDestroyRef.current = true;
       activeDriverRef.current?.destroy();
     };
-  }, [t, dir]);
+    // Mount-once: latest t/dir are read via tRef/dirRef inside `run`.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return null;
 }
