@@ -1,20 +1,25 @@
-import { headers } from "next/headers";
-
 import type { EventBaseType } from "../../types/events";
 import type { SearchParams } from "../../types/searchParams";
 
 import { getDateFromSearchParams } from "../../utils/date";
 
+import eventsData from "../../data/events";
 import IndexPage from "./components/IndexPage";
 
-const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
+// Read the local events data directly in the server component instead of doing a
+// server-side self-fetch to /api/events. The self-fetch broke under `output:
+// 'standalone'` (NODE_ENV=production forced https against an http server) and would
+// also hairpin through Cloudflare in the container. Same filter as the route handler.
+function getEventsForMonth(events: EventBaseType[], date: Date): EventBaseType[] {
+  const year = date.getFullYear();
+  const month = date.getUTCMonth();
 
-async function getEvents(dateISO: string) {
-  const host = (await headers()).get("host");
-  const res = await fetch(`${protocol}://${host}/api/events?date=${dateISO}`);
-
-  if (!res.ok) throw new Error("Failed to fetch events");
-  return res.json();
+  return events
+    .filter((event) => {
+      const eventDate = new Date(event.startDate);
+      return eventDate.getFullYear() === year && eventDate.getUTCMonth() === month;
+    })
+    .sort((a, b) => (a.startDate > b.startDate ? 1 : -1));
 }
 
 type PageProps = {
@@ -22,15 +27,14 @@ type PageProps = {
 };
 
 export default async function Page(props: PageProps) {
+  const searchParams = await props.searchParams;
+  const date = getDateFromSearchParams(searchParams);
+
   let events: EventBaseType[] = [];
   let error = false;
 
-  const searchParams = await props.searchParams;
-  const date = getDateFromSearchParams(searchParams);
-  const dateISO = date.toISOString().split("T")[0];
-
   try {
-    events = await getEvents(dateISO);
+    events = getEventsForMonth(eventsData, date);
   } catch {
     error = true;
   }

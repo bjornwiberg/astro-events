@@ -1,0 +1,22 @@
+# Keep the build context small + NEVER bake secrets/source into the image.
+node_modules
+.next
+.git
+.github
+.gitignore
+.dockerignore
+Dockerfile
+# secrets — runtime-injected on the host, never in the image:
+.env
+.env.*
+*.log
+.claude
+.vscode
+tests
+e2e
+playwright.config.*
+playwright-report
+test-results
+coverage
+README*
+tsconfig.tsbuildinfo
