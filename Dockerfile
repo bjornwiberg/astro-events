@@ -3,12 +3,15 @@
 # ---- deps: install dependencies (cached on lockfile) ----
 FROM node:26-alpine AS deps
 WORKDIR /app
+# node:26-alpine no longer bundles yarn — install Yarn 1 (classic) for the yarn.lock
+RUN npm install -g yarn@1.22.22
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile
 
 # ---- builder: standalone Next.js build ----
 FROM node:26-alpine AS builder
 WORKDIR /app
+RUN npm install -g yarn@1.22.22
 ARG GIT_SHA=dev
 # BUILD_STANDALONE=1 makes next.config emit output:'standalone' (Netlify stays default).
 ENV BUILD_STANDALONE=1 \
