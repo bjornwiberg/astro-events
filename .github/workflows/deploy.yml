@@ -1,0 +1,48 @@
+name: Build & publish astro image
+
+# PUBLIC-REPO SAFE: only builds + pushes the image to GHCR (all on GitHub-hosted
+# runners). Deployment is done by a pull-agent on LXC 106 — GitHub never executes
+# anything on the home network.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-astro
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  packages: write   # push image to GHCR
+
+env:
+  IMAGE: ghcr.io/${{ github.repository }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest           # GitHub-hosted (free + unlimited for public repos)
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          build-args: |
+            GIT_SHA=${{ github.sha }}
+          tags: |
+            ${{ env.IMAGE }}:latest
+            ${{ env.IMAGE }}:${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  # NO deploy job here — deploy is decoupled for maximum security on a public repo:
+  # a pull-agent on LXC 106 (systemd timer) watches GHCR and runs
+  # `docker compose pull && docker rollout` itself. GitHub has zero execution
+  # foothold on the home network (no self-hosted runner, no inbound, no token).
