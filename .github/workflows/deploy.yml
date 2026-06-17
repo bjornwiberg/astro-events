@@ -39,8 +39,12 @@ jobs:
           tags: |
             ${{ env.IMAGE }}:latest
             ${{ env.IMAGE }}:${{ github.sha }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          # Registry cache (co-located with the image on GHCR) instead of the GHA
+          # cache backend: gha,mode=max stalled the job ~2min on cache export for the
+          # large node_modules layers. Registry export piggybacks on the push and is
+          # far faster, while still caching the multi-stage deps layer (mode=max).
+          cache-from: type=registry,ref=${{ env.IMAGE }}:buildcache
+          cache-to: type=registry,ref=${{ env.IMAGE }}:buildcache,mode=max
 
   # NO deploy job here — deploy is decoupled for maximum security on a public repo:
   # a pull-agent on LXC 106 (systemd timer) watches GHCR and runs
