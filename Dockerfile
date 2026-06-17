@@ -6,7 +6,9 @@ WORKDIR /app
 # node:26-alpine no longer bundles yarn — install Yarn 1 (classic) for the yarn.lock
 RUN npm install -g yarn@1.22.22
 COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile
+# --ignore-engines: mixpanel-browser pins engines to "node >=20 <26"; it's a browser
+# lib and runs fine on node 26. Without this, yarn classic aborts the frozen install.
+RUN yarn install --frozen-lockfile --ignore-engines
 
 # ---- builder: standalone Next.js build ----
 FROM node:26-alpine AS builder
