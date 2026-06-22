@@ -48,9 +48,9 @@ export async function fetchCalculatorEventsByRange(
       tmb,
       tmf,
       modules: {
-        eclipse: true,
-        season: true,
-        mphase: true,
+        eclipse: [],
+        season: [],
+        mphase: [],
       },
     }),
     next: { revalidate: CACHE_REVALIDATE_SECONDS },

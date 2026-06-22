@@ -77,7 +77,7 @@
   },
   "errors": {
     "fetchEvents": "Error fetching events",
-    "fetchEventsHint": "Set CALCULATOR_API_URL and CALCULATOR_API_KEY in .env.local"
+    "fetchEventsHint": "Please try again later."
   },
   "loading": {
     "changingLanguage": "Changing language…"
