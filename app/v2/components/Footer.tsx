@@ -1,7 +1,7 @@
 "use client";
 
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
+import HelpOutlineIcon from "@mui/icons-material/HelpOutlineOutlined";
 import { Box, IconButton, Typography } from "@mui/material";
 import { useState } from "react";
 import { track } from "../../../utils/mixpanel";

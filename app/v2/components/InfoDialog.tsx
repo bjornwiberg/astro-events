@@ -49,7 +49,7 @@ export function InfoDialog({ open, onClose }: InfoDialogProps) {
           color: theme.palette.text.primary,
         }}
       >
-        <Typography variant="h6" component="span" fontWeight={600}>
+        <Typography variant="h6" component="span" sx={{ fontWeight: 600 }}>
           {t("info.title")}
         </Typography>
         <IconButton
@@ -72,7 +72,7 @@ export function InfoDialog({ open, onClose }: InfoDialogProps) {
 
         <Divider sx={{ my: 2, borderColor: theme.palette.divider }} />
 
-        <Typography variant="subtitle2" fontWeight={600} gutterBottom>
+        <Typography variant="subtitle2" gutterBottom sx={{ fontWeight: 600 }}>
           {t("info.contact.title")}
         </Typography>
         <Typography variant="body2" color="text.secondary">
@@ -92,7 +92,7 @@ export function InfoDialog({ open, onClose }: InfoDialogProps) {
         <Divider sx={{ my: 2, borderColor: theme.palette.divider }} />
 
         <Box sx={{ display: "flex", alignItems: "center", gap: 0.75, mb: 0.75 }}>
-          <Typography variant="subtitle2" fontWeight={600}>
+          <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
             {t("info.support.title")}
           </Typography>
           <FavoriteIcon sx={{ fontSize: 13, color: "secondary.main" }} />
@@ -105,7 +105,7 @@ export function InfoDialog({ open, onClose }: InfoDialogProps) {
             rel="noopener"
             color="text.primary"
             underline="hover"
-            fontWeight={600}
+            sx={{ fontWeight: 600 }}
             onClick={() => track("Click Info Dialog Link", { link: "revolut" })}
           >
             @bjornwiberg
@@ -115,7 +115,7 @@ export function InfoDialog({ open, onClose }: InfoDialogProps) {
             href="tel:+46735112444"
             color="text.primary"
             underline="hover"
-            fontWeight={600}
+            sx={{ fontWeight: 600 }}
             onClick={() => track("Click Info Dialog Link", { link: "swish" })}
           >
             +46 73 511 24 44

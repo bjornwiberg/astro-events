@@ -191,8 +191,7 @@ export function LocationSelector({ value, onChange }: LocationSelectorProps) {
     <Box data-tour="location">
       <Typography
         variant="body2"
-        fontWeight={500}
-        sx={{ marginBlockEnd: (theme) => theme.spacing(0.5) }}
+        sx={{ fontWeight: 500, marginBlockEnd: (theme) => theme.spacing(0.5) }}
       >
         {t("location.label")}
       </Typography>
@@ -224,11 +223,12 @@ export function LocationSelector({ value, onChange }: LocationSelectorProps) {
             placeholder={t("location.placeholder")}
             size="small"
             slotProps={{
+              ...params.slotProps,
               input: {
-                ...params.InputProps,
+                ...params.slotProps.input,
                 endAdornment: (
                   <>
-                    {params.InputProps.endAdornment}
+                    {params.slotProps.input.endAdornment}
                     <Tooltip title={t("location.myLocation")}>
                       <IconButton onClick={handleMyLocation} edge="end" size="small">
                         <MyLocationIcon fontSize="small" />
