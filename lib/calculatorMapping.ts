@@ -65,6 +65,8 @@ export function mapApiIdToEventType(
       return EventType.FULL_MOON_PEAK;
     case "sr":
       return EventType.SHIVARATRI;
+    case "msr":
+      return EventType.MAHA_SHIVARATRI;
     case "nm":
       return EventType.NEW_MOON;
     case "se":
@@ -97,7 +99,7 @@ export function mapApiResponseToEvents(items: ApiResponseItem[]): CalculatorEven
           angleBegDate: item.begtime ? ensureUtcZ(item.begtime) : undefined,
           angleEndDate: item.endtime ? ensureUtcZ(item.endtime) : undefined,
         });
-      } else if (item.id === "sr") {
+      } else if (item.id === "sr" || item.id === "msr") {
         result.push({
           type,
           startDate: item.begtime ? ensureUtcZ(item.begtime) : timeZ,

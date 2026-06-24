@@ -18,6 +18,7 @@ const EVENT_COLORS: Record<EventType, string> = {
   [EventType.TRIPURA_SUNDARI_PEAK]: "#f43f5e",
   [EventType.FULL_MOON_PEAK]: "#6366b8",
   [EventType.SHIVARATRI]: "#d4af37",
+  [EventType.MAHA_SHIVARATRI]: "#b8860b",
   [EventType.NEW_MOON]: "#94a3b8",
   [EventType.MOON_ECLIPSE]: "#a78bfa",
   [EventType.SOLAR_ECLIPSE]: "#fb923c",
@@ -90,6 +91,7 @@ function getRelativeTime(date: Date, locale: string): string {
 /** Event types that are proper names and are not translated (same in all languages). */
 const UNTRANSLATED_EVENT_TYPES: EventType[] = [
   EventType.SHIVARATRI,
+  EventType.MAHA_SHIVARATRI,
   EventType.TRIPURA_SUNDARI_PEAK,
 ];
 
