@@ -3,11 +3,7 @@ import type { GeoLocation } from "../../lib/calculator";
 import { getCachedYearEvents } from "../../lib/calculator";
 import { parseLocationCookie } from "../../lib/cookies";
 import { getLocationFromIp } from "../../lib/geoip";
-import {
-  getPreferredLocale,
-  I18N_HASH_COOKIE_NAME,
-  translationHash,
-} from "../../lib/i18n";
+import { getPreferredLocale, I18N_HASH_COOKIE_NAME, translationHash } from "../../lib/i18n";
 import { getEnglishSource, getTranslations } from "../../lib/translate";
 import type { CalculatorEventType } from "../../types/calculatorEvent";
 import IndexPage from "./components/IndexPage";
