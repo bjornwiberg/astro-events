@@ -32,6 +32,11 @@ export function getIconAndNameFromType(type: string) {
         icon: "🔱",
         name: "Shivaratri",
       };
+    case EventType.MAHA_SHIVARATRI:
+      return {
+        icon: "🔱",
+        name: "Maha Shivaratri",
+      };
     case EventType.NEW_MOON:
       return {
         icon: "🌑",

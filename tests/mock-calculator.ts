@@ -8,7 +8,7 @@ import { createServer, type IncomingMessage, type Server, type ServerResponse } 
  */
 
 type CalculatorItem =
-  | { type: "mphase"; id: "fm" | "nm"; time: string; begtime?: string; endtime?: string; pos?: number }
+  | { type: "mphase"; id: "fm" | "nm" | "msr"; time: string; begtime?: string; endtime?: string; pos?: number }
   | { type: "eclipse"; id: "se" | "le"; planet: "sun" | "moo"; time: string; pos?: number }
   | { type: "simple"; id: "ss" | "ws" | "se" | "ae"; time: string };
 
@@ -24,6 +24,16 @@ function fixtureFor(year: number): CalculatorItem[] {
     items.push({ type: "mphase", id: "fm", time: `${year}-${mm}-12T02:22:00Z`, pos: 0 });
     items.push({ type: "mphase", id: "nm", time: `${year}-${mm}-26T17:31:00Z`, pos: 0 });
   }
+  // Maha Shivaratri (API id "msr") — uses begtime/endtime for its window,
+  // same shape as a regular Shivaratri ("sr").
+  items.push({
+    type: "mphase",
+    id: "msr",
+    time: `${year}-02-15T21:08:00Z`,
+    begtime: `${year}-02-15T21:08:00Z`,
+    endtime: `${year}-02-15T23:50:00Z`,
+    pos: 0,
+  });
   // Plus a couple of seasonal markers + an eclipse for variety.
   items.push({ type: "simple", id: "ae", time: `${year}-03-20T04:45:00Z` });
   items.push({ type: "simple", id: "ss", time: `${year}-06-21T02:11:00Z` });
