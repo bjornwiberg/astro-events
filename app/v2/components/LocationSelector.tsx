@@ -209,6 +209,11 @@ export function LocationSelector({ value, onChange }: LocationSelectorProps) {
           else setInputValue(v);
         }}
         options={options}
+        // Results are already filtered server-side by the geocode query. Disable
+        // MUI's default client-side filtering, which substring-matches the input
+        // against the label and would drop localized/diacritic names (e.g. typing
+        // "bucharest" hides "București, România"), leaving an empty dropdown.
+        filterOptions={(opts) => opts}
         getOptionLabel={(opt) => (typeof opt === "string" ? opt : opt.display_name)}
         loading={loading}
         onFocus={handleFocus}
