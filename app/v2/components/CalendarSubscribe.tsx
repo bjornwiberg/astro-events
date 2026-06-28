@@ -2,7 +2,7 @@
 
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
+import HelpOutlineIcon from "@mui/icons-material/HelpOutlineOutlined";
 import {
   Box,
   Button,
@@ -76,7 +76,13 @@ export function CalendarSubscribe({ calendarUrl, variant = "default" }: Calendar
           {t("calendarSubscribe.title")}
         </Button>
       )}
-      <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth PaperProps={{ dir }}>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        maxWidth="sm"
+        fullWidth
+        slotProps={{ paper: { dir } }}
+      >
         <DialogTitle>
           <Box
             sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 1 }}
@@ -94,8 +100,7 @@ export function CalendarSubscribe({ calendarUrl, variant = "default" }: Calendar
         <DialogContent>
           <Typography
             variant="body2"
-            fontWeight={500}
-            sx={{ marginBlockEnd: (theme) => theme.spacing(0.5) }}
+            sx={{ fontWeight: 500, marginBlockEnd: (theme) => theme.spacing(0.5) }}
           >
             {t("calendarSubscribe.url")}
           </Typography>
