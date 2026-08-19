@@ -468,9 +468,9 @@
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
 "@mixpanel/rrdom@^2.0.0-alpha.18":
-  version "2.0.0-alpha.18.5"
-  resolved "https://registry.yarnpkg.com/@mixpanel/rrdom/-/rrdom-2.0.0-alpha.18.5.tgz#a7df90af056ea3f41901112387a7c9c21e10e020"
-  integrity sha512-RSWgCJmPpAsAs7xwt0+gMeaWytGtsCLEaTTjTCim6CpVUWM+zZSEnGzspz6FDQD69BjIduAah1LVCT/7dI5T+Q==
+  version "2.0.0-alpha.18.6"
+  resolved "https://registry.yarnpkg.com/@mixpanel/rrdom/-/rrdom-2.0.0-alpha.18.6.tgz#17294d59fc7767307af6c78b6e8b0116d728fa05"
+  integrity sha512-JY1Kr8c5pPmFBdPMLIEm1e0/hw2xvsS515Qqf+5Lpm0AW+2e/ZvA6P6M+z4fXeuachfZZv06UhTvixiUJv355Q==
   dependencies:
     "@mixpanel/rrweb-snapshot" "^2.0.0-alpha.18"
 
@@ -480,16 +480,16 @@
   integrity sha512-gGxEnNpfWurQht+fpSJbwPV60ug0LAENlk4Ux3XRmYooNJGPBO1TiQHcM7g0yhrKf4tfbTiKKZ4EXzFlOZs/pw==
 
 "@mixpanel/rrweb-snapshot@^2.0.0-alpha.18":
-  version "2.0.0-alpha.18.5"
-  resolved "https://registry.yarnpkg.com/@mixpanel/rrweb-snapshot/-/rrweb-snapshot-2.0.0-alpha.18.5.tgz#8cf446a7da90a9d3ee4c871a2bf43e3c1a2cb59e"
-  integrity sha512-Ys5VRrHAG4cWMc5QSZRcmhtX5ySPgid3dofVVL1L6h0tL74vcOXO4y+HebHWV2p/iEQg80fmWKaB6HZ5p7+kbA==
+  version "2.0.0-alpha.18.6"
+  resolved "https://registry.yarnpkg.com/@mixpanel/rrweb-snapshot/-/rrweb-snapshot-2.0.0-alpha.18.6.tgz#998e0487851fe50e6730c28986386ab149638977"
+  integrity sha512-8c8TArw8l0mmYPvKc3asq3hIzQ7uVrNVQ4xsVt+ESxHohW8r47ua/YLDpd2jV30FZj4Y3KvGTQl5sXLDI+02Zw==
   dependencies:
     postcss "^8.4.38"
 
 "@mixpanel/rrweb-types@^2.0.0-alpha.18":
-  version "2.0.0-alpha.18.5"
-  resolved "https://registry.yarnpkg.com/@mixpanel/rrweb-types/-/rrweb-types-2.0.0-alpha.18.5.tgz#9fb94befe0383fe24a517f7ed0e720ae3a10cd4a"
-  integrity sha512-upLJEkRB40FGAVJpnfepQXMj/RuBjuC4UGGEKAiZSi17FG4Aqt0F+vXuB+9WicizhQf3vUW89K26Ay0VtbCSiQ==
+  version "2.0.0-alpha.18.6"
+  resolved "https://registry.yarnpkg.com/@mixpanel/rrweb-types/-/rrweb-types-2.0.0-alpha.18.6.tgz#46b58cd998a99be246b2afcc849f0d6b6f7c3f5c"
+  integrity sha512-KvaTcbZR4mJ3w1b1fEq4AeSg9rUqvQ1gKko9r56ANUw4fqWam23xoXrLJ8Og+hPYTwIDQ99TkZBVXFTGJqYwpQ==
 
 "@mixpanel/rrweb-utils@2.0.0-alpha.18.4":
   version "2.0.0-alpha.18.4"
@@ -497,9 +497,9 @@
   integrity sha512-c3nUbQl19kxHjf8nowFMeXlJw0ZqLesIVBb9t4g1nC4WtaNEPkFotWRdGt5V2cJNQ+aY38/v2uYb8Ren4IcdSQ==
 
 "@mixpanel/rrweb-utils@^2.0.0-alpha.18":
-  version "2.0.0-alpha.18.5"
-  resolved "https://registry.yarnpkg.com/@mixpanel/rrweb-utils/-/rrweb-utils-2.0.0-alpha.18.5.tgz#c68dd406759d3bd21e4a1b7b86f88f69351f9e52"
-  integrity sha512-Gi35ktM6991Zso0ABYf+9kkcldpPzialQtK5tTIkCSEFbtrOD1S7OLAM9dMqVeC2N9fUpw3mFGvuAiXgxsDpiw==
+  version "2.0.0-alpha.18.6"
+  resolved "https://registry.yarnpkg.com/@mixpanel/rrweb-utils/-/rrweb-utils-2.0.0-alpha.18.6.tgz#5cc2fcc36c7b700f78b9b46923121ab80e8b031b"
+  integrity sha512-1eEcOunlnv27oqHRhaK9F2fo5kB97M98+3VoZz6CCq816J37wveGQIiXDvb5qUOgMqjwJ9GCNRMUhrxSyM0C5w==
 
 "@mixpanel/rrweb@2.0.0-alpha.18.4":
   version "2.0.0-alpha.18.4"
@@ -906,9 +906,9 @@ mitt@^3.0.0:
   integrity sha512-vKivATfr97l2/QBCYAkXYDbrIWPM2IIKEl7YPhjCvKlG3kE2gm+uBo6nEXK3M5/Ffh/FLpKExzOQ3JJoJGFKBw==
 
 mixpanel-browser@^2.72.0:
-  version "2.81.0"
-  resolved "https://registry.yarnpkg.com/mixpanel-browser/-/mixpanel-browser-2.81.0.tgz#038b2a352108d420c8ae1ac20b37bbb71e2410ef"
-  integrity sha512-FVPaapbpDdZVbU8X6A3N1Ur3PWcr1Kol9sGuHNwExpFYFQVFeeSlaeEyFELvpTp6Q5JgBoLatkDbb/w/81TDJQ==
+  version "2.82.0"
+  resolved "https://registry.yarnpkg.com/mixpanel-browser/-/mixpanel-browser-2.82.0.tgz#961dc8f05272a075d5e509b272ef9d3638be9557"
+  integrity sha512-J6JXLp77Ak2OqzqdgQDM/wvKCBxh1VfVpe8EbibXd3jeZb+R60ZaJ2Py7xeIxXK0jqbYWHOGDWyHQ2KqBTJ5hQ==
   dependencies:
     "@mixpanel/rrweb" "2.0.0-alpha.18.4"
     "@mixpanel/rrweb-plugin-console-record" "2.0.0-alpha.18.4"
@@ -921,12 +921,7 @@ ms@^2.1.3:
   resolved "https://registry.npmjs.org/ms/-/ms-2.1.3.tgz"
   integrity sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==
 
-nanoid@^3.3.12:
-  version "3.3.16"
-  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.16.tgz#a04d8ec4b1f10009d2d533947aefe4293737816c"
-  integrity sha512-bzlKTyNJ7+LdGIIwy8ijFpIqEQIvafahV7eYykJ8Cvh42EdJeODoJ6gUJXpQJvej1BddH8OqTXZNE/KfbWAu8Q==
-
-nanoid@^3.3.16:
+nanoid@^3.3.16, nanoid@^3.3.17:
   version "3.3.18"
   resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.18.tgz#f66a2de1199ffde0fcf21c8a5f13106b1c081913"
   integrity sha512-DTg4MJbGMWkfi6VZFdNt2/caMbQy4Ou+Op/hJQvGEWcnVfoA1QA+xzRKAzw9jD6+GVOOeYr/mIcuDSdug6F6+w==
@@ -1014,11 +1009,11 @@ postcss@8.5.23:
     source-map-js "^1.2.1"
 
 postcss@^8.4.38:
-  version "8.5.19"
-  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.5.19.tgz#45ad5cfde499408e20147348237551381a922037"
-  integrity sha512-Mz8SaolMd8nB+G13WkORcxQKHZ/NE4xXevtkJHVuG+guo9/wYKlIMTKAqGdEmYOXR2ijPjTYNHssizdaVSUNdQ==
+  version "8.5.26"
+  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.5.26.tgz#6e75135780c7e10df3433bf2266c552d35c8c620"
+  integrity sha512-u82N74LFzG8ca+dD8puPnplTXoGH4fTPpVGuIbt36G3qvNlkvfD0lEAZSxaly3KX8TS/L1A1gsCEmvKmBcVbkQ==
   dependencies:
-    nanoid "^3.3.12"
+    nanoid "^3.3.17"
     picocolors "^1.1.1"
     source-map-js "^1.2.1"
 
