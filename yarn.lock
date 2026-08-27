@@ -906,9 +906,9 @@ mitt@^3.0.0:
   integrity sha512-vKivATfr97l2/QBCYAkXYDbrIWPM2IIKEl7YPhjCvKlG3kE2gm+uBo6nEXK3M5/Ffh/FLpKExzOQ3JJoJGFKBw==
 
 mixpanel-browser@^2.72.0:
-  version "2.82.0"
-  resolved "https://registry.yarnpkg.com/mixpanel-browser/-/mixpanel-browser-2.82.0.tgz#961dc8f05272a075d5e509b272ef9d3638be9557"
-  integrity sha512-J6JXLp77Ak2OqzqdgQDM/wvKCBxh1VfVpe8EbibXd3jeZb+R60ZaJ2Py7xeIxXK0jqbYWHOGDWyHQ2KqBTJ5hQ==
+  version "2.82.1"
+  resolved "https://registry.yarnpkg.com/mixpanel-browser/-/mixpanel-browser-2.82.1.tgz#ea44f5ab6c62bd7ab09d05ae3de84beb0453038d"
+  integrity sha512-meJv23+7YYUHs08VlIVUC4x9riKnCLy6THQ264idlonBKzOq4LmmubOjOm71nVRm6osqEbXeXH2fwYrNXHRG1g==
   dependencies:
     "@mixpanel/rrweb" "2.0.0-alpha.18.4"
     "@mixpanel/rrweb-plugin-console-record" "2.0.0-alpha.18.4"
