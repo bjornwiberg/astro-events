@@ -839,9 +839,9 @@ hoist-non-react-statics@^3.3.1:
     react-is "^16.7.0"
 
 ical-generator@^11.0.0:
-  version "11.1.0"
-  resolved "https://registry.yarnpkg.com/ical-generator/-/ical-generator-11.1.0.tgz#6b7669e42e1a656beb91cebcb06bb1856d339e5e"
-  integrity sha512-/CSyXcelySK5qYAUxXnwzhAi1UPVnapnVMXqkRQ+L0RXHCFtzqLm92o5PD0ZRhaWBCtkS0hP8YIxMrSRZ+8Zug==
+  version "11.1.1"
+  resolved "https://registry.yarnpkg.com/ical-generator/-/ical-generator-11.1.1.tgz#199b8a73199e6e8939df7a3eeb43b12481277bda"
+  integrity sha512-1m50e+BOMzxtE3lFXlFiOKvze4Mmiiq2+QoEMw7w7EDtWSq8OxWrdN6mmQdaymBVjmkP1pg0BAPUesBL1ZHQMQ==
 
 import-fresh@^3.2.1:
   version "3.3.1"
