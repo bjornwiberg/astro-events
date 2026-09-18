@@ -15,9 +15,11 @@ FROM node:26-alpine AS builder
 WORKDIR /app
 RUN npm install -g yarn@1.22.22
 ARG GIT_SHA=dev
+ARG NEXT_PUBLIC_MIXPANEL_TOKEN
 # BUILD_STANDALONE=1 makes next.config emit output:'standalone' (Netlify stays default).
 ENV BUILD_STANDALONE=1 \
     NEXT_PUBLIC_BUILD_ID=$GIT_SHA \
+    NEXT_PUBLIC_MIXPANEL_TOKEN=$NEXT_PUBLIC_MIXPANEL_TOKEN \
     NEXT_TELEMETRY_DISABLED=1
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
