@@ -1,161 +1,104 @@
 import ical, { ICalCalendarMethod } from "ical-generator";
-import { NextResponse } from "next/server";
-import eventsData from "../../../data/events";
-import { type EventBaseType, EventType } from "../../../types/events";
+import { type NextRequest, NextResponse } from "next/server";
+import { getCachedSubscriptionEvents } from "../../../lib/calculator";
+import type { CalculatorEventType } from "../../../types/calculatorEvent";
+import { EventType } from "../../../types/events";
 import {
-  getDateWithOffsetAndDST,
   getFullMoonDatesFromPeakDate,
   getTripuraSundariDatesFromPeakDate,
-  isDateDST,
-} from "../../../utils/date";
+} from "../../../utils/dateNew";
 import { getIconAndNameFromType } from "../../../utils/event";
 
-type NormalizedEvent = Omit<EventBaseType, "startDate" | "endDate" | "peakDate" | "updatedAt"> & {
-  startDate: Date;
-  endDate?: Date;
-  peakDate?: Date;
-  updatedAt?: Date;
-};
-
-type CalendarEvent = {
-  start: Date;
-  end: Date;
-  summary: string;
-  description?: string;
-  lastModified?: Date;
-};
-
-const normalizeDate = (dateString: string): Date => {
-  const date = new Date(dateString);
-  const now = new Date();
-  const offset = isDateDST(now) ? 2 : 1;
-  return getDateWithOffsetAndDST(date, offset);
-};
-
-const normalizeEvent = (event: EventBaseType): NormalizedEvent => ({
-  ...event,
-  startDate: normalizeDate(event.startDate),
-  endDate: event.endDate ? normalizeDate(event.endDate) : undefined,
-  peakDate: event.peakDate ? normalizeDate(event.peakDate) : undefined,
-  updatedAt: event.updatedAt ? new Date(event.updatedAt) : undefined,
-});
-
-const createEventData = (event: NormalizedEvent, name: string) => ({
-  summary: name,
-  description: event.description,
-  lastModified: event.updatedAt,
-});
-
-const createRegularEvent = (event: NormalizedEvent, name: string) => ({
-  ...createEventData(event, name),
-  start: event.startDate,
-  end: event.endDate || event.startDate,
-});
-
-const createTripuraSundariEvents = (event: NormalizedEvent, name: string) => {
-  const { start, end } = getTripuraSundariDatesFromPeakDate(event.startDate);
-
-  return [
-    {
-      ...createEventData(event, `${name} peak`),
-      start: event.startDate,
-      end: event.startDate,
-    },
-    {
-      ...createEventData(event, name),
-      start,
-      end,
-    },
-  ];
-};
-
-const createFullMoonEvents = (event: NormalizedEvent, name: string) => {
-  const { start, end } = getFullMoonDatesFromPeakDate(event.startDate);
-
-  return [
-    {
-      ...createEventData(event, `${name} peak`),
-      start: event.startDate,
-      end: event.startDate,
-    },
-    {
-      ...createEventData(event, name),
-      start,
-      end,
-    },
-  ];
-};
-
-const createEclipseEvents = (event: NormalizedEvent, name: string) => {
-  const events: CalendarEvent[] = [];
-
-  if (event.peakDate) {
-    events.push({
-      ...createEventData(event, `${name} maximum`),
-      start: event.peakDate,
-      end: event.peakDate,
-    });
-  }
-
-  events.push({
-    ...createEventData(event, name),
-    start: event.startDate,
-    end: event.endDate || event.startDate,
-  });
-
-  return events;
-};
-
-const generateCalendar = (events: EventBaseType[]) => {
+function generateCalendar(events: CalculatorEventType[]) {
   const calendar = ical({
-    name: "Astrological events",
-    timezone: "Europe/Stockholm",
+    name: "Astro Events",
+    timezone: "UTC",
     method: ICalCalendarMethod.REQUEST,
   });
 
-  events
-    .map(normalizeEvent)
-    .sort((a, b) => (a.startDate > b.startDate ? 1 : -1))
-    .forEach((event) => {
-      const nameData = getIconAndNameFromType(event.type);
-      const name = nameData?.name ?? "";
+  const sorted = [...events].sort(
+    (a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
+  );
 
-      if (event.type === EventType.TRIPURA_SUNDARI_PEAK) {
-        const events = createTripuraSundariEvents(event, name);
-        events.forEach((eventData) => {
-          calendar.createEvent(eventData);
+  for (const event of sorted) {
+    const nameData = getIconAndNameFromType(event.type);
+    const name = nameData?.name ?? event.type;
+
+    if (event.type === EventType.TRIPURA_SUNDARI_PEAK) {
+      calendar.createEvent({
+        summary: `${name} peak`,
+        start: new Date(event.startDate),
+        end: new Date(event.startDate),
+      });
+      const { start, end } = getTripuraSundariDatesFromPeakDate(new Date(event.startDate));
+      calendar.createEvent({
+        summary: name,
+        start,
+        end,
+      });
+    } else if (event.type === EventType.FULL_MOON_PEAK) {
+      calendar.createEvent({
+        summary: `${name} peak`,
+        start: new Date(event.startDate),
+        end: new Date(event.startDate),
+      });
+      const { start, end } = getFullMoonDatesFromPeakDate(new Date(event.startDate));
+      calendar.createEvent({
+        summary: name,
+        start,
+        end,
+      });
+    } else if (event.type === EventType.SOLAR_ECLIPSE || event.type === EventType.MOON_ECLIPSE) {
+      if (event.peakDate) {
+        calendar.createEvent({
+          summary: `${name} maximum`,
+          start: new Date(event.peakDate),
+          end: new Date(event.peakDate),
         });
-      } else if (event.type === EventType.FULL_MOON_PEAK) {
-        const events = createFullMoonEvents(event, name);
-        events.forEach((eventData) => {
-          calendar.createEvent(eventData);
-        });
-      } else if ([EventType.MOON_ECLIPSE, EventType.SOLAR_ECLIPSE].includes(event.type)) {
-        const events = createEclipseEvents(event, name);
-        events.forEach((eventData) => {
-          calendar.createEvent(eventData);
-        });
-      } else {
-        calendar.createEvent(createRegularEvent(event, name));
       }
-    });
+      calendar.createEvent({
+        summary: name,
+        description: event.description,
+        start: new Date(event.startDate),
+        end: event.endDate ? new Date(event.endDate) : new Date(event.startDate),
+      });
+    } else {
+      calendar.createEvent({
+        summary: name,
+        description: event.description,
+        start: new Date(event.startDate),
+        end: event.endDate ? new Date(event.endDate) : new Date(event.startDate),
+      });
+    }
+  }
 
   return calendar;
-};
+}
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+  const { searchParams } = new URL(req.url);
+  const lngParam = searchParams.get("lng");
+  const latParam = searchParams.get("lat");
+
+  // Malmö, Sweden as default coordinates if none are provided
+  const lng = lngParam != null ? parseFloat(lngParam) : 13.0001566;
+  const lat = latParam != null ? parseFloat(latParam) : 55.6052931;
+
+  if (!Number.isFinite(lng) || !Number.isFinite(lat)) {
+    return NextResponse.json({ error: "Invalid lng or lat" }, { status: 400 });
+  }
+
   try {
-    const calendar = generateCalendar(eventsData);
-    const response = new NextResponse(calendar.toString(), {
+    const events = await getCachedSubscriptionEvents(lng, lat);
+    const calendar = generateCalendar(events);
+    return new NextResponse(calendar.toString(), {
       headers: {
-        "Content-Type": "text/calendar",
-        "Content-Disposition": 'attachment; filename="calendar.ics"',
+        "Content-Type": "text/calendar; charset=utf-8",
+        "Content-Disposition": 'attachment; filename="astro-events.ics"',
       },
     });
-    return response;
-  } catch {
-    return new NextResponse(JSON.stringify({ error: "Failed to generate calendar" }), {
-      status: 500,
-    });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : "Calendar error";
+    return NextResponse.json({ error: message }, { status: 502 });
   }
 }

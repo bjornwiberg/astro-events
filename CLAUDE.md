@@ -1,14 +1,14 @@
 # astro-events — contributor notes
 
-## Tours (v2)
+## Tours
 
-Guided tours live under `app/v2/components/tours/` + `app/v2/components/Tour.tsx`. Seen state is tracked **per step** in `localStorage["v2:tours:seen"]` as `{ [tourId]: stepId[] }`.
+Guided tours live under `app/components/tours/` + `app/components/Tour.tsx`. Seen state is tracked **per step** in `localStorage["v2:tours:seen"]` as `{ [tourId]: stepId[] }`.
 
 ### The three scenarios
 
 **1. New tour for a new feature** (e.g. a new "Share" dialog needs its own walkthrough):
 
-1. Append a `TourDefinition` to `TOURS` in `app/v2/components/tours/definitions.ts`:
+1. Append a `TourDefinition` to `TOURS` in `app/components/tours/definitions.ts`:
    ```ts
    {
      id: "share-dialog",              // stable kebab-case
@@ -41,7 +41,7 @@ Guided tours live under `app/v2/components/tours/` + `app/v2/components/Tour.tsx
      <HelpOutlineIcon fontSize="small" />
    </IconButton>
    ```
-6. Copy `tests/v2/calendar-tour.spec.ts` as a template for the new tour's coverage.
+6. Copy `tests/calendar-tour.spec.ts` as a template for the new tour's coverage.
 
 **2. Adding new steps to an existing tour** (e.g. Calendar dialog just got a "Share" button — surface it to everyone, show only the new step to returning users):
 
@@ -72,7 +72,7 @@ Both close (X button) and complete ("Got it" on the last step) write to the seen
 - **Complete**: marks just the steps shown in this run. For a delta run (returning user with new steps), that's only the new ones — the rest were already in seen.
 - **Close**: marks **all current step ids** for the tour, regardless of how many were shown. This is the "I dismissed this tour, stop nagging me on every reload" signal. Autostart only fires when there are unseen steps in the tour definition, so once everything is marked seen via close, future page loads won't auto-trigger. Adding **new** step ids to the tour later still triggers autostart for those — exactly the behaviour we want.
 
-Don't change close to "mark only what was viewed" — that re-introduces the bug where closing on step 1 left steps 2–N unseen, and the autostart re-fired on every reload until the user clicked through every step. Mixpanel caught this with three `Tour Start` events in 30 seconds for the same `distinct_id`. Locked in by `tests/v2/intro-tour.spec.ts:closing mid-tour marks all current step ids so the auto-tour does not re-fire`.
+Don't change close to "mark only what was viewed" — that re-introduces the bug where closing on step 1 left steps 2–N unseen, and the autostart re-fired on every reload until the user clicked through every step. Mixpanel caught this with three `Tour Start` events in 30 seconds for the same `distinct_id`. Locked in by `tests/intro-tour.spec.ts:closing mid-tour marks all current step ids so the auto-tour does not re-fire`.
 
 ### Forcing a re-see after a major rewrite
 
@@ -87,7 +87,7 @@ Prefer the per-step reset — it only re-shows what actually changed.
 
 Say the Copy button behaviour changes: single-click copies → double-click copies. You want returning users to see ONLY a heads-up about the new interaction; new users should see the full tour but with the updated description on the copy step. Three files change.
 
-**1. `app/v2/components/tours/definitions.ts`** — rename the step id and point it at new translation keys:
+**1. `app/components/tours/definitions.ts`** — rename the step id and point it at new translation keys:
 
 ```diff
 -  { id: "copy",             element: '[data-tour="calendar-copy"]',
@@ -129,7 +129,7 @@ Say the Copy button behaviour changes: single-click copies → double-click copi
 | Brand-new | `[]` | `[welcome, url, copy-doubleclick]` | full | `[welcome, url, copy-doubleclick]` |
 | Replay via `?` | any | as above | ALL (replay bypasses seen) | unchanged by replay |
 
-The leftover `"copy"` in the returning user's seen map is **inert** — the runner only checks set membership against step ids currently in the definition. The test `delta after a step rename …` in `tests/v2/calendar-tour.spec.ts` locks this behaviour in.
+The leftover `"copy"` in the returning user's seen map is **inert** — the runner only checks set membership against step ids currently in the definition. The test `delta after a step rename …` in `tests/calendar-tour.spec.ts` locks this behaviour in.
 
 #### The rule, in one sentence
 
@@ -139,10 +139,10 @@ If the **behaviour** of a step changes, rename its `id`. If a **genuinely new ca
 
 | File | Purpose |
 |---|---|
-| `app/v2/components/tours/definitions.ts` | Registry of tours + steps. Start here. |
-| `app/v2/components/Tour.tsx` | Driver.js runner, seen-map helpers, `startTour` / `hasUnseenSteps` exports. Rarely needs edits. |
-| `app/v2/components/Footer.tsx` | Hosts the `?` replay icon for the `intro` tour. |
-| `app/v2/components/CalendarSubscribe.tsx` | Example of a context-scoped tour: first-open trigger + in-dialog `?` replay. |
+| `app/components/tours/definitions.ts` | Registry of tours + steps. Start here. |
+| `app/components/Tour.tsx` | Driver.js runner, seen-map helpers, `startTour` / `hasUnseenSteps` exports. Rarely needs edits. |
+| `app/components/Footer.tsx` | Hosts the `?` replay icon for the `intro` tour. |
+| `app/components/CalendarSubscribe.tsx` | Example of a context-scoped tour: first-open trigger + in-dialog `?` replay. |
 | `locales/en.json` | `tour.*` keys. LibreTranslate regenerates per-language on source-hash change. |
 
 ### Mixpanel events
@@ -157,7 +157,7 @@ Useful funnels: `Tour Start` → `Tour Step Viewed` per step → `Tour Complete`
 
 ## Testing
 
-Playwright e2e lives in `tests/v2/`. The mock calculator API at `tests/mock-calculator.ts` replaces the external service so tests are deterministic.
+Playwright e2e lives in `tests/`. The mock calculator API at `tests/mock-calculator.ts` replaces the external service so tests are deterministic.
 
 - **Run**: `yarn test:e2e` (does `next build && playwright test`)
 - **Interactive**: `yarn test:e2e:ui`
@@ -166,7 +166,7 @@ Playwright e2e lives in `tests/v2/`. The mock calculator API at `tests/mock-calc
 
 Conventions:
 - Seed state with `seedSeenTours(context, { tourId: [stepIds] })` and `seedLocationCookie(context)` BEFORE `page.goto`. `addInitScript` runs pre-hydration so SSR + client both see the seeded values.
-- Use `waitForTourPopover(page)` and `readSeen(page)` from `tests/v2/helpers.ts`.
+- Use `waitForTourPopover(page)` and `readSeen(page)` from `tests/helpers.ts`.
 - Tour "Next" button collides with "Next month" in Navigation — always use `getByRole("button", { name: "Next", exact: true })` for the tour.
 - For partial-replay tests, seed a subset of a tour's step ids and assert only the missing ones are shown (count the popover transitions or assert the final seen list).
 
@@ -181,4 +181,4 @@ Single workflow `.github/workflows/ci.yml`:
 ## Other gotchas
 
 - `utils/mixpanel.ts` `track()` is gated on an `initialized` flag. If `NEXT_PUBLIC_MIXPANEL_TOKEN` is missing in a production build, `track` no-ops instead of throwing `before_track` (which previously killed the tour startup).
-- v1 (`app/(index)/`) is legacy and intentionally untested. Only v2 has e2e coverage.
+- The app lives at the root (`app/`). The old v1 UI and its `/api/events` + `/api/calendar` v1 routes were removed; `/v2` and `/api/v2/calculator` redirect permanently to the root equivalents in `next.config.ts`.

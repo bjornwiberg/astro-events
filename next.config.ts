@@ -5,6 +5,25 @@ const nextConfig: NextConfig = {
   // Gated on BUILD_STANDALONE=1 (set only in the Docker/CI build) so Netlify deploy
   // previews keep their default output and are unaffected.
   ...(process.env.BUILD_STANDALONE === '1' ? { output: 'standalone' as const } : {}),
+  async redirects() {
+    return [
+      {
+        source: '/v2',
+        destination: '/',
+        permanent: true,
+      },
+      {
+        source: '/v2/:path*',
+        destination: '/:path*',
+        permanent: true,
+      },
+      {
+        source: '/api/v2/calculator/:path*',
+        destination: '/api/calculator/:path*',
+        permanent: true,
+      },
+    ]
+  },
 }
 
 export default nextConfig
