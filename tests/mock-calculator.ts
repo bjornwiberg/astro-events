@@ -3,7 +3,7 @@ import { createServer, type IncomingMessage, type Server, type ServerResponse } 
 /**
  * Minimal HTTP server that stands in for the external calculator API during
  * Playwright runs. It answers any POST /… with a deterministic fixture so
- * the Next.js server route `app/api/v2/calculator/route.ts` gets predictable
+ * the Next.js server route `app/api/calculator/route.ts` gets predictable
  * data back regardless of the requested location or date range.
  */
 
@@ -13,7 +13,7 @@ type CalculatorItem =
   | { type: "simple"; id: "ss" | "ws" | "se" | "ae"; time: string };
 
 function fixtureFor(year: number): CalculatorItem[] {
-  // One full moon + one new moon for every month so the v2 page always
+  // One full moon + one new moon for every month so the page always
   // renders the events grid regardless of which month "today" lands in
   // — without that, the intro tour's `events` step gets filtered out
   // (no [data-tour="events"] anchor), the tour shrinks by one step, and

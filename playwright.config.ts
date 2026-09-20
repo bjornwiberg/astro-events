@@ -7,7 +7,7 @@ const MOCK_PORT = Number.parseInt(process.env.MOCK_CALCULATOR_PORT ?? "3333", 10
 const BASE_URL = `http://127.0.0.1:${PORT}`;
 
 export default defineConfig({
-  testDir: "./tests/v2",
+  testDir: "./tests",
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 1,
@@ -34,7 +34,7 @@ export default defineConfig({
     // means the user can't have `yarn dev` open while tests run. Requires a
     // prior `next build` — the `test:e2e` npm script handles that.
     command: `next start --port ${PORT}`,
-    url: `${BASE_URL}/v2`,
+    url: `${BASE_URL}`,
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
     env: {

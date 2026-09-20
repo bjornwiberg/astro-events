@@ -92,7 +92,7 @@
       "label": "Welcome tour",
       "welcome": {
         "title": "Welcome to Astro Events 🪐",
-        "description": "A quick tour of what's new in v2. You can skip any time."
+        "description": "A quick tour of the app. You can skip any time."
       },
       "theme": {
         "title": "Dark & light mode",
@@ -134,13 +134,5 @@
         "description": "Tap to copy the URL to your clipboard. Then paste it into Apple Calendar, Google Calendar, or any app that accepts iCal feeds."
       }
     }
-  },
-  "v1Banner": {
-    "text": "Looking for the classic version?",
-    "link": "Go back"
-  },
-  "v2Banner": {
-    "link": "Try out the new version",
-    "badge": "beta"
   }
 }
