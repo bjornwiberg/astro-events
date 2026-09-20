@@ -1,29 +1,29 @@
-import type { NextConfig } from 'next'
+import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   // 'standalone' produces a minimal self-hosted server build (used for our Docker image).
   // Gated on BUILD_STANDALONE=1 (set only in the Docker/CI build) so Netlify deploy
   // previews keep their default output and are unaffected.
-  ...(process.env.BUILD_STANDALONE === '1' ? { output: 'standalone' as const } : {}),
+  ...(process.env.BUILD_STANDALONE === "1" ? { output: "standalone" as const } : {}),
   async redirects() {
     return [
       {
-        source: '/v2',
-        destination: '/',
+        source: "/v2",
+        destination: "/",
         permanent: true,
       },
       {
-        source: '/v2/:path*',
-        destination: '/:path*',
+        source: "/v2/:path*",
+        destination: "/:path*",
         permanent: true,
       },
       {
-        source: '/api/v2/calculator/:path*',
-        destination: '/api/calculator/:path*',
+        source: "/api/v2/calendar",
+        destination: "/api/calendar",
         permanent: true,
       },
-    ]
+    ];
   },
-}
+};
 
-export default nextConfig
+export default nextConfig;
