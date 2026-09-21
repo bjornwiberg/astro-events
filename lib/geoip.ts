@@ -17,9 +17,7 @@ type IpApiResponse = {
   message?: string;
 };
 
-export async function getLocationFromIp(
-  forwardedFor?: string | null,
-): Promise<GeoLocation> {
+export async function getLocationFromIp(forwardedFor?: string | null): Promise<GeoLocation> {
   const ip = forwardedFor?.split(",")[0]?.trim() || undefined;
   if (!ip || ip === "127.0.0.1" || ip === "::1") {
     return DEFAULT_LOCATION;
@@ -30,7 +28,7 @@ export async function getLocationFromIp(
       `${IP_API_BASE}/${encodeURIComponent(ip)}?fields=status,lat,lon,city,timezone`,
       {
         next: { revalidate: 3600 },
-      },
+      }
     );
     const data = (await res.json()) as IpApiResponse;
     if (data.status !== "success" || data.lat == null || data.lon == null) {

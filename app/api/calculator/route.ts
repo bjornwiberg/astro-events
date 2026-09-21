@@ -1,7 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { corsHeaders, validateOrigin } from "../../../lib/cors";
 import { fetchCalculatorEvents } from "../../../lib/calculator";
 import { getCookieValue, parseLocationCookie } from "../../../lib/cookies";
+import { corsHeaders, validateOrigin } from "../../../lib/cors";
 
 export async function GET(req: NextRequest) {
   if (!validateOrigin(req)) {
@@ -12,15 +12,10 @@ export async function GET(req: NextRequest) {
   const yearParam = searchParams.get("year");
   const year = yearParam ? parseInt(yearParam, 10) : new Date().getFullYear();
   if (!Number.isInteger(year)) {
-    return NextResponse.json(
-      { error: "Invalid year" },
-      { status: 400, headers: corsHeaders(req) },
-    );
+    return NextResponse.json({ error: "Invalid year" }, { status: 400, headers: corsHeaders(req) });
   }
 
-  const location = parseLocationCookie(
-    getCookieValue(req.headers.get("cookie"), "location"),
-  );
+  const location = parseLocationCookie(getCookieValue(req.headers.get("cookie"), "location"));
   const lng = location?.lng ?? 13.0001566;
   const lat = location?.lat ?? 55.6052931;
 
@@ -32,10 +27,7 @@ export async function GET(req: NextRequest) {
     });
   } catch (err) {
     const message = err instanceof Error ? err.message : "Calculator error";
-    return NextResponse.json(
-      { error: message },
-      { status: 502, headers: corsHeaders(req) },
-    );
+    return NextResponse.json({ error: message }, { status: 502, headers: corsHeaders(req) });
   }
 }
 

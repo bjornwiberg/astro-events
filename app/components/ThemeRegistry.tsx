@@ -3,7 +3,7 @@
 import createCache from "@emotion/cache";
 import { CacheProvider } from "@emotion/react";
 import { useServerInsertedHTML } from "next/navigation";
-import { useState, type ReactNode } from "react";
+import { type ReactNode, useState } from "react";
 
 export function ThemeRegistry({ children }: { children: ReactNode }) {
   const [{ cache, flush }] = useState(() => {

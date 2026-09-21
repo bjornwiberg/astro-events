@@ -7,7 +7,15 @@ import {
   waitForTourPopover,
 } from "./helpers";
 
-const INTRO_STEPS = ["welcome", "theme", "language", "calendar", "location", "navigation", "events"];
+const INTRO_STEPS = [
+  "welcome",
+  "theme",
+  "language",
+  "calendar",
+  "location",
+  "navigation",
+  "events",
+];
 const CALENDAR_STEPS = ["welcome", "url", "copy"];
 
 test.describe("calendar dialog tour", () => {

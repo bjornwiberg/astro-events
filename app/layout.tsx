@@ -1,5 +1,5 @@
-import { cookies, headers } from "next/headers";
 import type { Metadata, Viewport } from "next";
+import { cookies, headers } from "next/headers";
 import { getPreferredLocale, isRtl } from "../lib/i18n";
 import { ThemeRoot } from "./components/ThemeRoot";
 import "./global.css";
@@ -36,11 +36,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const initialDark = darkCookie === "true" ? true : darkCookie === "false" ? false : null;
 
   return (
-    <html
-      lang={locale}
-      dir={dir}
-      data-theme={dataTheme}
-    >
+    <html lang={locale} dir={dir} data-theme={dataTheme}>
       <head>
         <title>Astro Events</title>
         <link

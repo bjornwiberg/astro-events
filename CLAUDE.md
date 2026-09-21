@@ -173,7 +173,7 @@ Conventions:
 ## CI
 
 Single workflow `.github/workflows/ci.yml`:
-- `lint` — `yarn check` (biome)
+- `lint` — `yarn lint` (biome). Not `yarn check`: in yarn v1 that is a builtin that verifies `node_modules` and never runs the script, so the job passed without linting. The duplicate `check` script was removed to kill the footgun.
 - `build` — `yarn build` with dummy `CALCULATOR_API_*` env
 - `playwright` — `yarn test:e2e`; uploads `playwright-report/` always and `test-results/` on failure
 - `ci-status` — `if: always()` aggregator. **Point branch protection at "CI Status" only** so adding new jobs doesn't require changing the required-checks list.

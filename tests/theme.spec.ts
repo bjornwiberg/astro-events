@@ -1,11 +1,15 @@
 import { expect, test } from "@playwright/test";
-import {
-  mockClientEndpoints,
-  seedLocationCookie,
-  seedSeenTours,
-} from "./helpers";
+import { mockClientEndpoints, seedLocationCookie, seedSeenTours } from "./helpers";
 
-const INTRO_STEPS = ["welcome", "theme", "language", "calendar", "location", "navigation", "events"];
+const INTRO_STEPS = [
+  "welcome",
+  "theme",
+  "language",
+  "calendar",
+  "location",
+  "navigation",
+  "events",
+];
 
 test.describe("theme toggle", () => {
   test.beforeEach(async ({ context, page }) => {

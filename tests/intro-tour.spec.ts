@@ -10,7 +10,15 @@ import {
   waitForTourPopover,
 } from "./helpers";
 
-const INTRO_STEPS = ["welcome", "theme", "language", "calendar", "location", "navigation", "events"];
+const INTRO_STEPS = [
+  "welcome",
+  "theme",
+  "language",
+  "calendar",
+  "location",
+  "navigation",
+  "events",
+];
 
 test.describe("intro tour", () => {
   test.beforeEach(async ({ context, page }) => {

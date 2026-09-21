@@ -31,8 +31,8 @@ import { Header } from "./Header";
 import { LocationSelector } from "./LocationSelector";
 import { Navigation } from "./Navigation";
 import { ThemeRegistry } from "./ThemeRegistry";
-import { Tour } from "./Tour";
 import { useAppTheme } from "./ThemeRoot";
+import { Tour } from "./Tour";
 
 type IndexPageProps = {
   events: CalculatorEventType[];
