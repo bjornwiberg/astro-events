@@ -1,9 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { corsHeaders, validateOrigin } from "../../../lib/cors";
-import {
-  translationHash,
-  isSupportedLocale,
-} from "../../../lib/i18n";
+import { isSupportedLocale, translationHash } from "../../../lib/i18n";
 import { getEnglishSource, getTranslations } from "../../../lib/translate";
 
 export async function GET(req: NextRequest) {
@@ -16,7 +13,7 @@ export async function GET(req: NextRequest) {
   if (!isSupportedLocale(lang)) {
     return NextResponse.json(
       { error: "Unsupported language" },
-      { status: 400, headers: corsHeaders(req) },
+      { status: 400, headers: corsHeaders(req) }
     );
   }
 
@@ -33,7 +30,7 @@ export async function GET(req: NextRequest) {
           "Content-Type": "application/json",
           "Cache-Control": `private, max-age=86400, s-maxage=86400, stale-while-revalidate=86400`,
         },
-      },
+      }
     );
   } catch (err) {
     const source = getEnglishSource();
@@ -41,7 +38,7 @@ export async function GET(req: NextRequest) {
     const message = err instanceof Error ? err.message : "Translation error";
     return NextResponse.json(
       { translations: source, hash: sourceHash, error: message },
-      { status: 200, headers: { ...corsHeaders(req), "Content-Type": "application/json" } },
+      { status: 200, headers: { ...corsHeaders(req), "Content-Type": "application/json" } }
     );
   }
 }

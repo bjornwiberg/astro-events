@@ -53,7 +53,13 @@ type AppProviderProps = {
   children: ReactNode;
 };
 
-export function AppProvider({ locale, translations, timezone, isCurrentMonth, children }: AppProviderProps) {
+export function AppProvider({
+  locale,
+  translations,
+  timezone,
+  isCurrentMonth,
+  children,
+}: AppProviderProps) {
   const t = useCallback(
     (key: string, vars?: Record<string, string>) => {
       const raw = getNested(translations as Record<string, unknown>, key);
@@ -72,7 +78,10 @@ export function AppProvider({ locale, translations, timezone, isCurrentMonth, ch
     }
   }, [locale, dir]);
 
-  const value = useMemo<AppContextValue>(() => ({ t, locale, dir, timezone, isCurrentMonth }), [t, locale, dir, timezone, isCurrentMonth]);
+  const value = useMemo<AppContextValue>(
+    () => ({ t, locale, dir, timezone, isCurrentMonth }),
+    [t, locale, dir, timezone, isCurrentMonth]
+  );
 
   return (
     <AppContext.Provider value={value}>

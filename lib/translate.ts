@@ -1,10 +1,7 @@
-import type { Translations } from "./i18n";
 import en from "../locales/en.json";
+import type { Translations } from "./i18n";
 
-function flatten(
-  obj: Record<string, unknown>,
-  prefix = "",
-): { path: string; value: string }[] {
+function flatten(obj: Record<string, unknown>, prefix = ""): { path: string; value: string }[] {
   const out: { path: string; value: string }[] = [];
   for (const [k, v] of Object.entries(obj)) {
     const path = prefix ? `${prefix}.${k}` : k;
@@ -37,10 +34,7 @@ const LANG_CODE_MAP: Record<string, string> = {
   no: "nb",
 };
 
-async function translateStrings(
-  strings: string[],
-  target: string,
-): Promise<string[]> {
+async function translateStrings(strings: string[], target: string): Promise<string[]> {
   const baseUrl = process.env.LIBRE_TRANSLATE_URL;
   const apiKey = process.env.LIBRE_TRANSLATE_API_KEY;
   if (!baseUrl) {

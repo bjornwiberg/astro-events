@@ -94,7 +94,7 @@ export function isRtl(locale: string): boolean {
 /** Resolve locale from lang cookie or Accept-Language header. */
 export function getPreferredLocale(
   langCookie: string | null | undefined,
-  acceptLanguage: string | null | undefined,
+  acceptLanguage: string | null | undefined
 ): string {
   if (langCookie && isSupportedLocale(langCookie)) return langCookie;
   if (!acceptLanguage) return "en";

@@ -18,7 +18,10 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
       - name: Biome check
-        run: yarn check
+        # `yarn lint`, not `yarn check`: in yarn v1 `check` is a builtin that
+        # verifies node_modules against package.json and never runs the script,
+        # so this job passed without linting anything.
+        run: yarn lint
 
   build:
     name: Build

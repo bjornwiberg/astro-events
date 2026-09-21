@@ -54,10 +54,7 @@ export async function seedLegacyTourFlag(context: BrowserContext): Promise<void>
  * Write the pre-rename `v2:tours:seen` map so we can verify it carries over
  * into `tours:seen` instead of resetting the user.
  */
-export async function seedLegacySeenTours(
-  context: BrowserContext,
-  seen: SeenMap
-): Promise<void> {
+export async function seedLegacySeenTours(context: BrowserContext, seen: SeenMap): Promise<void> {
   await context.addInitScript((payload) => {
     window.localStorage.setItem("v2:tours:seen", JSON.stringify(payload));
   }, seen);
@@ -126,8 +123,10 @@ export async function waitForTourPopover(page: Page): Promise<void> {
 }
 
 export async function tourTitle(page: Page): Promise<string> {
-  return (await page
-    .locator(".driver-popover.app-tour-popover .driver-popover-title")
-    .first()
-    .textContent()) ?? "";
+  return (
+    (await page
+      .locator(".driver-popover.app-tour-popover .driver-popover-title")
+      .first()
+      .textContent()) ?? ""
+  );
 }

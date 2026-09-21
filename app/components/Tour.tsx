@@ -92,8 +92,7 @@ type WindowWithReadyFlag = Window & { [TOUR_READY_FLAG]?: boolean };
 export function startTour(id: string, opts?: StartOptions): void {
   if (typeof window === "undefined") return;
   const detail = { id, replay: opts?.replay === true };
-  const dispatch = () =>
-    window.dispatchEvent(new CustomEvent(TOUR_START_EVENT, { detail }));
+  const dispatch = () => window.dispatchEvent(new CustomEvent(TOUR_START_EVENT, { detail }));
 
   // Tour mounts its listener in a useEffect. If startTour is called before
   // that effect runs (e.g. a dialog open-handler firing during hydration),

@@ -1,7 +1,4 @@
-import {
-  getFullMoonDatesFromPeakDate,
-  getTripuraSundariDatesFromPeakDate,
-} from "./date";
+import { getFullMoonDatesFromPeakDate, getTripuraSundariDatesFromPeakDate } from "./date";
 
 /**
  * Format a UTC date string in the given IANA timezone.
@@ -10,7 +7,7 @@ import {
 export function formatDateInTimezone(
   utcDateString: string,
   timezone: string,
-  locale: string = "en-US",
+  locale: string = "en-US"
 ): string {
   return new Intl.DateTimeFormat(locale, {
     timeZone: timezone,
@@ -23,4 +20,4 @@ export function formatDateInTimezone(
   }).format(new Date(utcDateString));
 }
 
-export { getTripuraSundariDatesFromPeakDate, getFullMoonDatesFromPeakDate };
+export { getFullMoonDatesFromPeakDate, getTripuraSundariDatesFromPeakDate };

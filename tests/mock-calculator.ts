@@ -8,7 +8,14 @@ import { createServer, type IncomingMessage, type Server, type ServerResponse } 
  */
 
 type CalculatorItem =
-  | { type: "mphase"; id: "fm" | "nm" | "msr"; time: string; begtime?: string; endtime?: string; pos?: number }
+  | {
+      type: "mphase";
+      id: "fm" | "nm" | "msr";
+      time: string;
+      begtime?: string;
+      endtime?: string;
+      pos?: number;
+    }
   | { type: "eclipse"; id: "se" | "le"; planet: "sun" | "moo"; time: string; pos?: number }
   | { type: "simple"; id: "ss" | "ws" | "se" | "ae"; time: string };
 

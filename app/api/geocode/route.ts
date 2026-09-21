@@ -17,7 +17,7 @@ export async function GET(req: NextRequest) {
     if (!q || !q.trim()) {
       return NextResponse.json(
         { error: "Missing q for search" },
-        { status: 400, headers: corsHeaders(req) },
+        { status: 400, headers: corsHeaders(req) }
       );
     }
     const url = new URL(`${NOMINATIM_BASE}/search`);
@@ -41,10 +41,7 @@ export async function GET(req: NextRequest) {
       });
     } catch (err) {
       const message = err instanceof Error ? err.message : "Geocode error";
-      return NextResponse.json(
-        { error: message },
-        { status: 502, headers: corsHeaders(req) },
-      );
+      return NextResponse.json({ error: message }, { status: 502, headers: corsHeaders(req) });
     }
   }
 
@@ -54,7 +51,7 @@ export async function GET(req: NextRequest) {
     if (lat == null || lon == null || lat === "" || lon === "") {
       return NextResponse.json(
         { error: "Missing lat/lon for reverse" },
-        { status: 400, headers: corsHeaders(req) },
+        { status: 400, headers: corsHeaders(req) }
       );
     }
     const url = new URL(`${NOMINATIM_BASE}/reverse`);
@@ -78,16 +75,13 @@ export async function GET(req: NextRequest) {
       });
     } catch (err) {
       const message = err instanceof Error ? err.message : "Geocode error";
-      return NextResponse.json(
-        { error: message },
-        { status: 502, headers: corsHeaders(req) },
-      );
+      return NextResponse.json({ error: message }, { status: 502, headers: corsHeaders(req) });
     }
   }
 
   return NextResponse.json(
     { error: "Invalid action: use action=search or action=reverse" },
-    { status: 400, headers: corsHeaders(req) },
+    { status: 400, headers: corsHeaders(req) }
   );
 }
 

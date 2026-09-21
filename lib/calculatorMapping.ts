@@ -51,10 +51,7 @@ function ensureUtcZ(time: string): string {
   return roundToMinute(withZ);
 }
 
-export function mapApiIdToEventType(
-  id: string,
-  planet?: string,
-): EventType | null {
+export function mapApiIdToEventType(id: string, planet?: string): EventType | null {
   if (planet === "sun") return EventType.SOLAR_ECLIPSE;
   if (planet === "moo") return EventType.MOON_ECLIPSE;
 
@@ -136,9 +133,6 @@ export function mapApiResponseToEvents(items: ApiResponseItem[]): CalculatorEven
     }
   }
 
-  result.sort(
-    (a, b) =>
-      new Date(a.startDate).getTime() - new Date(b.startDate).getTime(),
-  );
+  result.sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime());
   return result;
 }

@@ -9,7 +9,7 @@ export function initMixpanel() {
     if (token) {
       mixpanel.init(token, {
         ignore_dnt: true,
-        api_host: 'https://api-eu.mixpanel.com',
+        api_host: "https://api-eu.mixpanel.com",
         record_sessions_percent: 100,
       });
       mixpanel.register({ Environment: process.env.NODE_ENV });
