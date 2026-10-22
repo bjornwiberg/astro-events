@@ -893,9 +893,9 @@ dom-helpers@^5.0.1:
     csstype "^3.0.2"
 
 driver.js@^1.4.0:
-  version "1.9.0"
-  resolved "https://registry.yarnpkg.com/driver.js/-/driver.js-1.9.0.tgz#f8bffc39d2fda5a9cda4aa0d4c0887c29228a98f"
-  integrity sha512-+YWVdNVUrY1/2spszQshohWYY4soIjNBnMFS6lfmousT8igos2lmswhlqyuuNMhr+qbV0EjJ+L6i2FECPr6Ygg==
+  version "1.10.2"
+  resolved "https://registry.yarnpkg.com/driver.js/-/driver.js-1.10.2.tgz#2c3fb1458d0edc49c50aff4c03cc8f92faf970f6"
+  integrity sha512-L/EMTriJPAmg+5kIFmrjzt3TI+1NblhHOV/UZkfpgU/uxhSflGheynMBxk5oImDSy6seAEkIl6MzNOc0zdoKtg==
 
 error-ex@^1.3.1:
   version "1.3.2"
