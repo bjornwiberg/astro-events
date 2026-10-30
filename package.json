@@ -25,7 +25,7 @@
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "react-select": "^5.10.2",
-    "react-timezone-select": "^3.2.8"
+    "react-timezone-select": "^4.0.0"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.3.9",
